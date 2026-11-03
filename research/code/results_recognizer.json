@@ -1,0 +1,483 @@
+{
+ "generated": "2026-11-03T14:09:04.204Z",
+ "perLetter": {
+  "level": 1.5,
+  "perClass": 60,
+  "matrix": {
+   "A": {
+    "A": 60
+   },
+   "B": {
+    "B": 60
+   },
+   "C": {
+    "C": 60
+   },
+   "D": {
+    "D": 60
+   },
+   "E": {
+    "E": 57,
+    "N": 3
+   },
+   "F": {
+    "F": 60
+   },
+   "G": {
+    "G": 57,
+    "Q": 3
+   },
+   "H": {
+    "H": 60
+   },
+   "I": {
+    "I": 60
+   },
+   "K": {
+    "K": 59,
+    "V": 1
+   },
+   "L": {
+    "L": 60
+   },
+   "M": {
+    "M": 58,
+    "N": 2
+   },
+   "N": {
+    "M": 8,
+    "N": 49,
+    "E": 3
+   },
+   "O": {
+    "O": 60
+   },
+   "P": {
+    "P": 59,
+    "K": 1
+   },
+   "Q": {
+    "Q": 59,
+    "G": 1
+   },
+   "R": {
+    "R": 49,
+    "U": 11
+   },
+   "S": {
+    "S": 57,
+    "N": 1,
+    "T": 2
+   },
+   "T": {
+    "T": 53,
+    "S": 6,
+    "X": 1
+   },
+   "U": {
+    "U": 38,
+    "R": 20,
+    "V": 2
+   },
+   "V": {
+    "V": 53,
+    "U": 5,
+    "R": 2
+   },
+   "W": {
+    "W": 60
+   },
+   "X": {
+    "X": 60
+   },
+   "Y": {
+    "Y": 60
+   }
+  }
+ },
+ "ablation": {
+  "Full design": {
+   "n": 720,
+   "accuracy": 0.9597222222222223
+  },
+  "No mirror check (trust the hand label)": {
+   "n": 720,
+   "accuracy": 0.8930555555555556
+  },
+  "No orientation features": {
+   "n": 720,
+   "accuracy": 0.8347222222222223
+  },
+  "Camera-frame coordinates (no palm frame)": {
+   "n": 720,
+   "accuracy": 0.7541666666666667
+  },
+  "One example per letter": {
+   "n": 720,
+   "accuracy": 0.9541666666666667
+  }
+ },
+ "words": [
+  {
+   "holdMs": 300,
+   "signerMs": 500,
+   "words": 40,
+   "wordAccuracy": 0.875,
+   "cer": 0.02358490566037736
+  },
+  {
+   "holdMs": 300,
+   "signerMs": 700,
+   "words": 40,
+   "wordAccuracy": 0.95,
+   "cer": 0.009433962264150943
+  },
+  {
+   "holdMs": 300,
+   "signerMs": 1000,
+   "words": 40,
+   "wordAccuracy": 0.925,
+   "cer": 0.014150943396226415
+  },
+  {
+   "holdMs": 400,
+   "signerMs": 500,
+   "words": 40,
+   "wordAccuracy": 0.85,
+   "cer": 0.02830188679245283
+  },
+  {
+   "holdMs": 400,
+   "signerMs": 700,
+   "words": 40,
+   "wordAccuracy": 0.875,
+   "cer": 0.02358490566037736
+  },
+  {
+   "holdMs": 400,
+   "signerMs": 1000,
+   "words": 40,
+   "wordAccuracy": 0.95,
+   "cer": 0.009433962264150943
+  },
+  {
+   "holdMs": 600,
+   "signerMs": 500,
+   "words": 40,
+   "wordAccuracy": 0,
+   "cer": 0.46226415094339623
+  },
+  {
+   "holdMs": 600,
+   "signerMs": 700,
+   "words": 40,
+   "wordAccuracy": 0.8,
+   "cer": 0.03773584905660377
+  },
+  {
+   "holdMs": 600,
+   "signerMs": 1000,
+   "words": 40,
+   "wordAccuracy": 0.875,
+   "cer": 0.02358490566037736
+  }
+ ],
+ "custom": {
+  "perSign": {
+   "spiral": {
+    "trials": 30,
+    "detected": 1,
+    "recordedAsMoving": 3
+   },
+   "climb": {
+    "trials": 30,
+    "detected": 1,
+    "recordedAsMoving": 3
+   },
+   "swipe": {
+    "trials": 30,
+    "detected": 1,
+    "recordedAsMoving": 3
+   },
+   "knock": {
+    "trials": 30,
+    "detected": 1,
+    "recordedAsMoving": 3
+   }
+  },
+  "lookalikes": {
+   "trials": 104,
+   "falseAccepts": 0
+  }
+ },
+ "static": [
+  {
+   "level": 0.5,
+   "n": 960,
+   "accuracy": 0.9989583333333333,
+   "confusions": {
+    "R": {
+     "U": 1
+    }
+   }
+  },
+  {
+   "level": 1,
+   "n": 960,
+   "accuracy": 0.9895833333333334,
+   "confusions": {
+    "N": {
+     "M": 1
+    },
+    "R": {
+     "U": 3
+    },
+    "T": {
+     "S": 1
+    },
+    "U": {
+     "R": 4,
+     "V": 1
+    }
+   }
+  },
+  {
+   "level": 1.5,
+   "n": 960,
+   "accuracy": 0.940625,
+   "confusions": {
+    "A": {
+     "T": 1
+    },
+    "C": {
+     "O": 1
+    },
+    "E": {
+     "N": 2,
+     "M": 1
+    },
+    "G": {
+     "Q": 3
+    },
+    "H": {
+     "P": 1,
+     "V": 1
+    },
+    "M": {
+     "N": 3
+    },
+    "N": {
+     "M": 3
+    },
+    "R": {
+     "U": 6
+    },
+    "S": {
+     "N": 1,
+     "T": 3
+    },
+    "T": {
+     "S": 3
+    },
+    "U": {
+     "R": 15,
+     "V": 5
+    },
+    "V": {
+     "U": 7,
+     "R": 1
+    }
+   }
+  },
+  {
+   "level": 2,
+   "n": 960,
+   "accuracy": 0.8885416666666667,
+   "confusions": {
+    "A": {
+     "T": 1
+    },
+    "C": {
+     "F": 1
+    },
+    "E": {
+     "M": 4,
+     "N": 1
+    },
+    "G": {
+     "Q": 7
+    },
+    "K": {
+     "V": 1
+    },
+    "M": {
+     "N": 4,
+     "E": 1
+    },
+    "N": {
+     "M": 8,
+     "S": 1,
+     "E": 3,
+     "T": 1
+    },
+    "O": {
+     "C": 2,
+     "X": 1,
+     "S": 1
+    },
+    "P": {
+     "H": 1
+    },
+    "Q": {
+     "G": 5
+    },
+    "R": {
+     "K": 1,
+     "U": 11,
+     "V": 1
+    },
+    "S": {
+     "T": 6,
+     "N": 3,
+     "E": 1
+    },
+    "T": {
+     "S": 5,
+     "A": 3
+    },
+    "U": {
+     "R": 15,
+     "K": 1,
+     "V": 1
+    },
+    "V": {
+     "R": 4,
+     "U": 8,
+     "K": 2
+    },
+    "X": {
+     "T": 2
+    }
+   }
+  }
+ ],
+ "moving": {
+  "hello": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "yes": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "no": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "please": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "sorry": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "thankyou": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "where": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "water": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "eat": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "bathroom": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "J": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "Z": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "Ñ": {
+   "trials": 30,
+   "detected": 1,
+   "missed": 0,
+   "other": {}
+  },
+  "love": {
+   "trials": 30,
+   "detected": 1,
+   "twoHands": true
+  },
+  "more": {
+   "trials": 30,
+   "detected": 1,
+   "twoHands": true
+  },
+  "friend": {
+   "trials": 30,
+   "detected": 1,
+   "twoHands": true
+  },
+  "name": {
+   "trials": 30,
+   "detected": 1,
+   "twoHands": true
+  },
+  "house": {
+   "trials": 30,
+   "detected": 1,
+   "twoHands": true
+  },
+  "help": {
+   "trials": 30,
+   "detected": 1,
+   "twoHands": true
+  }
+ },
+ "still": {
+  "sequences": 144,
+  "firstCommitCorrect": 1,
+  "movingSignFalseAlarms": 0
+ },
+ "timing": {
+  "msPerFrame": 0.089599255,
+  "templates": 572
+ }
+}

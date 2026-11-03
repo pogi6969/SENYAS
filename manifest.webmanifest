@@ -1,0 +1,25 @@
+{
+  "id": "app/",
+  "name": "SENYAS: Sign Language Translator",
+  "short_name": "SENYAS",
+  "description": "Live sign language translator, braille reader and sign language lessons in English, Filipino and Bikol.",
+  "lang": "en",
+  "start_url": "app/",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#0B1220",
+  "theme_color": "#0E5BD8",
+  "categories": ["education", "accessibility", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Translate", "url": "app/#translate", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Learn", "url": "app/#learn", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ]
+}

@@ -1,0 +1,109 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>SENYAS benchmark</title>
+<canvas id="c" width="1100" height="440"></canvas>
+<canvas id="h" width="480" height="480"></canvas>
+<script src="../../src/hand.js"></script>
+<script src="../../src/avatar.js"></script>
+<script src="../../src/data.js"></script>
+<script src="../../src/recog.js"></script>
+<script src="../../src/braille.js"></script>
+<script type="module">
+import { HandLandmarker } from "../../app/vendor/vision_bundle.mjs";
+let seed = 7;
+const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+function lev(a, b) {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i].concat(Array(b.length).fill(0)));
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return d[a.length][b.length];
+}
+
+/* A braille "photo": dots printed or embossed, turned, blurred, unevenly lit and noisy. */
+function braillePhoto(text, o) {
+  const c = document.getElementById("c"), x = c.getContext("2d"), W = c.width, H = c.height;
+  const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, o.emb ? "#efe9dc" : "#fdfcf7"); g.addColorStop(1, o.emb ? `rgb(${200 - o.shade},${194 - o.shade},${180 - o.shade})` : `rgb(${235 - o.shade},${233 - o.shade},${226 - o.shade})`);
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  for (let i = 0; i < o.noise * 6000; i++) { x.fillStyle = `rgba(0,0,0,${rnd() * 0.1})`; x.fillRect(rnd() * W, rnd() * H, 1 + rnd() * 2, 1 + rnd() * 2); }
+  x.save(); x.translate(W / 2, H / 2); x.rotate(o.rot);
+  const d = o.d, P = d * 2.5, LP = d * 4.3, lines = text.split("\n");
+  const wmax = Math.max(...lines.map((l) => Braille.write(l).length)) * P;
+  x.translate(-wmax / 2, -(lines.length * LP) / 2 + d);
+  lines.forEach((line, li) => {
+    [...Braille.write(line)].forEach((ch, ci) => {
+      const m = ch.charCodeAt(0) - 0x2800;
+      for (let k = 0; k < 6; k++) if (m & (1 << k)) {
+        const cx = ci * P + (k >= 3 ? d : 0) + (rnd() - 0.5) * d * 0.08, cy = li * LP + (k % 3) * d + (rnd() - 0.5) * d * 0.08, r = d * o.rr;
+        if (o.emb) { x.fillStyle = "rgba(255,253,245,.95)"; x.beginPath(); x.arc(cx - r * 0.25, cy - r * 0.25, r, 0, 7); x.fill(); x.fillStyle = "rgba(70,60,40,.42)"; x.beginPath(); x.arc(cx + r * 0.35, cy + r * 0.35, r * 0.8, 0, 7); x.fill(); }
+        else { x.fillStyle = "#1c1c1c"; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill(); }
+      }
+    });
+  });
+  x.restore();
+  if (o.blur) { x.filter = `blur(${o.blur}px)`; x.drawImage(c, 0, 0); x.filter = "none"; }
+  return c;
+}
+
+function brailleBench() {
+  const pool = [];
+  DATA.phrases.forEach((p) => { pool.push(p.en, p.fil, p.bcl); });
+  ["Room 12", "Exit 3", "CR 2", "Albay 4500", "Tel 0917 555 0199"].forEach((s) => pool.push(s));
+  const rows = [], t0 = performance.now();
+  for (let i = 0; i < 300; i++) {
+    let text = pool[Math.floor(rnd() * pool.length)].replace(/[^A-Za-zÑñ0-9 ,.?!'-]/g, "");
+    if (rnd() < 0.3) text += "\n" + pool[Math.floor(rnd() * pool.length)].replace(/[^A-Za-zÑñ0-9 ,.?!'-]/g, "");
+    text = text.split("\n").map((l) => l.slice(0, 26).trim()).join("\n");
+    const o = { emb: rnd() < 0.5, rot: (rnd() - 0.5) * 2 * (6 * Math.PI / 180), d: 12 + rnd() * 8, rr: 0.26 + rnd() * 0.1, blur: rnd() * 1.6, noise: rnd(), shade: Math.floor(rnd() * 60) };
+    const c = braillePhoto(text, o), s = performance.now(), r = Braille.scan(c, 1100), ms = performance.now() - s;
+    const want = text.replace(/\s+/g, " ").trim().toLowerCase(), got = r.text.replace(/\s+/g, " ").trim().toLowerCase();
+    rows.push({ emb: o.emb, rotDeg: +(o.rot * 180 / Math.PI).toFixed(2), d: +o.d.toFixed(1), blur: +o.blur.toFixed(2), chars: want.length, errors: lev(want, got), exact: want === got, ms: +ms.toFixed(1) });
+  }
+  return rows;
+}
+
+/* Rendered hands, drawn shaded on a skin-coloured forearm, then given to MediaPipe. */
+const LETTERS = "ABCDEFGHIKLMNOPQRSTUVWXY".split(""), ORI = { C: "C", O: "C", G: "G", H: "G", P: "P", Q: "Q", X: "X" };
+const TONES = [["#f1c7a3", "#dca883", "#c99572"], ["#d9a07a", "#c98d68", "#b77a57"], ["#a8693f", "#94592f", "#7f4a24"]];
+function renderHand(sh, ori, tone, mir, tilt) {
+  const c = document.getElementById("h"), ctx = c.getContext("2d");
+  ctx.fillStyle = ["#cfd8dc", "#e6dccf", "#b9c4cc"][tone]; ctx.fillRect(0, 0, 480, 480);
+  Hand.TONES[3] = TONES[tone];
+  let fm = Hand.frame(ori);
+  const rz = (v) => [v[0] * Math.cos(tilt) - v[1] * Math.sin(tilt), v[0] * Math.sin(tilt) + v[1] * Math.cos(tilt), v[2]];
+  fm = fm.map(rz);
+  let pts = Hand.orient(Hand.local(Hand.resolve(sh)), fm); if (mir) pts = Hand.mirror(pts);
+  const u = 120, cx = 240, cy = 330, P = pts.map((q) => [cx + q[0] * u, cy - q[1] * u, q[2] * u]);
+  const dn = Hand.v.norm([pts[0][0] - pts[9][0], pts[0][1] - pts[9][1], 0]);
+  ctx.strokeStyle = TONES[tone][1]; ctx.lineCap = "round"; ctx.lineWidth = u * 0.5; ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]); ctx.lineTo(P[0][0] + dn[0] * u * 1.6, P[0][1] - dn[1] * u * 1.6); ctx.stroke();
+  Hand.drawHand(ctx, P, u, 3, {});
+  ctx.filter = "blur(1.5px)"; ctx.drawImage(c, 0, 0); ctx.filter = "none";
+  return c;
+}
+async function mediapipeBench() {
+  const hl = await HandLandmarker.createFromOptions({ wasmLoaderPath: new URL("../../app/vendor/vision_wasm_internal.js", location.href).href, wasmBinaryPath: new URL("../../app/vendor/vision_wasm_internal.wasm", location.href).href },
+    { baseOptions: { modelAssetPath: "../../app/vendor/hand_landmarker.task", delegate: "CPU" }, runningMode: "IMAGE", numHands: 2, minHandDetectionConfidence: 0.3 });
+  const rows = [], times = [];
+  for (const L of LETTERS) for (let tone = 0; tone < 3; tone++) for (const mir of [false, true]) for (const tilt of [-0.15, 0.15]) {
+    const c = renderHand(L, ORI[L] || "Fa", tone, mir, tilt), s = performance.now(), r = hl.detect(c); times.push(performance.now() - s);
+    if (!r.landmarks.length) { rows.push({ L, tone, mir, det: false }); continue; }
+    const h = Recog.hands(r, 1, false)[0], best = Recog.pick(Recog.nearest(h.f, [], h.f2), Recog.allowFor("abc"));
+    rows.push({ L, tone, mir, det: true, got: best ? best.tok.slice(2) : "-" });
+  }
+  times.sort((a, b) => a - b);
+  return { rows, msMedian: times[times.length >> 1] };
+}
+
+window.runAll = async () => {
+  seed = 7; const braille = brailleBench();
+  const ablation = {};
+  for (const [name, sm, su] of [["+ box smoothing", true, false], ["+ neighbour filter", false, true], ["+ both steps", true, true]]) {
+    Braille.opts.smooth = sm; Braille.opts.support = su; seed = 7;
+    const rows = brailleBench(), chars = rows.reduce((a, r) => a + r.chars, 0);
+    ablation[name] = { cer: rows.reduce((a, r) => a + Math.min(r.errors, r.chars), 0) / chars, exact: rows.filter((r) => r.exact).length / rows.length };
+  }
+  Braille.opts.smooth = false; Braille.opts.support = false;
+  const mp = await mediapipeBench();
+  return { generated: new Date().toISOString(), userAgent: navigator.userAgent, braille, brailleAblation: ablation, mediapipe: mp };
+};
+window.ready = true;
+</script>

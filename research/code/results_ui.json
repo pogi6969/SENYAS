@@ -1,0 +1,387 @@
+[
+ {
+  "name": "Small phone",
+  "w": 320,
+  "h": 568,
+  "loadMs": 65,
+  "layout": "bottom tabs",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "name": "Android phone",
+  "w": 360,
+  "h": 740,
+  "loadMs": 51,
+  "layout": "bottom tabs",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "name": "iPhone",
+  "w": 390,
+  "h": 844,
+  "loadMs": 54,
+  "layout": "bottom tabs",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "name": "Large phone",
+  "w": 412,
+  "h": 915,
+  "loadMs": 121,
+  "layout": "bottom tabs",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "name": "Phone, sideways",
+  "w": 844,
+  "h": 390,
+  "loadMs": 50,
+  "layout": "side rail",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "name": "Small tablet",
+  "w": 768,
+  "h": 1024,
+  "loadMs": 50,
+  "layout": "side rail",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "name": "Tablet",
+  "w": 820,
+  "h": 1180,
+  "loadMs": 65,
+  "layout": "side rail",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "name": "Tablet, sideways",
+  "w": 1180,
+  "h": 820,
+  "loadMs": 54,
+  "layout": "side rail",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "name": "Laptop",
+  "w": 1366,
+  "h": 768,
+  "loadMs": 58,
+  "layout": "side rail",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   }
+  },
+  "errors": []
+ },
+ {
+  "name": "Desktop",
+  "w": 1920,
+  "h": 1080,
+  "loadMs": 61,
+  "layout": "side rail",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 4
+   }
+  },
+  "errors": []
+ },
+ {
+  "name": "TV / 4K (scaled)",
+  "w": 2560,
+  "h": 1440,
+  "loadMs": 57,
+  "layout": "side rail",
+  "views": {
+   "translate": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "learn": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "dict": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "phrases": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   },
+   "settings": {
+    "overflowX": 0,
+    "navTabs": 5,
+    "smallTargets": 0
+   }
+  },
+  "errors": []
+ }
+]

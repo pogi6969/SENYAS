@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SENYAS · Live sign language translator</title>
+<meta name="description" content="SENYAS translates sign language live with your camera, signs your words with an avatar, and teaches sign language in English, Filipino and Bikol. Free, private and offline.">
+<meta name="theme-color" content="#0E5BD8">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="SENYAS · Live sign language translator">
+<meta property="og:description" content="Sign → words, words → sign, and lessons in English, Filipino and Bikol.">
+<meta property="og:image" content="assets/senyas-logo.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+:root{--bg:#F6F8FD;--card:#fff;--ink:#0B1630;--mut:#56637C;--line:#DDE4F0;--pri:#0E5BD8;--pri2:#0A47AA;--acc:#F2A900;--soft:#E8F0FE;--grad:linear-gradient(135deg,#0E5BD8,#7A3CFF);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0A101D;--card:#121B2D;--ink:#E8EEF9;--mut:#9AA8C0;--line:#223049;--pri:#5B9BFF;--pri2:#7FB0FF;--soft:#172645;color-scheme:dark}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.55 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif}
+a{color:var(--pri)}img,canvas{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left))}
+header.nav{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;text-decoration:none;color:var(--ink)}
+.logo{width:38px;height:38px;display:block}.logo svg{width:100%;height:100%}html,body{overflow-x:hidden}
+.links{display:flex;gap:18px;margin-left:auto}.links a{color:var(--mut);text-decoration:none;font-weight:600}.links a:hover{color:var(--ink)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.lang button{border:0;background:none;padding:6px 10px;font:600 .8rem system-ui;color:var(--mut);cursor:pointer}.lang button.on{background:var(--pri);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:13px 22px;border-radius:14px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:1rem;min-height:48px}
+.btn.pri{background:var(--pri);color:#fff}.btn.pri:hover{background:var(--pri2)}.btn.sec{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:56px 0 40px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;margin:0 0 16px;letter-spacing:-.02em}
+.hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:1.15rem;color:var(--mut);margin:0 0 26px;max-width:36ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.pills span{background:var(--soft);color:var(--pri);border-radius:999px;padding:6px 12px;font-weight:700;font-size:.85rem}
+.phone{justify-self:center;width:min(340px,86vw);aspect-ratio:9/18.5;border-radius:44px;padding:12px;background:#0B1220;box-shadow:0 30px 80px rgba(14,91,216,.25),inset 0 0 0 2px #2a3550}
+.screen{width:100%;height:100%;border-radius:34px;overflow:hidden;background:linear-gradient(180deg,#E8F0FE,#fff);position:relative;display:flex;flex-direction:column}
+.screen canvas{flex:1;width:100%}
+.screen .cap{background:#fff;margin:10px;border-radius:16px;padding:10px 14px;font-weight:800;color:#0B1630;font-size:1.25rem;min-height:56px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.screen .cap small{display:block;font-size:.7rem;color:#56637C;font-weight:700;letter-spacing:.05em}
+section{padding:56px 0}
+h2{font-size:clamp(1.6rem,3.4vw,2.3rem);margin:0 0 10px;letter-spacing:-.01em}.sub{color:var(--mut);margin:0 0 28px;max-width:60ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.f{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}.f b{display:block;font-size:1.08rem;margin:10px 0 6px}.f p{margin:0;color:var(--mut)}.f .ic{font-size:1.8rem}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.steps div{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;position:relative}.steps div::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--grad);color:#fff;font-weight:800;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line)}th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}th{background:var(--soft);font-size:.85rem;letter-spacing:.04em}
+.dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.dl .f{display:flex;flex-direction:column;gap:10px}.dl .f .btn{margin-top:auto}
+.dl ol{margin:0;padding-left:20px;color:var(--mut)}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;margin-bottom:10px}summary{font-weight:700;cursor:pointer}details p{color:var(--mut);margin:.6em 0 0}
+footer{border-top:1px solid var(--line);padding:30px 0 calc(30px + env(safe-area-inset-bottom));color:var(--mut);font-size:.9rem}footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
+footer a{color:var(--mut)}
+.ck{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:50;max-width:620px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.ck p{margin:0 0 12px;font-size:.95rem}.ck .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.ck .btn{padding:10px 16px;min-height:42px}
+.policy h3{margin:1.2em 0 .3em}.policy{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px}
+@media (max-width:860px){.hero{grid-template-columns:1fr;padding-top:28px;text-align:center}.hero p.lead{margin-left:auto;margin-right:auto}.cta,.pills{justify-content:center}.links{display:none}}
+@media (min-width:1800px){html{font-size:19px}.wrap{max-width:1500px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="#top"><span class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+  
+  <defs><linearGradient id="lg" gradientUnits="userSpaceOnUse" x1="40" y1="40" x2="470" y2="500"><stop offset="0" stop-color="#1F6BFF"/><stop offset="1" stop-color="#7A3CFF"/></linearGradient></defs>
+  <path d="M150 58h212a102 102 0 0 1 102 102v148a102 102 0 0 1-102 102H232l-104 72 22-76a102 102 0 0 1-102-98V160A102 102 0 0 1 150 58z" fill="url(#lg)"/>
+  <g fill="#fff">
+    <rect x="176" y="90" width="30" height="150" rx="15"/>
+    <rect x="264" y="112" width="28" height="128" rx="14"/>
+    <rect x="170" y="196" width="126" height="118" rx="46"/>
+  </g>
+  <path d="M190 284L128 226" stroke="#fff" stroke-width="30" stroke-linecap="round" fill="none"/>
+  <g fill="#FFC23A"><circle cx="216" cy="256" r="10"/><circle cx="216" cy="286" r="10"/><circle cx="248" cy="226" r="10"/></g>
+  <g stroke="#fff" stroke-width="18" stroke-linecap="round" fill="none"><path d="M340 196a62 62 0 0 1 0 88"/><path d="M378 160a112 112 0 0 1 0 160"/></g>
+</svg>
+</span>SENYAS</a>
+  <nav class="links"><a href="#features" data-i="nFeat">Features</a><a href="#learn" data-i="nLearn">Learn</a><a href="#download" data-i="nDl">Download</a><a href="privacy.html" data-i="nPriv">Privacy</a></nav>
+  <div class="lang" role="group" aria-label="Language"><button data-l="en">EN</button><button data-l="fil">FIL</button><button data-l="bcl">BIK</button></div>
+</div></header>
+
+<main id="top">
+<div class="wrap hero">
+  <div>
+    <h1 data-i="h1">Sign language, <span>translated live.</span></h1>
+    <p class="lead" data-i="lead">Point your camera at signing hands and SENYAS writes and speaks the words. Type or talk and the SENYAS avatar signs it back. Learn it all in English, Filipino and Bikol.</p>
+    <div class="cta">
+      <a class="btn pri" id="apk" href="#download"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span data-i="getApp">Download the app</span></a>
+      <a class="btn sec" href="app/"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg><span data-i="openWeb">Open in browser</span></a>
+    </div>
+    <div class="pills"><span>English</span><span>Filipino</span><span>Bikol</span><span>FSL · ASL</span><span data-i="offline">Works offline</span></div>
+  </div>
+  <div class="phone"><div class="screen"><canvas id="demo"></canvas><div class="cap"><small id="capLang">ENGLISH</small><span id="capTxt">Hello</span></div></div></div>
+</div>
+
+<section id="features"><div class="wrap">
+  <h2 data-i="fTitle">Everything in one app</h2>
+  <p class="sub" data-i="fSub">Two-way translation for Deaf and hearing people, and a full course to learn signing.</p>
+  <div class="grid">
+    <div class="f"><span class="ic">📷</span><b data-i="f1">Live sign → words</b><p data-i="f1d">The camera reads fingerspelling A–Z (with Ñ), numbers 0–10 and everyday signs like hello, thank you, please, help and I love you.</p></div>
+    <div class="f"><span class="ic">🔊</span><b data-i="f2">Read aloud, on or off</b><p data-i="f2d">SENYAS can say each recognised word out loud in English, Filipino or Bikol. Switch it on or off with one tap, and choose whether letters are spoken too.</p></div>
+    <div class="f"><span class="ic">🧑‍🦱</span><b data-i="f3">Words & voice → sign</b><p data-i="f3d">Type or speak a sentence and the 3D avatar signs it, fingerspelling names and new words. Slow it down to follow.</p></div>
+    <div class="f"><span class="ic">⠃</span><b data-i="f9">Braille reader</b><p data-i="f9d">Upload a photo of braille or scan it live with the camera. SENYAS reads Grade 1 braille (with Ñ), shows the text and can say it aloud. Typed words are shown in braille too.</p></div>
+    <div class="f"><span class="ic">🎓</span><b data-i="f4">Lessons that check you</b><p data-i="f4d">Alphabet, numbers, greetings, family, feelings, questions and emergencies, with quizzes, flashcards, games and camera practice.</p></div>
+    <div class="f"><span class="ic">🗣️</span><b data-i="f5">English, Filipino, Bikol</b><p data-i="f5d">The whole app, every word and the phrasebook come in three languages, with Bikol words from Central Bikol.</p></div>
+    <div class="f"><span class="ic">✋</span><b data-i="f6">Teach it your signs</b><p data-i="f6d">Record any sign three times — a local FSL sign, a name sign — and SENYAS reads it from then on.</p></div>
+    <div class="f"><span class="ic">🔒</span><b data-i="f7">Private and offline</b><p data-i="f7d">Video never leaves your phone. After the first start it works with no signal, which matters in an emergency.</p></div>
+    <div class="f"><span class="ic">📱</span><b data-i="f8">Fits every screen</b><p data-i="f8d">Phones, tablets, laptops and TVs, upright or sideways. On big screens both directions sit side by side as a conversation.</p></div>
+  </div>
+</div></section>
+
+<section id="learn"><div class="wrap">
+  <h2 data-i="hTitle">How it works</h2>
+  <div class="steps">
+    <div><b data-i="s1">Start the camera</b><p class="sub" data-i="s1d">Hold your hand in view. SENYAS tracks 21 points on each hand, on your device.</p></div>
+    <div><b data-i="s2">Sign</b><p class="sub" data-i="s2d">Hold a letter for a moment, or make a word sign. The words appear and, if you like, are read aloud.</p></div>
+    <div><b data-i="s3">Answer back</b><p class="sub" data-i="s3d">The hearing person types or speaks, and the avatar signs the reply.</p></div>
+  </div>
+  <h2 style="margin-top:40px" data-i="langTitle">Three languages, one sign</h2>
+  <table><thead><tr><th>English</th><th>Filipino</th><th>Bikol</th></tr></thead><tbody id="langRows"></tbody></table>
+</div></section>
+
+<section id="download"><div class="wrap">
+  <h2 data-i="dTitle">Get SENYAS</h2>
+  <p class="sub" data-i="dSub">Free. No account. Pick your device.</p>
+  <div class="dl">
+    <div class="f"><span class="ic">🤖</span><b>Android</b><p data-i="dAnd">Download the app file and open it to install. Allow “install unknown apps” for your browser if asked.</p><a class="btn pri" id="apkBtn" href="https://github.com/pogi6969/KAMAY/releases/latest/download/SENYAS.apk"><span data-i="dApk">Download APK</span></a></div>
+    <div class="f"><span class="ic">🍎</span><b>iPhone & iPad</b><ol><li data-i="i1">Open this page in Safari.</li><li data-i="i2">Tap Share, then “Add to Home Screen”.</li><li data-i="i3">Open SENYAS from your home screen.</li></ol><a class="btn sec" href="app/"><span data-i="openWeb">Open in browser</span></a></div>
+    <div class="f"><span class="ic">💻</span><b data-i="dPc">Computer & Chromebook</b><p data-i="dPcD">Install it from Chrome or Edge as an app, or just use it in the browser.</p><button class="btn pri" id="installBtn" hidden><span data-i="dInst">Install app</span></button><a class="btn sec" href="app/"><span data-i="openWeb">Open in browser</span></a></div>
+    <div class="f"><span class="ic">📦</span><b data-i="dFile">One-file version</b><p data-i="dFileD">The whole app in one HTML file to keep or share. It needs internet the first time to fetch hand tracking.</p><a class="btn sec" href="app/index.html" download="SENYAS.html"><span data-i="dFileB">Download file</span></a></div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>FAQ</h2>
+  <details><summary data-i="q1">Which sign language does SENYAS use?</summary><p data-i="a1">The one-handed manual alphabet and core everyday signs shared by Filipino Sign Language (FSL) and American Sign Language (ASL). Signs differ by region, so SENYAS lets you teach it your own.</p></details>
+  <details><summary data-i="q2">Is my camera recorded?</summary><p data-i="a2">No. Video is processed on your device and never uploaded or saved. See the privacy policy.</p></details>
+  <details><summary data-i="q3">Does it need internet?</summary><p data-i="a3">Only the first time, to download it. After that it works offline. Voice typing may need internet, depending on your phone.</p></details>
+  <details><summary data-i="q4">Can it replace an interpreter?</summary><p data-i="a4">No. SENYAS helps with everyday talk and learning. For hospitals, courts and emergencies, ask for a qualified FSL interpreter.</p></details>
+</div></section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 SENYAS · Hand tracking by MediaPipe (Apache-2.0)</span><span><a href="privacy.html" data-i="nPriv">Privacy</a> · <a href="#" id="ckOpen" data-i="ckSet">Cookie settings</a> · <a href="app/">App</a></span></div></footer>
+
+<div class="ck" id="ck" hidden role="dialog" aria-label="Cookies">
+  <p><b data-i="ckT">Cookies</b> — <span data-i="ckD">SENYAS uses one essential cookie to remember this choice. With your OK it also remembers your language. No ads, no analytics, no tracking.</span> <a href="privacy.html" data-i="nPriv">Privacy</a></p>
+  <div class="row"><button class="btn sec" id="ckNo" data-i="ckNo">Essential only</button><button class="btn pri" id="ckYes" data-i="ckYes">Accept</button></div>
+</div>
+<script>/* SENYAS hand: a 3D hand built from joint angles. It draws the signing avatar and makes the
+   built-in examples the live translator compares camera hands against.
+   Space: x to the viewer's right, y up, z toward the viewer. Hands are built as a right hand;
+   a left hand is the mirror image (x -> -x). Points follow the MediaPipe order (0 wrist,
+   1-4 thumb, 5-8 index, 9-12 middle, 13-16 ring, 17-20 pinky). */
+var Hand = (function () {
+  var RAD = Math.PI / 180;
+  function add(a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; }
+  function sub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function mul(a, s) { return [a[0] * s, a[1] * s, a[2] * s]; }
+  function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  function cross(a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+  function len(a) { return Math.sqrt(dot(a, a)); }
+  function norm(a) { var l = len(a) || 1; return [a[0] / l, a[1] / l, a[2] / l]; }
+  function mix(a, b, t) { return a + (b - a) * t; }
+  function mixV(a, b, t) { return [mix(a[0], b[0], t), mix(a[1], b[1], t), mix(a[2], b[2], t)]; }
+  function avg(a, b) { return mixV(a, b, 0.5); }
+
+  var MCP = [[0.30, 0.95, 0], [0.08, 1.0, 0], [-0.13, 0.95, 0], [-0.32, 0.85, 0]];
+  var SEG = [[0.45, 0.27, 0.22], [0.50, 0.31, 0.23], [0.47, 0.29, 0.22], [0.36, 0.21, 0.19]];
+  var BASE = [5, 0, -5, -10];
+  var CMC = [0.21, 0.2, 0.08], TH = [0.42, 0.33, 0.27];
+  var CURL = {
+    x: [0, 0, 0], c: [88, 100, 65], h: [8, 95, 75], b: [85, 5, 5], r: [28, 45, 30], o: [45, 65, 40],
+    e: [62, 105, 72], m: [72, 85, 40], k: [45, 0, 0], f: [55, 22, 12], s: [12, 18, 10], t: [70, 95, 55], w: [25, 20, 12]
+  };
+
+  /* Handshapes. f: index, middle, ring, pinky (a CURL letter or [mcp, pip, dip]); s: extra
+     spread in degrees (toward the thumb is positive); t: where the thumb tip goes. */
+  var SHAPES = {
+    A: { f: "cccc", t: "up" }, B: { f: "xxxx", t: "across" }, C: { f: "rrrr", t: "c" },
+    D: { f: "xooo", t: "tm" }, E: { f: "eeee", t: "e" }, F: { f: "oxxx", s: [0, 3, -3, -8], t: "ti" },
+    G: { f: "xccc", t: "g" }, H: { f: "xxcc", s: [-2, 2, 0, 0], t: "hold" }, I: { f: "cccx", s: [0, 0, 0, -6], t: "fist" },
+    K: { f: ["x", "k", "c", "c"], s: [6, -10, 0, 0], t: "kmid" }, L: { f: "xccc", t: "out" },
+    M: { f: "mmmc", t: "m" }, N: { f: "mmcc", t: "n" }, O: { f: "oooo", t: "ti" },
+    R: { f: [[0, 0, 0], [14, 0, 0], "c", "c"], s: [-9, 13, 0, 0], t: "hold" }, S: { f: "cccc", t: "fist" },
+    T: { f: ["t", "c", "c", "c"], t: "between" }, U: { f: "xxcc", s: [-3, 3, 0, 0], t: "hold" },
+    V: { f: "xxcc", s: [9, -9, 0, 0], t: "hold" }, W: { f: "xxxc", s: [9, 0, -9, 0], t: "tp" },
+    X: { f: "hccc", t: "fist" }, Y: { f: "cccx", s: [0, 0, 0, -18], t: "out" }, ONE: { f: "xccc", t: "hold" },
+    THREE: { f: "xxcc", s: [9, -9, 0, 0], t: "out" }, FOUR: { f: "xxxx", s: [10, 2, -6, -14], t: "across" },
+    FIVE: { f: "xxxx", s: [14, 2, -9, -20], t: "out" }, SEVEN: { f: ["x", "x", "o", "x"], s: [8, 0, -4, -14], t: "tr" },
+    EIGHT: { f: ["x", "o", "x", "x"], s: [8, 0, -6, -14], t: "tm" }, ILY: { f: "xccx", s: [4, 0, 0, -14], t: "out" },
+    THUMB: { f: "cccc", t: "thumb" }, FLAT: { f: "xxxx", t: "side" }, FLATO: { f: "ffff", t: "tm" },
+    BENT: { f: "bbbb", t: "side" }, CLAW: { f: [[30, 60, 40], [30, 60, 40], [30, 60, 40], [30, 60, 40]], s: [14, 2, -9, -20], t: "claw" },
+    RELAX: { f: "wwww", s: [4, 1, -3, -6], t: "relax" }, HOOK2: { f: "hhcc", s: [6, -6, 0, 0], t: "hold" },
+    PINCH: { f: ["o", "x", "x", "x"], s: [0, 3, -3, -8], t: "ti" }, BENTV: { f: "hhcc", s: [9, -9, 0, 0], t: "hold" }
+  };
+  SHAPES.J = SHAPES.I; SHAPES.Z = SHAPES.ONE; SHAPES.P = SHAPES.K; SHAPES.Q = SHAPES.G;
+  SHAPES.TWO = SHAPES.V; SHAPES.SIX = SHAPES.W; SHAPES.NINE = SHAPES.F; SHAPES.ZERO = SHAPES.O; SHAPES.OK = SHAPES.F;
+
+  /* Orientations: the direction the fingers point and the direction the palm faces. */
+  var ORI = {
+    F: [[0, 1, 0], [0, 0, 1]], Fa: [[0, 1, 0], [0.4, 0, 0.92]], B: [[0, 1, 0], [0, 0, -1]],
+    C: [[0, 1, 0], [0.82, 0, 0.57]], S: [[0, 1, 0], [1, 0, 0.15]], G: [[1, 0, 0.15], [0, 0, -1]],
+    Gd: [[-1, 0, 0.15], [0, 0, -1]], P: [[0.15, -0.6, 0.8], [0.2, -0.8, -0.6]], Q: [[0.3, -0.92, 0.25], [0, 0.2, -1]],
+    U: [[0, 0.25, 1], [0, 1, -0.25]], D: [[0, -0.2, 1], [0, -1, -0.2]], X: [[0, 1, 0], [0.7, 0, 0.7]],
+    I: [[1, 0.3, 0], [0, 0, -1]], Iu: [[0.9, 0.4, 0], [0, 1, 0]], Id: [[0.9, 0.3, 0], [0, -1, 0]],
+    T: [[0.3, 1, 0], [0.8, 0, 0.6]], Dn: [[0, -1, 0.1], [0, 0, -1]], Df: [[0, -1, 0.1], [0, 0, 1]],
+    Fw: [[0, 0.1, 1], [1, 0, 0]], Ul: [[0.9, 0.2, 0.3], [0, 1, 0]], Bi: [[0.5, 1, 0], [0, 0, -1]],
+    Fi: [[0.4, 1, 0], [0, 0, 1]], Si: [[0.6, 0.8, 0.2], [0.8, -0.5, 0.2]], Up: [[0, 1, 0.2], [0, 0.2, -1]]
+  };
+
+  function curlOf(c) { return typeof c === "string" ? CURL[c] : c; }
+
+  function finger(i, c, s) {
+    var a = (BASE[i] + (s || 0)) * RAD, u = [Math.sin(a), Math.cos(a), 0], z = [0, 0, 1];
+    var p = MCP[i], out = [p], th = 0;
+    for (var j = 0; j < 3; j++) {
+      th += c[j] * RAD;
+      p = add(p, mul(add(mul(u, Math.cos(th)), mul(z, Math.sin(th))), SEG[i][j]));
+      out.push(p);
+    }
+    return out;
+  }
+
+  /* The thumb is placed by reaching its tip to a target (FABRIK), starting from a natural bow. */
+  function thumb(target) {
+    var b = CMC, d = sub(target, b), dist = len(d), dn = norm(d), tot = TH[0] + TH[1] + TH[2];
+    if (dist >= tot - 1e-3) return [b, add(b, mul(dn, TH[0])), add(b, mul(dn, TH[0] + TH[1])), add(b, mul(dn, tot))];
+    var j1 = add(b, mul(norm(add(mul(dn, 0.55), [0.55, 0.35, -0.05])), TH[0]));
+    var j2 = add(j1, mul(norm(add(mul(dn, 0.9), [0.25, 0.15, 0.05])), TH[1]));
+    var j3 = add(j2, mul(dn, TH[2]));
+    for (var k = 0; k < 14; k++) {
+      j3 = target;
+      j2 = add(j3, mul(norm(sub(j2, j3)), TH[2]));
+      j1 = add(j2, mul(norm(sub(j1, j2)), TH[1]));
+      j1 = add(b, mul(norm(sub(j1, b)), TH[0]));
+      j2 = add(j1, mul(norm(sub(j2, j1)), TH[1]));
+      j3 = add(j2, mul(norm(sub(j3, j2)), TH[2]));
+    }
+    return [b, j1, j2, j3];
+  }
+
+  function thumbTarget(t, F) {
+    if (Array.isArray(t)) return t;
+    var tip = function (i, o) { return add(F[i][3], o || [0, -0.02, 0.035]); };
+    switch (t) {
+      case "out": return add(CMC, [0.8, 0.48, 0.1]);
+      case "thumb": return add(CMC, [0.98, 0.3, 0.12]);
+      case "up": return [0.45, 0.98, 0.24];
+      case "side": return [0.4, 0.72, 0.04];
+      case "relax": return [0.48, 0.78, 0.2];
+      case "g": return [0.44, 0.98, 0.1];
+      case "across": return [-0.1, 0.62, 0.16];
+      case "fist": return add(F[1][1], [-0.06, -0.22, 0.15]);
+      case "between": return add(avg(F[0][1], F[1][1]), [0, 0, 0.09]);
+      case "n": return add(avg(MCP[1], MCP[2]), [0, -0.2, 0.36]);
+      case "m": return add(avg(MCP[2], MCP[3]), [0, -0.2, 0.33]);
+      case "e": return [0.0, 0.6, 0.2];
+      case "hold": return add(F[2][1], [0.07, -0.08, 0.1]);
+      case "kmid": return add(F[1][1], [0.06, -0.02, 0.05]);
+      case "c": return add(F[0][3], [-0.06, -0.72, 0]);
+      case "claw": return add(CMC, [0.62, 0.52, 0.3]);
+      case "ti": return tip(0); case "tm": return tip(1); case "tr": return tip(2); case "tp": return tip(3);
+    }
+    return add(CMC, [0.6, 0.5, 0.1]);
+  }
+
+  /* Resolve a shape (by name or object) to numbers that can be blended frame to frame. */
+  function resolve(shape) {
+    var sh = typeof shape === "string" ? SHAPES[shape] : shape;
+    var fl = [], sp = [], F = [];
+    for (var i = 0; i < 4; i++) {
+      var c = curlOf(typeof sh.f === "string" ? sh.f[i] : sh.f[i]);
+      fl.push(c.slice()); sp.push(sh.s ? sh.s[i] : 0);
+      F.push(finger(i, c, sp[i]));
+    }
+    return { fl: fl, sp: sp, tt: thumbTarget(sh.t, F) };
+  }
+
+  function blend(a, b, t) {
+    var fl = [], sp = [];
+    for (var i = 0; i < 4; i++) {
+      fl.push([mix(a.fl[i][0], b.fl[i][0], t), mix(a.fl[i][1], b.fl[i][1], t), mix(a.fl[i][2], b.fl[i][2], t)]);
+      sp.push(mix(a.sp[i], b.sp[i], t));
+    }
+    return { fl: fl, sp: sp, tt: mixV(a.tt, b.tt, t) };
+  }
+
+  /* Local points (palm facing +z, fingers +y): the 21 landmarks plus the two wrist edges. */
+  function local(r) {
+    var pts = [[0, 0, 0]], T = thumb(r.tt);
+    for (var j = 0; j < 4; j++) pts.push(T[j]);
+    for (var i = 0; i < 4; i++) { var F = finger(i, r.fl[i], r.sp[i]); for (var k = 0; k < 4; k++) pts.push(F[k]); }
+    pts.push([0.22, 0.02, 0.02], [-0.21, 0.05, 0.02]);
+    return pts;
+  }
+
+  function frame(o) {
+    var v = typeof o === "string" ? ORI[o] : o;
+    var y = norm(v[0]), z = v[1];
+    z = norm(sub(z, mul(y, dot(z, y))));
+    return [cross(y, z), y, z];
+  }
+  function blendFrame(a, b, t) {
+    var y = norm(mixV(a[1], b[1], t)), z = mixV(a[2], b[2], t);
+    if (len(z) < 1e-3) z = a[0];
+    z = norm(sub(z, mul(y, dot(z, y))));
+    return [cross(y, z), y, z];
+  }
+  function orient(pts, f) {
+    return pts.map(function (p) { return add(add(mul(f[0], p[0]), mul(f[1], p[1])), mul(f[2], p[2])); });
+  }
+  function mirror(pts) { return pts.map(function (p) { return [-p[0], p[1], p[2]]; }); }
+
+  function build(shape, ori) { return orient(local(resolve(shape)), frame(ori || "F")); }
+
+  /* ---------- Features (shared by the templates and the camera) ---------- */
+  /* Shape: fingertip and middle-joint positions in the palm's own frame, so they hold however the
+     hand turns; orientation: which way the fingers point and the palm faces, for G/H/P/Q. */
+  function features(p) {
+    var W = p[0], Y = sub(p[9], W), s = len(Y) || 1;
+    Y = mul(Y, 1 / s);
+    var Z = norm(cross(sub(p[5], p[17]), Y)), X = cross(Y, Z);
+    function loc(q) { var d = sub(q, W); return [dot(d, X) / s, dot(d, Y) / s, dot(d, Z) / s]; }
+    var f = [], i, tips = [4, 8, 12, 16, 20], mids = [3, 6, 10, 14, 18];
+    for (i = 0; i < 5; i++) f.push.apply(f, loc(p[tips[i]]));
+    for (i = 0; i < 5; i++) f.push.apply(f, loc(p[mids[i]]).map(function (x) { return x * 0.7; }));
+    for (i = 1; i < 5; i++) f.push(1.4 * len(sub(p[4], p[tips[i]])) / s);
+    for (i = 1; i < 4; i++) f.push(1.2 * len(sub(p[tips[i]], p[tips[i + 1]])) / s);
+    f.push(Y[0] * 0.9, Y[1] * 0.9, Z[2] * 0.5, Z[0] * 0.4);
+    return f;
+  }
+  function dist(a, b) { var d = 0; for (var i = 0; i < a.length; i++) { var e = a[i] - b[i]; d += e * e; } return Math.sqrt(d); }
+
+  /* Built-in examples: each sign's shape, turned and loosened a little at random. */
+  function rng(seed) { return function () { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }; }
+  function rotate(f, ax, ay, az) {
+    function rx(v) { var c = Math.cos(ax), s = Math.sin(ax); return [v[0], v[1] * c - v[2] * s, v[1] * s + v[2] * c]; }
+    function ry(v) { var c = Math.cos(ay), s = Math.sin(ay); return [v[0] * c + v[2] * s, v[1], -v[0] * s + v[2] * c]; }
+    function rz(v) { var c = Math.cos(az), s = Math.sin(az); return [v[0] * c - v[1] * s, v[0] * s + v[1] * c, v[2]]; }
+    return f.map(function (v) { return rz(rx(ry(v))); });
+  }
+  function variants(shape, ori, n, seed) {
+    var r = rng(seed || 7), base = resolve(shape), out = [];
+    for (var k = 0; k < n; k++) {
+      var j = k === 0 ? 0 : 1;
+      var q = { fl: base.fl.map(function (c) { return c.map(function (a) { return Math.max(0, a + j * (r() - 0.5) * 16); }); }),
+        sp: base.sp.map(function (a) { return a + j * (r() - 0.5) * 6; }),
+        tt: add(base.tt, [j * (r() - 0.5) * 0.08, j * (r() - 0.5) * 0.08, j * (r() - 0.5) * 0.08]) };
+      var f = rotate(frame(ori), j * (r() - 0.5) * 0.6, j * (r() - 0.5) * 0.8, j * (r() - 0.5) * 0.5);
+      out.push(features(orient(local(q), f).slice(0, 21)));
+    }
+    return out;
+  }
+
+  /* ---------- Drawing ---------- */
+  var TONES = [["#F1C7A3", "#D9A47F", "#7A4A33"], ["#E0A57A", "#C4865C", "#6B3E2A"], ["#B9774D", "#9C5F3A", "#4E2A18"], ["#8A5236", "#6E3F28", "#33190D"]];
+  var WID = [0.2, 0.205, 0.195, 0.17], THW = 0.22;
+
+  /* P: 23 points already in screen space (x right, y down, z toward the viewer, in px); u: px per palm. */
+  function drawHand(ctx, P, u, tone, nails) {
+    var col = TONES[tone || 0], items = [], ow = Math.max(1.2, u * 0.035);
+    function seg(a, b, w, kind) { items.push({ z: (P[a][2] + P[b][2]) / 2 + (kind === 2 ? 0.02 * u : 0), a: a, b: b, w: w * u, k: kind }); }
+    var palm = [21, 1, 5, 9, 13, 17, 22];
+    var pz = 0; palm.forEach(function (i) { pz += P[i][2]; }); pz /= palm.length;
+    items.push({ z: pz - 0.01 * u, palm: palm });
+    seg(1, 2, THW, 0); seg(2, 3, THW * 0.95, 1); seg(3, 4, THW * 0.9, 2);
+    for (var f = 0; f < 4; f++) { var b = 5 + f * 4; seg(b, b + 1, WID[f], 0); seg(b + 1, b + 2, WID[f] * 0.95, 1); seg(b + 2, b + 3, WID[f] * 0.9, 2); }
+    items.sort(function (a, b) { return a.z - b.z; });
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    items.forEach(function (it) {
+      if (it.palm) {
+        ctx.beginPath();
+        it.palm.forEach(function (i, n) { if (n) ctx.lineTo(P[i][0], P[i][1]); else ctx.moveTo(P[i][0], P[i][1]); });
+        ctx.closePath();
+        ctx.strokeStyle = col[2]; ctx.lineWidth = u * 0.24 + ow * 2; ctx.stroke();
+        ctx.fillStyle = col[0]; ctx.fill(); ctx.strokeStyle = col[0]; ctx.lineWidth = u * 0.24; ctx.stroke();
+        return;
+      }
+      var A = P[it.a], B = P[it.b];
+      ctx.beginPath(); ctx.moveTo(A[0], A[1]); ctx.lineTo(B[0] + 0.01, B[1]);
+      ctx.strokeStyle = col[2]; ctx.lineWidth = it.w + ow * 2; ctx.stroke();
+      ctx.strokeStyle = it.k === 0 ? col[1] : col[0]; ctx.lineWidth = it.w; ctx.stroke();
+      if (it.k === 0) { ctx.strokeStyle = col[0]; ctx.lineWidth = it.w * 0.7; ctx.stroke(); }
+      if (it.k === 2 && nails && nails[it.b]) {
+        var n = nails[it.b];
+        ctx.beginPath(); ctx.moveTo(mix(A[0], B[0], 0.45) + n[0], mix(A[1], B[1], 0.45) + n[1]); ctx.lineTo(B[0] + n[0], B[1] + n[1]);
+        ctx.strokeStyle = "rgba(255,240,230,0.7)"; ctx.lineWidth = it.w * 0.45; ctx.stroke();
+      }
+    });
+  }
+
+  /* World hand points -> screen points; returns the nail offsets for fingers whose backs face us. */
+  function toScreen(pts, frameM, cx, cy, u) {
+    var P = pts.map(function (p) { return [cx + p[0] * u, cy - p[1] * u, p[2] * u]; });
+    var back = mul(frameM[2], -1), nails = {};
+    if (back[2] > 0.25) [4, 8, 12, 16, 20].forEach(function (i) { nails[i] = [back[0] * u * 0.05, -back[1] * u * 0.05]; });
+    return { P: P, nails: nails };
+  }
+
+  function drawStatic(ctx, shape, ori, cx, cy, u, opt) {
+    opt = opt || {};
+    var fm = frame(ori || "F"), pts = orient(local(resolve(shape)), fm);
+    if (opt.left) { pts = mirror(pts); fm = [mul(fm[0], -1), [-fm[1][0], fm[1][1], fm[1][2]], [-fm[2][0], fm[2][1], fm[2][2]]]; }
+    var mid = mul(add(pts[0], pts[9]), 0.5), s = toScreen(pts.map(function (p) { return sub(p, [mid[0], mid[1] - 0.15, 0]); }), fm, cx, cy, u);
+    drawHand(ctx, s.P, u, opt.tone, s.nails);
+  }
+
+  return {
+    SHAPES: SHAPES, ORI: ORI, resolve: resolve, blend: blend, local: local, frame: frame, blendFrame: blendFrame,
+    orient: orient, mirror: mirror, build: build, features: features, dist: dist, variants: variants,
+    drawHand: drawHand, toScreen: toScreen, drawStatic: drawStatic, TONES: TONES,
+    v: { add: add, sub: sub, mul: mul, dot: dot, cross: cross, len: len, norm: norm, mixV: mixV, mix: mix }
+  };
+})();
+if (typeof module !== "undefined") module.exports = Hand;
+
+/* SENYAS avatar: a signer drawn on a canvas, moving two hands through keyframes.
+   A sign is written as one or two tracks (right; left), each a list of steps
+   "SHAPE.PLACE.FACING[.ms]". PLACE may end in :t (fingertips touch), :i (index tip), :th (thumb tip),
+   and @dx,dy,dz to nudge it. Left-track places are mirrored, so "n" is the left hand's own neutral
+   space; a leading ~ puts it on the other side. */
+var Avatar = (function () {
+  var V = Hand.v;
+  var LOC = {
+    forehead: [0, 1.86, 0.42], temple: [-0.36, 1.76, 0.3], eye: [-0.15, 1.62, 0.45], nose: [0, 1.5, 0.52],
+    mouth: [0, 1.33, 0.48], chin: [0, 1.13, 0.44], cheek: [-0.32, 1.4, 0.36], ear: [-0.47, 1.55, 0.15],
+    neck: [0, 0.95, 0.32], shoulder: [-0.62, 0.78, 0.22], chest: [0, 0.48, 0.36], chestR: [-0.3, 0.45, 0.36],
+    heart: [0.24, 0.5, 0.36], stomach: [0, -0.05, 0.36], n: [-0.34, 0.25, 0.62], nh: [-0.4, 0.72, 0.62],
+    nc: [0, 0.3, 0.7], nL: [0.3, 0.18, 0.6], fwd: [-0.3, 0.55, 1.15], fwdlow: [-0.25, 0.05, 1.05],
+    side: [-0.85, 0.5, 0.45], up: [-0.42, 1.5, 0.6], down: [-0.3, -0.35, 0.6], fs: [-0.5, 0.82, 0.62],
+    rest: [-0.64, -0.98, 0.25], head: [0, 2.1, 0.2]
+  };
+  Hand.ORI.Hang = [[0.08, -1, 0.05], [1, 0, 0.2]];
+  var SCALE = 0.38;
+
+  function parseLoc(s) {
+    var mir = s[0] === "~"; if (mir) s = s.slice(1);
+    var off = [0, 0, 0], at = s.indexOf("@");
+    if (at >= 0) { off = s.slice(at + 1).split(",").map(Number); s = s.slice(0, at); }
+    var parts = s.split(":"), p = (LOC[parts[0]] || LOC.n).slice();
+    p = V.add(p, [off[0] || 0, off[1] || 0, off[2] || 0]);
+    if (mir) p[0] = -p[0];
+    return { p: p, c: parts[1] || "" };
+  }
+  function parseStep(s) {
+    var a = s.split(".");
+    var ms = a.length > 3 && /^\d+$/.test(a[a.length - 1]) ? +a.pop() : 0;
+    var loc = parseLoc(a.slice(1, a.length - 1).join(".") || "n");
+    return { shape: a[0], loc: loc.p, c: loc.c, ori: a[a.length - 1] || "F", ms: ms };
+  }
+  function parse(spec) {
+    var t = spec.split(";").map(function (x) { return x.trim().split(/\s+/).filter(Boolean).map(parseStep); });
+    return { R: t[0] || [], L: t[1] || [] };
+  }
+
+  /* Fingerspelling: each letter is a short spec at the fingerspelling place. */
+  var LETTER_ORI = { C: "C", O: "C", G: "G", H: "G", P: "P", Q: "Q", X: "X" };
+  function letterSpec(ch) {
+    ch = ch.toUpperCase();
+    var shape = ch, o = LETTER_ORI[ch] || "Fa";
+    if (ch === "J") return "I.fs.Fa I.fs@0.02,-0.16,0.Fa.250 I.fs@0.16,-0.24,0.B.300";
+    if (ch === "Z") return "ONE.fs@-0.12,0.1,0.Fa ONE.fs@0.14,0.1,0.Fa.250 ONE.fs@-0.12,-0.14,0.Fa.250 ONE.fs@0.14,-0.14,0.Fa.250";
+    if (ch === "Ñ") return "N.fs.Fa N.fs@0.07,0,0.Fa.150 N.fs@-0.05,0,0.Fa.150 N.fs@0.05,0,0.Fa.150";
+    if (!Hand.SHAPES[shape]) return null;
+    return shape + ".fs." + o;
+  }
+  var NUM = ["ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE"];
+  function numberSpec(n) {
+    if (n === 10) return "THUMB.fs.G THUMB.fs@0.05,0,0.I.200 THUMB.fs.G.200 THUMB.fs@0.05,0,0.I.200";
+    return NUM[n] + ".fs." + (n === 0 ? "C" : "Fa");
+  }
+
+  /* ---------- drawing ---------- */
+  function drawBody(ctx, o, face, t) {
+    var k = o.k, X = function (x) { return o.cx + x * k; }, Y = function (y) { return o.cy - y * k; };
+    var skin = Hand.TONES[o.tone || 0];
+    ctx.save();
+    ctx.fillStyle = o.shirt || "#1E5BD8";
+    ctx.beginPath();
+    ctx.moveTo(X(-0.95), Y(-1.6)); ctx.lineTo(X(-0.98), Y(0.42));
+    ctx.quadraticCurveTo(X(-0.95), Y(0.85), X(-0.55), Y(0.9));
+    ctx.lineTo(X(0.55), Y(0.9)); ctx.quadraticCurveTo(X(0.95), Y(0.85), X(0.98), Y(0.42));
+    ctx.lineTo(X(0.95), Y(-1.6)); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = skin[1]; ctx.fillRect(X(-0.13), Y(1.2), 0.26 * k, 0.36 * k);
+    ctx.beginPath(); ctx.moveTo(X(-0.2), Y(0.9)); ctx.lineTo(X(0), Y(0.66)); ctx.lineTo(X(0.2), Y(0.9)); ctx.fillStyle = skin[1]; ctx.fill();
+    ctx.fillStyle = o.hair || "#2A1B14";
+    ctx.beginPath(); ctx.ellipse(X(0), Y(1.62), 0.45 * k, 0.52 * k, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = skin[0];
+    ctx.beginPath(); ctx.ellipse(X(0), Y(1.52), 0.38 * k, 0.46 * k, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(X(-0.39), Y(1.52), 0.07 * k, 0.11 * k, 0, 0, Math.PI * 2); ctx.ellipse(X(0.39), Y(1.52), 0.07 * k, 0.11 * k, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = o.hair || "#2A1B14";
+    ctx.beginPath(); ctx.moveTo(X(-0.4), Y(1.62)); ctx.quadraticCurveTo(X(-0.38), Y(2.08), X(0.05), Y(2.05));
+    ctx.quadraticCurveTo(X(0.42), Y(2.02), X(0.4), Y(1.62)); ctx.quadraticCurveTo(X(0.2), Y(1.86), X(-0.4), Y(1.62)); ctx.fill();
+    var blink = (t % 4200) < 140, brow = face === "yn" ? 0.06 : face === "wh" ? -0.03 : 0;
+    ctx.strokeStyle = "#2A1B14"; ctx.lineCap = "round"; ctx.lineWidth = Math.max(1.5, 0.035 * k);
+    [-1, 1].forEach(function (s) {
+      ctx.beginPath();
+      if (face === "wh") { ctx.moveTo(X(s * 0.24), Y(1.74 + brow)); ctx.lineTo(X(s * 0.07), Y(1.7 + brow)); }
+      else if (face === "sad") { ctx.moveTo(X(s * 0.24), Y(1.68)); ctx.lineTo(X(s * 0.07), Y(1.74)); }
+      else { ctx.moveTo(X(s * 0.24), Y(1.71 + brow)); ctx.quadraticCurveTo(X(s * 0.15), Y(1.76 + brow), X(s * 0.06), Y(1.72 + brow)); }
+      ctx.stroke();
+      ctx.beginPath();
+      if (blink) { ctx.moveTo(X(s * 0.2), Y(1.6)); ctx.lineTo(X(s * 0.09), Y(1.6)); ctx.stroke(); }
+      else { ctx.fillStyle = "#2A1B14"; ctx.ellipse(X(s * 0.145), Y(1.6), 0.04 * k, 0.05 * k, 0, 0, Math.PI * 2); ctx.fill(); }
+    });
+    ctx.strokeStyle = skin[2]; ctx.lineWidth = Math.max(1.2, 0.025 * k);
+    ctx.beginPath(); ctx.moveTo(X(0), Y(1.55)); ctx.lineTo(X(-0.03), Y(1.44)); ctx.lineTo(X(0.02), Y(1.43)); ctx.stroke();
+    ctx.strokeStyle = "#8A3B32"; ctx.lineWidth = Math.max(1.5, 0.03 * k); ctx.beginPath();
+    if (face === "o") { ctx.ellipse(X(0), Y(1.3), 0.05 * k, 0.06 * k, 0, 0, Math.PI * 2); }
+    else if (face === "sad") { ctx.moveTo(X(-0.1), Y(1.27)); ctx.quadraticCurveTo(X(0), Y(1.33), X(0.1), Y(1.27)); }
+    else { ctx.moveTo(X(-0.12), Y(1.33)); ctx.quadraticCurveTo(X(0), Y(face === "happy" ? 1.22 : 1.26), X(0.12), Y(1.33)); }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function arm(ctx, o, sh, w, side) {
+    var k = o.k, L = 0.66 * k, S = [o.cx + sh[0] * k, o.cy - sh[1] * k];
+    var d = [w[0] - S[0], w[1] - S[1]], D = Math.min(Math.hypot(d[0], d[1]), 2 * L - 1), a0 = Math.atan2(d[1], d[0]);
+    var a = Math.acos(Math.max(-1, Math.min(1, D / (2 * L)))), best = null;
+    [a, -a].forEach(function (aa) {
+      var e = [S[0] + Math.cos(a0 + aa) * L, S[1] + Math.sin(a0 + aa) * L];
+      var score = side * (e[0] - o.cx) + 0.6 * (e[1] - S[1]);
+      if (!best || score > best.s) best = { e: e, s: score };
+    });
+    var E = best.e, wx = S[0] + Math.cos(a0) * D, wy = S[1] + Math.sin(a0) * D;
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.strokeStyle = "rgba(0,0,0,0.25)"; ctx.lineWidth = 0.23 * k + 2;
+    ctx.beginPath(); ctx.moveTo(S[0], S[1]); ctx.lineTo(E[0], E[1]); ctx.lineTo(wx, wy); ctx.stroke();
+    ctx.strokeStyle = o.shirt || "#1E5BD8"; ctx.lineWidth = 0.23 * k;
+    ctx.stroke();
+    ctx.strokeStyle = Hand.TONES[o.tone || 0][1]; ctx.lineWidth = 0.14 * k;
+    ctx.beginPath(); ctx.moveTo(mixP(E, [wx, wy], 0.7)[0], mixP(E, [wx, wy], 0.7)[1]); ctx.lineTo(w[0], w[1]); ctx.stroke();
+  }
+  function mixP(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]; }
+
+  /* One hand's state in avatar units: pose numbers, facing frame, wrist position. */
+  function handState(step, left) {
+    var r = Hand.resolve(step.shape), fm = Hand.frame(step.ori);
+    var pts = Hand.orient(Hand.local(r), fm), c;
+    if (step.c === "t") c = V.mixV(pts[12], pts[8], 0.5);
+    else if (step.c === "i") c = pts[8];
+    else if (step.c === "th") c = pts[4];
+    else if (step.c === "w") c = pts[0];
+    else c = V.add(V.mixV(pts[0], pts[9], 0.55), V.mul(fm[2], 0.12));
+    var wrist = V.sub(step.loc, V.mul(c, SCALE));
+    return { r: r, fm: fm, w: left ? [-wrist[0], wrist[1], wrist[2]] : wrist };
+  }
+  function mixState(a, b, t) {
+    return { r: Hand.blend(a.r, b.r, t), fm: Hand.blendFrame(a.fm, b.fm, t), w: V.mixV(a.w, b.w, t) };
+  }
+  function ease(t) { return t < 0 ? 0 : t > 1 ? 1 : t * t * (3 - 2 * t); }
+
+  function drawHandState(ctx, o, s, left) {
+    var pts = Hand.orient(Hand.local(s.r), s.fm), fm = s.fm;
+    if (left) { pts = Hand.mirror(pts); fm = fm.map(function (v) { return [-v[0], v[1], v[2]]; }); }
+    var u = SCALE * o.k;
+    var sc = Hand.toScreen(pts, fm, o.cx + s.w[0] * o.k, o.cy - s.w[1] * o.k, u);
+    sc.P.forEach(function (p) { p[2] += s.w[2] * o.k; });
+    return { P: sc.P, nails: sc.nails, u: u };
+  }
+
+  /* ---------- player ---------- */
+  function Player(canvas, opts) {
+    var self = this, ctx = canvas.getContext("2d");
+    this.opts = opts || {}; this.speed = 1; this.items = []; this.i = 0; this.playing = false;
+    var restR = parseStep("RELAX.rest.Hang"), restL = parseStep("RELAX.rest.Hang");
+    var cur = { R: handState(restR, false), L: handState(restL, true) }, from = null, to = null, face = "";
+    var queue = [], qStart = 0, last = 0, raf = 0;
+
+    function size() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2), w = canvas.clientWidth || 300, h = canvas.clientHeight || 300;
+      if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) { canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); }
+      var k = Math.min(canvas.width / 2.9, canvas.height / 3.3);
+      return { k: k, cx: canvas.width / 2, cy: canvas.height * 0.66 + k * 0.05, tone: self.opts.tone, shirt: self.opts.shirt, hair: self.opts.hair };
+    }
+    function render(t) {
+      var o = size(), left = !!self.opts.lefty;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBody(ctx, o, face, t);
+      var hands = [["R", false], ["L", true]].map(function (h) {
+        var mir = left ? !h[1] : h[1];
+        var st = cur[h[0]];
+        if (left) st = { r: st.r, fm: st.fm, w: [-st.w[0], st.w[1], st.w[2]] };
+        return { d: drawHandState(ctx, o, st, mir), side: h[0] === "R" ? (left ? 1 : -1) : (left ? -1 : 1) };
+      });
+      hands.forEach(function (h) { arm(ctx, o, [h.side * 0.66, 0.74], h.d.P[0], h.side); });
+      hands.sort(function (a, b) { return a.d.P[0][2] - b.d.P[0][2]; });
+      hands.forEach(function (h) { Hand.drawHand(ctx, h.d.P, h.d.u, self.opts.tone, h.d.nails); });
+    }
+    function build(item) {
+      var sp = parse(item.spec), n = Math.max(sp.R.length, sp.L.length), steps = [];
+      for (var i = 0; i < n; i++) {
+        var r = sp.R[Math.min(i, sp.R.length - 1)], l = sp.L.length ? sp.L[Math.min(i, sp.L.length - 1)] : restL;
+        steps.push({ R: handState(r, false), L: handState(l, true), ms: (sp.R[i] && sp.R[i].ms) || 420, face: item.face || "", item: item.idx });
+      }
+      steps[steps.length - 1].hold = item.hold || 380;
+      return steps;
+    }
+    function tick(now) {
+      raf = 0;
+      if (self.playing && queue.length) {
+        var st = queue[0], dur = st.ms / self.speed, hold = (st.hold || 60) / self.speed, el = now - qStart;
+        if (!from) { from = { R: cur.R, L: cur.L }; face = st.face; if (self.onitem) self.onitem(st.item); }
+        var t = ease(el / dur);
+        cur = { R: mixState(from.R, st.R, t), L: mixState(from.L, st.L, t) };
+        if (el >= dur + hold) { queue.shift(); from = null; qStart = now; if (!queue.length) end(); }
+      } else if (self.resting) {
+        var q = ease(Math.min(1, (now - qStart) / 600));
+        var rs = { R: handState(restR, false), L: handState(restL, true) };
+        cur = { R: mixState(cur.R, rs.R, q * 0.2), L: mixState(cur.L, rs.L, q * 0.2) };
+        if (q >= 1) self.resting = false;
+      }
+      if (now - last > 30 || self.playing) { render(now); last = now; }
+      if (self.playing || self.resting || !document.hidden) raf = requestAnimationFrame(self.playing || self.resting ? tick : idle);
+    }
+    function idle(now) { raf = 0; if (now - last > 120 && canvas.clientWidth) { render(now); last = now; } if (!document.hidden && canvas.isConnected) raf = requestAnimationFrame(idle); }
+    document.addEventListener("visibilitychange", function () { if (!document.hidden && canvas.isConnected) kick(); });
+    function end() { self.playing = false; face = ""; self.resting = true; if (self.onend) self.onend(); }
+    function kick() { if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); }
+
+    this.load = function (items) { self.items = items; queue = []; items.forEach(function (it, i) { it.idx = i; queue = queue.concat(build(it)); }); from = null; };
+    this.play = function (items) { if (items) self.load(items); if (!queue.length && self.items.length) self.load(self.items); self.playing = true; self.resting = false; qStart = performance.now(); from = null; kick(); };
+    this.pause = function () { self.playing = false; kick(); };
+    this.stop = function () { queue = []; self.playing = false; self.resting = true; qStart = performance.now(); kick(); };
+    this.pose = function (spec) { var s = build({ spec: spec })[0]; cur = { R: s.R, L: s.L }; self.playing = false; self.resting = false; kick(); };
+    this.redraw = function () { kick(); };
+    kick();
+  }
+
+  /* One still frame (the first step of a sign) for thumbnails; crop "hand" zooms in on the hand. */
+  function still(canvas, spec, opts) {
+    opts = opts || {};
+    var ctx = canvas.getContext("2d"), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = canvas.clientWidth || 64, h = canvas.clientHeight || 64;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    var sp = parse(spec), r = sp.R[0], l = sp.L[0] || parseStep("RELAX.rest.Hang");
+    var R = handState(r, false), L = handState(l, true);
+    var k = Math.min(canvas.width / 2.9, canvas.height / 3.3);
+    var o = { k: k, cx: canvas.width / 2, cy: canvas.height * 0.66 + k * 0.05, tone: opts.tone, shirt: opts.shirt };
+    if (opts.crop === "hand") { o.k = canvas.height / 0.95; o.cx = canvas.width / 2 - R.w[0] * o.k; o.cy = canvas.height * 0.82 + R.w[1] * o.k; }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (opts.crop !== "hand") drawBody(ctx, o, r.face || "", 1000);
+    var hs = [{ d: drawHandState(ctx, o, R, false), side: -1 }];
+    if (opts.crop !== "hand") hs.push({ d: drawHandState(ctx, o, L, true), side: 1 });
+    if (opts.crop !== "hand") hs.forEach(function (x) { arm(ctx, o, [x.side * 0.66, 0.74], x.d.P[0], x.side); });
+    hs.sort(function (a, b) { return a.d.P[0][2] - b.d.P[0][2]; });
+    hs.forEach(function (x) { Hand.drawHand(ctx, x.d.P, x.d.u, opts.tone, x.d.nails); });
+  }
+
+  return { LOC: LOC, parse: parse, letterSpec: letterSpec, numberSpec: numberSpec, Player: Player, still: still };
+})();
+if (typeof module !== "undefined") module.exports = Avatar;
+
+/* SENYAS words: each sign with its English, Filipino and Bikol (Central Bikol) words, how the
+   avatar signs it, and how to sign it. Fingerspelling and the core signs here are the forms shared by
+   Filipino Sign Language (FSL) and American Sign Language (ASL); local FSL variants exist. */
+Hand.SHAPES.NO2 = { f: ["o", "o", "c", "c"], t: "ti" };
+Hand.SHAPES.SICK = { f: ["x", "b", "x", "x"], s: [14, 0, -9, -20], t: "out" };
+Hand.ORI.Nd = [[0, 0.55, 0.83], [0, -0.83, 0.55]];
+
+var DATA = (function () {
+  var CATS = ["greet", "people", "needs", "feel", "quest", "emerg", "time"];
+  var ROWS = `
+hello|greet|hello|kumusta|kumusta|FLAT.forehead:t@-0.12,0,0.Fa FLAT.temple@-0.35,0.05,0.3.Fa.450|Flat hand at the forehead, then out like a salute.
+goodbye|greet|goodbye|paalam|paaram|FLAT.nh.Fa BENT.nh.Fa.250 FLAT.nh.Fa.250 BENT.nh.Fa.250|Open hand, fingers bend down and up: a wave.
+thankyou|greet|thank you|salamat|Dios mabalos|FLAT.chin:t.B FLAT.fwdlow@0,0.3,0.U.500|Fingertips at the chin, then the hand moves forward and down.
+please|greet|please|pakiusap|tabi|FLAT.chest.B FLAT.chest@0.1,0.1,0.B.250 FLAT.chest@0,0.2,0.B.250 FLAT.chest@-0.1,0.1,0.B.250 FLAT.chest.B.250|Flat hand circles on the chest.
+sorry|greet|sorry|pasensya na|pasensya na|A.chest.B A.chest@0.1,0.1,0.B.250 A.chest@0,0.2,0.B.250 A.chest@-0.1,0.1,0.B.250 A.chest.B.250|Closed fist (A) circles on the chest.
+yes|greet|yes|oo|iyo|S.nh.Fa S.nh.Nd.200 S.nh.Fa.200 S.nh.Nd.200|Fist nods up and down, like a head nodding.
+no|greet|no|hindi|dai|THREE.nh.Fa NO2.nh.Fa.200 THREE.nh.Fa.200 NO2.nh.Fa.200|Index and middle fingers snap down onto the thumb.
+welcome|greet|you're welcome|walang anuman|daing anoman|FLAT.n@-0.3,0.1,0.4.U FLAT.stomach@0.1,0,0.U.500|Open palm sweeps in toward the body.
+fine|greet|fine|mabuti|marhay man|FIVE.chest:th.Fi FIVE.chest:th@0,0,0.15.Fi.250 FIVE.chest:th.Fi.250|Open hand, thumb taps the chest.
+nice|greet|nice|maganda|magayon|FLAT.nc@-0.1,0.12,0.1.D FLAT.nc@-0.45,0.12,0.2.D.500;FLAT.nc.U|Flat hand slides across the other palm.
+meet|greet|meet|makilala|mamidbid|ONE.n@-0.3,0,0.S ONE.nc@-0.08,0,0.S.500;ONE.n@-0.3,0,0.S ONE.nc@-0.08,0,0.S.500|Two index fingers, up, come together.
+excuse|greet|excuse me|paumanhin|makiagi tabi|BENT.nc@-0.05,0.1,0.D BENT.nc@-0.25,0.1,0.D.300 BENT.nc@-0.05,0.1,0.D.300;FLAT.nc.U|Bent fingertips brush across the other palm.
+me|people|I / me|ako|ako|ONE.chest:i.B ONE.chest:i@0,0,0.1.B.200|Point to yourself.
+you|people|you|ikaw|ika|ONE.fwd:i.Fw ONE.fwd:i@0,0,0.1.Fw.200|Point to the person.
+we|people|we|tayo|kita|ONE.chestR:i.B ONE.heart:i.B.500|Index touches one shoulder side of the chest, then the other.
+my|people|my|akin|sako|FLAT.chest.B|Flat palm on the chest.
+mother|people|mother|nanay|nanay|FIVE.chin:th.S FIVE.chin:th@0,0,0.12.S.200 FIVE.chin:th.S.200|Open hand, thumb taps the chin.
+father|people|father|tatay|tatay|FIVE.forehead:th.S FIVE.forehead:th@0,0,0.12.S.200 FIVE.forehead:th.S.200|Open hand, thumb taps the forehead.
+sibling|people|brother / sister|kapatid|tugang|L.forehead:th.S L.nc@0,0.1,0.S.500;L.nc@0,0,0.S|L hand from the head down onto the other L hand.
+baby|people|baby|sanggol|aki|FLAT.nc@0,-0.05,0.U FLAT.nc@-0.15,0.05,0.U.400 FLAT.nc@0.1,0.05,0.U.400;FLAT.nc@0,-0.15,0.U FLAT.nc@0.15,-0.05,0.U.400 FLAT.nc@-0.1,-0.05,0.U.400|Arms cradle and rock a baby.
+friend|people|friend|kaibigan|katood|X.nc@0,0.1,0.G X.nc@0,0,0.Gd.400;X.nc@0,0,0.Gd X.nc@0,0.1,0.G.400|Hooked index fingers link, then switch.
+family|people|family|pamilya|pamilya|F.n@0.15,0.2,0.F F.n@-0.15,0,0.3.S.400 F.nc@0,0,0.3.B.400;F.n@0.15,0.2,0.F F.n@-0.15,0,0.3.S.400 F.nc@0,0,0.3.B.400|Two F hands draw a circle and meet.
+name|people|name|pangalan|pangaran|H.nc@0,0.1,0.G H.nc@0,0.03,0.G.200 H.nc@0,0.1,0.G.200 H.nc@0,0.03,0.G.200;H.nc@0.1,0,0.G|Two H hands, one taps the other twice.
+deaf|people|Deaf|bingi|bungog|ONE.ear:i.Bi ONE.mouth:i@-0.1,0,0.Bi.450|Index touches near the ear, then the mouth.
+hearing|people|hearing|nakaririnig|nakakadangog|ONE.mouth:i@0,0,0.15.G ONE.mouth:i@0,0.1,0.3.G.250 ONE.mouth:i@0,0,0.4.G.250|Index rolls forward in front of the mouth.
+teacher|people|teacher|guro|paratukdo|FLATO.temple:t.Fw FLATO.temple@0,0,0.4.Fw.400;FLATO.temple:t.Fw FLATO.temple@0,0,0.4.Fw.400|Both flat-O hands move forward from the temples.
+learn|people|learn|mag-aral|mag-adal|CLAW.nc@0,0.05,0.1.D FLATO.forehead:t.B.500;FLAT.nc.U|Take from the open palm and put it in the head.
+doctor|people|doctor|doktor|doktor|D.nc:t@0.05,0.1,0.D D.nc:t@0.05,0.2,0.D.200 D.nc:t@0.05,0.1,0.D.200;FLAT.nc.U|Fingertips tap the inside of the other wrist.
+police|people|police|pulis|pulis|C.heart.S C.heart@0,0,0.1.S.200 C.heart.S.200|C hand taps the chest, like a badge.
+eat|needs|eat|kain|kakan|FLATO.mouth:t.Bi FLATO.mouth:t@0,-0.05,0.15.Bi.220 FLATO.mouth:t.Bi.220|Flat-O hand taps the mouth.
+food|needs|food|pagkain|kakanon|FLATO.mouth:t.Bi FLATO.mouth:t@0,-0.05,0.15.Bi.220 FLATO.mouth:t.Bi.220|Same as eat: flat-O hand taps the mouth.
+drink|needs|drink|inom|inom|C.chin.S C.mouth.Bi.450|C hand tips a cup to the mouth.
+water|needs|water|tubig|tubig|W.chin:i.S W.chin:i@0,0,0.1.S.200 W.chin:i.S.200|W hand taps the chin.
+bathroom|needs|bathroom (CR)|CR / banyo|CR / banyo|T.n.Fa T.n@0.06,0,0.Si.180 T.n.Fa.180 T.n@0.06,0,0.Si.180|T hand shakes side to side.
+sleep|needs|sleep|tulog|turog|FIVE.eye@0,0.1,0.1.B FLATO.eye@0,-0.1,0.1.B.500|Open hand closes down over the face.
+home|needs|home|bahay|harong|FLATO.mouth:t.Bi FLATO.cheek:t.Bi.400|Flat-O touches the mouth, then the cheek.
+house|needs|house|bahay|harong|FLAT.nh@0.32,0.25,0.Si FLAT.n@0,-0.1,0.S.500;FLAT.nh@0.32,0.25,0.Si FLAT.n@0,-0.1,0.S.500|Two flat hands draw a roof and walls.
+school|needs|school|paaralan|eskwelahan|FLAT.nc@0,0.25,0.D FLAT.nc@0,0.08,0.D.200 FLAT.nc@0,0.25,0.D.200 FLAT.nc@0,0.08,0.D.200;FLAT.nc.U|Clap twice, palm on palm.
+help|needs|help|tulong|tabang|THUMB.nc@0,0.1,0.S THUMB.nc@0,0.35,0.S.500;FLAT.nc.U FLAT.nc@0,0.25,0.U.500|Thumbs-up hand rests on the other palm; both lift.
+more|needs|more|dagdag|dagdag|FLATO.nc@-0.25,0,0.S FLATO.nc@-0.08,0,0.S.250 FLATO.nc@-0.25,0,0.S.250 FLATO.nc@-0.08,0,0.S.250;FLATO.nc@-0.25,0,0.S FLATO.nc@-0.08,0,0.S.250 FLATO.nc@-0.25,0,0.S.250 FLATO.nc@-0.08,0,0.S.250|Fingertips of two flat-O hands tap together.
+finished|needs|finished|tapos na|tapos na|FIVE.n.B FIVE.n@-0.1,0,0.Fa.300 FIVE.n.B.250 FIVE.n@-0.1,0,0.Fa.250;FIVE.n.B FIVE.n@-0.1,0,0.Fa.300 FIVE.n.B.250 FIVE.n@-0.1,0,0.Fa.250|Both open hands flip out.
+want|needs|want|gusto|gusto|CLAW.n@0,0,0.3.U CLAW.n@0,0,-0.1.U.450;CLAW.n@0,0,0.3.U CLAW.n@0,0,-0.1.U.450|Clawed hands, palms up, pull toward you.
+need|needs|need|kailangan|kaipuhan|X.n.Fa X.n@0,-0.1,0.D.300 X.n.Fa.250 X.n@0,-0.1,0.D.300|Hooked index bends down firmly.
+money|needs|money|pera|kuwarta|FLATO.nc@0,0.18,0.Bi FLATO.nc@0,0.08,0.Bi.200 FLATO.nc@0,0.18,0.Bi.200;FLAT.nc.U|Flat-O taps the open palm.
+work|needs|work|trabaho|trabaho|S.nc@0,0.2,0.D S.nc@0,0.1,0.D.200 S.nc@0,0.2,0.D.200;S.nc.D|One fist taps the back of the other.
+play|needs|play|laro|kawat|Y.n.Fa Y.n.Si.200 Y.n.Fa.200 Y.n.Si.200;Y.n.Fa Y.n.Si.200 Y.n.Fa.200 Y.n.Si.200|Both Y hands twist back and forth.
+go|needs|go|punta|lakaw|ONE.n:i.Bi ONE.fwd:i.Fw.450;ONE.n:i.Bi ONE.fwd:i.Fw.450|Both index fingers arc forward.
+come|needs|come|halika|dali|ONE.fwd:i.Fw ONE.n:i.Bi.450;ONE.fwd:i.Fw ONE.n:i.Bi.450|Both index fingers beckon toward you.
+stop|needs|stop|tigil|ontok|FLAT.nc@0,0.35,0.S FLAT.nc@0,0.05,0.S.300;FLAT.nc.U|Edge of the hand chops down onto the palm.
+wait|needs|wait|sandali|halat|FIVE.n.U CLAW.n.U.180 FIVE.n.U.180 CLAW.n.U.180;FIVE.n.U CLAW.n.U.180 FIVE.n.U.180 CLAW.n.U.180|Both palms up, fingers wiggle.
+again|needs|again|ulit|giraray|BENT.nc@0,0.1,0.25.U BENT.nc:t@0,0.05,0.D.450;FLAT.nc.U|Bent hand flips over onto the open palm.
+slow|needs|slow|dahan-dahan|hinay-hinay|FLAT.nc@0,0.1,0.D FLAT.nc@0,0.1,0.3.D.800;FLAT.nc.D|One hand slides slowly up the back of the other.
+write|needs|write|sulat|surat|FLATO.nc:t@0,0.08,0.D FLATO.nc:t@-0.15,0.05,0.D.400;FLAT.nc.U|Pinched fingers write across the palm.
+call|needs|call (phone)|tawag|apod|Y.ear.F Y.ear@0,0,0.1.F.300|Y hand held at the ear like a phone.
+see|needs|see|kita|hiling|V.eye:t@0,0,0.05.Bi V.fwd.Fw.400|V from the eyes moves forward.
+understand|needs|understand|maintindihan|masabotan|S.temple@0,0,0.1.Bi ONE.temple@0,0,0.1.Bi.300|Fist at the temple, index flicks up.
+know|needs|know|alam|aram|BENT.temple:t.Bi BENT.temple:t@0,0,0.1.Bi.200 BENT.temple:t.Bi.200|Fingertips tap the side of the forehead.
+not|needs|not|hindi|dai|A.chin:th.S A.chin:th@0,0,0.3.S.350|Thumb under the chin flicks forward.
+sign|needs|sign language|senyas|senyas|ONE.nh@0.1,0,0.G ONE.n@0.1,0,0.3.G.300 ONE.nh@0.1,0,0.G.300;ONE.n@0.1,0,0.3.G ONE.nh@0.1,0,0.G.300 ONE.n@0.1,0,0.3.G.300|Index fingers circle in turn.
+love|feel|love|pagmamahal|pagkamoot|S.heart.B S.heart@0,0,0.05.B.300;S.heart.B S.heart@0,0,0.05.B.300|Arms cross over the heart.
+iloveyou|feel|I love you|Mahal kita|Namumutan taka|ILY.nh.Fa ILY.nh@0,0,0.1.Fa.300|Thumb, index and little finger up.
+happy|feel|happy|masaya|maogma|FLAT.chest.B FLAT.chest@0,0.15,0.1.B.250 FLAT.chest.B.250 FLAT.chest@0,0.15,0.1.B.250|Flat hand brushes up the chest.|happy
+sad|feel|sad|malungkot|mamundo|FIVE.eye@0,0.05,0.2.F FIVE.mouth@0,-0.1,0.25.F.600;FIVE.eye@0,0.05,0.2.F FIVE.mouth@0,-0.1,0.25.F.600|Open hands slide down in front of the face.|sad
+angry|feel|angry|galit|maanggot|CLAW.mouth@0,0,0.2.B CLAW.chin@0,0,0.3.B.400|Clawed hand pulls out from the face.|wh
+tired|feel|tired|pagod|pagal|BENT.chestR:t.B BENT.chestR:t@0,-0.1,0.Bi.500;BENT.chestR:t.B BENT.chestR:t@0,-0.1,0.Bi.500|Bent hands on the chest droop down.|sad
+sick|feel|sick|may sakit|may hilang|SICK.forehead:t.B SICK.forehead:t@0,0,0.1.B.250;SICK.stomach:t.B SICK.stomach:t@0,0,0.1.B.250|Middle fingers touch the forehead and the stomach.|sad
+hungry|feel|hungry|gutom|gutom|C.chest@0,0.25,0.B C.stomach.B.500|C hand moves down the chest.
+thirsty|feel|thirsty|uhaw|uhaw|ONE.chin:i.B ONE.neck:i@0,-0.15,0.B.450|Index traces down the throat.
+good|feel|good|mabuti|marhay|FLAT.chin:t.B FLAT.nc@0,0.1,0.U.450;FLAT.nc.U|From the chin down to the open palm. A thumbs-up also reads as good.
+bad|feel|bad|masama|maraot|FLAT.chin:t.B FLAT.n@0,0,0.D.450|From the chin, the hand flips down. A thumbs-down also reads as bad.
+okay|feel|okay|ayos|sige|F.nh.Fa F.nh@0,0,0.1.Fa.250|The OK hand: thumb and index make a circle.
+pain|feel|pain / hurt|masakit|makulog|ONE.nc@-0.12,0.3,0.G ONE.nc@-0.12,0.3,0.Fw.250 ONE.nc@-0.12,0.3,0.G.250;ONE.nc@-0.12,0.3,0.G ONE.nc@-0.12,0.3,0.Fw.250 ONE.nc@-0.12,0.3,0.G.250|Index fingers point at each other and twist.|sad
+beautiful|feel|beautiful|maganda|magayon|FIVE.mouth@0,0,0.4.B FLATO.chin@0,0,0.3.B.500|Open hand circles the face and closes.|happy
+what|quest|what|ano|ano|FIVE.n.U FIVE.n@-0.05,0,0.Ul.200 FIVE.n.U.200;FIVE.n.U FIVE.n@-0.05,0,0.Ul.200 FIVE.n.U.200|Both palms up, shake a little.|wh
+where|quest|where|saan|hain|ONE.nh.F ONE.nh.Fi.180 ONE.nh.F.180 ONE.nh.Fi.180|Index finger up, wags side to side.|wh
+who|quest|who|sino|siisay|ONE.chin:i.Bi ONE.chin:i@0.05,0.05,0.Bi.200 ONE.chin:i.Bi.200|Index circles in front of the chin.|wh
+when|quest|when|kailan|nuarin|ONE.nc@-0.1,0.3,0.2.F ONE.nc@0,0.2,0.F.400;ONE.nc.F|Index circles and lands on the other index.|wh
+why|quest|why|bakit|taano|FLAT.forehead:t.B Y.forehead@-0.15,-0.05,0.3.B.400|Fingers at the forehead pull away into a Y.|wh
+how|quest|how|paano|paano|BENT.nc@-0.05,0,0.D BENT.nc@-0.05,0.05,0.U.400;BENT.nc@-0.05,0,0.D BENT.nc@-0.05,0.05,0.U.400|Bent hands back to back roll up and out.|wh
+emergency|emerg|emergency|emerhensiya|emerhensiya|E.nh.Fa E.nh@-0.08,0,0.Fa.180 E.nh.Fa.180 E.nh@-0.08,0,0.Fa.180|E hand shakes side to side.|wh
+hospital|emerg|hospital|ospital|ospital|H.~shoulder@0,0.05,0.25.G H.~shoulder@0,-0.15,0.25.G.300 H.~shoulder@0.1,-0.05,0.25.G.300 H.~shoulder@-0.1,-0.05,0.25.G.300|H fingers draw a cross on the upper arm.
+fire|emerg|fire|sunog|kalayo|FIVE.down@0,0.2,0.B CLAW.n.B.250 FIVE.nh.B.250;FIVE.down@0,0.2,0.B CLAW.n.B.250 FIVE.nh.B.250|Both hands rise with wiggling fingers, like flames.|wh
+earthquake|emerg|earthquake|lindol|linog|FLAT.n.D FLAT.n@-0.08,0,0.D.150 FLAT.n@0.06,0,0.D.150 FLAT.n@-0.08,0,0.D.150 FLAT.n.D.150;FLAT.n.D FLAT.n@-0.08,0,0.D.150 FLAT.n@0.06,0,0.D.150 FLAT.n@-0.08,0,0.D.150 FLAT.n.D.150|Both palms down shake, like the ground.|wh
+flood|emerg|flood|baha|baha|W.chin:i.S FLAT.n@0,-0.2,0.D.300 FLAT.n@0,0.3,0.D.500;FLAT.n@0,-0.2,0.D FLAT.n@0,-0.2,0.D FLAT.n@0,0.3,0.D.500|Water, then both palms rise.|wh
+typhoon|emerg|typhoon|bagyo|bagyo|FIVE.nh.S FIVE.nh@0.3,0,0.S.400 FIVE.nh.S.400;FIVE.nh.S FIVE.nh@-0.3,0,0.S.400 FIVE.nh.S.400|Both open hands sway hard, like strong wind.|wh
+danger|emerg|danger|panganib|peligro|A.nc@0,0.1,0.S A.nc@0,0.3,0.1.S.250 A.nc@0,0.1,0.S.250;FLAT.nc.B|Thumb brushes up the back of the other hand.|wh
+medicine|emerg|medicine|gamot|bulong|SICK.nc:t@0,0.08,0.D SICK.nc:t@0.05,0.1,0.D.200 SICK.nc:t@0,0.08,0.D.200;FLAT.nc.U|Middle finger circles on the open palm.
+now|time|now / today|ngayon|ngonyan|BENT.n@0,0.1,0.U BENT.n@0,-0.05,0.U.400;BENT.n@0,0.1,0.U BENT.n@0,-0.05,0.U.400|Both bent hands drop a little.
+tomorrow|time|tomorrow|bukas|sa aga|A.cheek:th.S A.cheek:th@0,0,0.3.S.400|Thumb at the cheek moves forward.
+yesterday|time|yesterday|kahapon|kasuhapon|A.cheek:th@0,0,0.2.S A.ear:th.S.400|Thumb moves back from the cheek.
+morning|time|morning|umaga|aga|FLAT.n@0,-0.25,0.U FLAT.n@0,0.15,0.Up.500;FLAT.nc@0,0,0.Id|One hand rises like the sun over the other arm.
+night|time|night|gabi|banggi|BENT.nc@0,0.15,0.D BENT.nc@0,0,0.D.500;FLAT.nc@0,0.05,0.Id|Bent hand sets over the other arm, like the sun going down.`;
+
+  var NUMW = [["zero", "sero", "sero"], ["one", "isa", "saro"], ["two", "dalawa", "duwa"], ["three", "tatlo", "tulo"], ["four", "apat", "apat"], ["five", "lima", "lima"],
+    ["six", "anim", "anom"], ["seven", "pito", "pito"], ["eight", "walo", "walo"], ["nine", "siyam", "siyam"], ["ten", "sampu", "sampulo"]];
+
+  var words = {}, list = [];
+  ROWS.trim().split("\n").forEach(function (r) {
+    var a = r.split("|");
+    var w = { id: a[0], cat: a[1], en: a[2], fil: a[3], bcl: a[4], spec: a[5], desc: a[6], face: a[7] || "" };
+    words[w.id] = w; list.push(w);
+  });
+  NUMW.forEach(function (n, i) {
+    var w = { id: "n" + i, cat: "num", en: n[0], fil: n[1], bcl: n[2], spec: Avatar.numberSpec(i), desc: i === 10 ? "Thumbs-up, shaken a little." : "Number " + i + " on one hand.", num: i };
+    words[w.id] = w; list.push(w);
+  });
+
+  /* Phrases: what people say, and the signs that carry it (in sign order). */
+  var PHRASES = `
+goodmorning|Good morning|Magandang umaga|Marhay na aga|good morning
+goodnight|Good evening|Magandang gabi|Marhay na banggi|good night
+thanks|Thank you|Salamat po|Dios mabalos|thankyou
+welcome|You're welcome|Walang anuman|Daing anoman|welcome
+howareyou|How are you?|Kumusta ka?|Kumusta ka?|how you
+fine|I'm fine|Mabuti ako|Marhay man ako|me fine
+yourname|What is your name?|Ano ang pangalan mo?|Ano an pangaran mo?|you name what
+myname|My name is|Ang pangalan ko ay|An pangaran ko si|my name
+nicemeet|Nice to meet you|Ikinagagalak kitang makilala|Maogma akong mamidbid ka|nice meet you
+deaf|I am Deaf|Bingi ako|Bungog ako|me deaf
+slow|Please sign slowly|Pakidahan-dahan ang pagsenyas|Hinay-hinay tabi an pagsenyas|please sign slow
+nounderstand|I don't understand|Hindi ko maintindihan|Dai ko nasasabotan|me understand not
+repeat|Please repeat|Pakiulit po|Giraray tabi|again please
+write|Please write it down|Pakisulat po|Isurat mo tabi|write please
+whereCR|Where is the bathroom?|Nasaan ang CR?|Hain an CR?|bathroom where
+needhelp|I need help|Kailangan ko ng tulong|Kaipuhan ko nin tabang|me need help
+calldoctor|Call a doctor|Tumawag ng doktor|Mag-apod nin doktor|call doctor
+sick|I am sick|May sakit ako|May hilang ako|me sick
+wherehospital|Where is the hospital?|Nasaan ang ospital?|Hain an ospital?|hospital where
+loveyou|I love you|Mahal kita|Namumutan taka|iloveyou
+hungry|I'm hungry|Gutom na ako|Gutom na ako|me hungry
+thirsty|I'm thirsty|Nauuhaw ako|Uhaw ako|me thirsty
+eat|Let's eat|Kain tayo|Magkakan kita|we eat
+seeyou|See you tomorrow|Kita tayo bukas|Magkita kita sa aga|see you tomorrow
+bye|Goodbye|Paalam|Paaram|goodbye
+sorry|I'm sorry|Pasensya na|Pasensya na|sorry
+wait|Please wait|Sandali lang po|Halat muna tabi|wait please
+stop|Stop!|Tigil!|Ontok!|stop
+danger|Danger! Leave now!|Delikado! Umalis na!|Peligro! Lakaw na!|danger go now
+fire|There is a fire!|May sunog!|May kalayo!|fire
+quake|Earthquake!|Lindol!|Linog!|earthquake
+okay|Are you okay?|Ayos ka lang?|Marhay ka lang?|you okay`;
+  var phrases = PHRASES.trim().split("\n").map(function (r) { var a = r.split("|"); return { id: a[0], en: a[1], fil: a[2], bcl: a[3], gloss: a[4].split(" ") }; });
+
+  /* Lookup from any written word or phrase (in any of the three languages) to its sign. */
+  var index = {};
+  function key(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9ñ' ]/g, " ").replace(/\s+/g, " ").trim(); }
+  function put(k, v) { k = key(k); if (k && !index[k]) index[k] = v; }
+  phrases.forEach(function (p) { ["en", "fil", "bcl"].forEach(function (l) { put(p[l], { phrase: p }); }); });
+  list.forEach(function (w) {
+    ["en", "fil", "bcl"].forEach(function (l) { w[l].split(" / ").forEach(function (x) { put(x, { word: w }); put(x.replace(/\(.*\)/, ""), { word: w }); }); });
+  });
+  var EXTRA = { i: "me", ako: "me", ko: "me", mo: "you", ka: "you", ikaw: "you", ika: "you", hi: "hello", thanks: "thankyou", ty: "thankyou", ok: "okay", yeah: "yes", nope: "no",
+    cr: "bathroom", toilet: "bathroom", comfort: "bathroom", restroom: "bathroom", nasaan: "where", "hello po": "hello", po: null, tabi: null, the: null, a: null, an: null, is: null, am: null, are: null, to: null, ang: null, ng: null, nin: null, sa: null, si: null, ay: null, na: null,
+    mama: "mother", ina: "mother", papa: "father", ama: "father", nanay: "mother", tatay: "father", brother: "sibling", sister: "sibling", today: "now", gamot: "medicine", doktora: "doctor", tulungan: "help", tabangi: "help", tulong: "help" };
+  Object.keys(EXTRA).forEach(function (k) { index[key(k)] = EXTRA[k] ? { word: words[EXTRA[k]] } : { skip: true }; });
+  for (var n = 0; n <= 10; n++) index[String(n)] = { word: words["n" + n] };
+
+  /* Text -> signs: longest phrase match first, then words, then fingerspelling. */
+  function toSigns(text) {
+    var toks = key(text).split(" ").filter(Boolean), out = [], i = 0;
+    while (i < toks.length) {
+      var hit = null, len = 0;
+      for (var L = Math.min(7, toks.length - i); L >= 1; L--) { var h = index[toks.slice(i, i + L).join(" ")]; if (h) { hit = h; len = L; break; } }
+      if (!hit) {
+        var t = toks[i];
+        if (/^\d+$/.test(t)) t.split("").forEach(function (d) { out.push({ word: words["n" + d] }); });
+        else out.push({ spell: t.toUpperCase() });
+        i++; continue;
+      }
+      if (hit.phrase) hit.phrase.gloss.forEach(function (g) { out.push({ word: words[g] }); });
+      else if (hit.word) out.push({ word: hit.word });
+      i += len;
+    }
+    return out;
+  }
+  function find(text) { var h = index[key(text)]; return h && h.word ? h.word : null; }
+
+  /* Learning units. */
+  var UNITS = [
+    { id: "a1", kind: "abc", items: "ABCDEFGHI".split("") }, { id: "a2", kind: "abc", items: "JKLMNOPQR".split("") },
+    { id: "a3", kind: "abc", items: "STUVWXYZ".split("").concat(["Ñ", "NG"]) }, { id: "num", kind: "num", items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+  ];
+  CATS.forEach(function (c) { UNITS.push({ id: c, kind: "word", items: list.filter(function (w) { return w.cat === c; }).map(function (w) { return w.id; }) }); });
+
+  /* Words the camera reads by itself, and the letters and numbers. */
+  var LIVE = ["hello", "yes", "no", "thankyou", "please", "sorry", "where", "water", "eat", "bathroom", "iloveyou", "good", "bad", "okay", "love", "help", "more", "house", "friend", "name", "finished"];
+
+  return { CATS: CATS, words: words, list: list, phrases: phrases, toSigns: toSigns, find: find, key: key, UNITS: UNITS, LIVE: LIVE };
+})();
+</script>
+<script>
+(function () {
+  var L = {
+    fil: { nFeat: "Mga Tampok", nLearn: "Matuto", nDl: "I-download", nPriv: "Privacy", h1: "Senyas, <span>isinasalin nang live.</span>", lead: "Itutok ang camera sa mga kamay na nagse-senyas at isusulat at bibigkasin ng SENYAS ang mga salita. Mag-type o magsalita at isesenyas ito ng avatar. Matuto sa Ingles, Filipino at Bikol.", getApp: "I-download ang app", openWeb: "Buksan sa browser", offline: "Gumagana offline", fTitle: "Lahat sa iisang app", fSub: "Dalawang-direksiyong pagsasalin para sa Deaf at nakaririnig, at kumpletong kurso sa pag-senyas.", f1: "Live na senyas → salita", f2: "Basahin nang malakas, bukas o sarado", f3: "Salita at boses → senyas", f4: "Mga aralin na sumusuri sa iyo", f5: "Ingles, Filipino, Bikol", f6: "Turuan ng iyong mga senyas", f7: "Pribado at offline", f8: "Akma sa bawat screen", f9: "Pagbasa ng braille", hTitle: "Paano ito gumagana", s1: "Buksan ang camera", s2: "Mag-senyas", s3: "Sumagot", langTitle: "Tatlong wika, isang senyas", dTitle: "Kunin ang SENYAS", dSub: "Libre. Walang account. Piliin ang iyong device.", dApk: "I-download ang APK", dInst: "I-install ang app", dFileB: "I-download ang file", ckT: "Cookies", ckD: "Gumagamit ang SENYAS ng isang mahalagang cookie para tandaan ang pagpiling ito. Kung papayag ka, tatandaan din nito ang iyong wika. Walang ads, analytics o tracking.", ckNo: "Mahalaga lang", ckYes: "Tanggapin", ckSet: "Settings ng cookie" },
+    bcl: { nFeat: "Mga Tampok", nLearn: "Mag-adal", nDl: "I-download", nPriv: "Privacy", h1: "Senyas, <span>isinasalin nin live.</span>", lead: "Itutok an kamera sa mga kamot na nagsesenyas asin isusurat asin sasabihon kan SENYAS an mga tataramon. Mag-type o magtaram asin isesenyas ini kan avatar. Mag-adal sa Ingles, Filipino asin Bikol.", getApp: "I-download an app", openWeb: "Bukasan sa browser", offline: "Nagagana offline", fTitle: "Gabos sa sarong app", fSub: "Duwang-direksyon na pagsalin para sa Deaf asin nakakadangog, asin kumpletong kurso sa pagsenyas.", f1: "Live na senyas → tataramon", f2: "Basahon nin makusog, bukas o serrado", f3: "Tataramon asin boses → senyas", f4: "Mga leksyon na nagsisiyasat saimo", f5: "Ingles, Filipino, Bikol", f6: "Tukduan kan saimong mga senyas", f7: "Pribado asin offline", f8: "Angay sa kada screen", f9: "Pagbasa kan braille", hTitle: "Paano ini nagagana", s1: "Bukasan an kamera", s2: "Magsenyas", s3: "Magsimbag", langTitle: "Tolong tataramon, sarong senyas", dTitle: "Kuanon an SENYAS", dSub: "Libre. Mayong account. Pilion an saimong device.", dApk: "I-download an APK", dInst: "I-install an app", dFileB: "I-download an file", ckT: "Cookies", ckD: "Naggagamit an SENYAS nin sarong kaipuhan na cookie tanganing girumdomon an pagpili na ini. Kun tugot ka, gigirumdomon man kaini an saimong tataramon. Mayong ads, analytics o tracking.", ckNo: "Kaipuhan sana", ckYes: "Akoon", ckSet: "Settings kan cookie" }
+  };
+  var EN = {};
+  document.querySelectorAll("[data-i]").forEach(function (el) { if (!(el.dataset.i in EN)) EN[el.dataset.i] = el.innerHTML; });
+  function cookie(n) { var m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? decodeURIComponent(m[1]) : null; }
+  function setCookie(n, v) { document.cookie = n + "=" + encodeURIComponent(v) + "; Max-Age=31536000; Path=/; SameSite=Lax" + (location.protocol === "https:" ? "; Secure" : ""); }
+  function lang(l) {
+    document.documentElement.lang = l === "en" ? "en" : l;
+    document.querySelectorAll("[data-i]").forEach(function (el) { var k = el.dataset.i; el.innerHTML = (L[l] && L[l][k]) || EN[k]; });
+    document.querySelectorAll(".lang button").forEach(function (b) { b.classList.toggle("on", b.dataset.l === l); });
+    if (cookie("senyas_consent") === "all") setCookie("senyas_lang", l);
+    window.__lang = l;
+  }
+  document.querySelectorAll(".lang button").forEach(function (b) { b.onclick = function () { lang(b.dataset.l); }; });
+  var ck = document.getElementById("ck");
+  if (!cookie("senyas_consent")) ck.hidden = false;
+  document.getElementById("ckYes").onclick = function () { setCookie("senyas_consent", "all"); setCookie("senyas_lang", window.__lang || "en"); ck.hidden = true; };
+  document.getElementById("ckNo").onclick = function () { setCookie("senyas_consent", "essential"); document.cookie = "senyas_lang=; Max-Age=0; Path=/"; ck.hidden = true; };
+  document.getElementById("ckOpen").onclick = function (e) { e.preventDefault(); ck.hidden = false; };
+  lang(cookie("senyas_lang") || (/^(fil|tl)/i.test(navigator.language) ? "fil" : "en"));
+
+  /* Install buttons: Android gets the APK, others the browser install. */
+  var ua = navigator.userAgent, ev = null;
+  if (/Android/i.test(ua)) document.getElementById("apk").href = document.getElementById("apkBtn").href;
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); ev = e; document.getElementById("installBtn").hidden = false; });
+  document.getElementById("installBtn").onclick = function () { if (ev) { ev.prompt(); ev = null; this.hidden = true; } };
+  if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(function () {});
+
+  /* Language table and the signing demo. */
+  var rows = ["hello", "thankyou", "please", "sorry", "help", "iloveyou", "water", "friend"];
+  document.getElementById("langRows").innerHTML = rows.map(function (id) { var w = DATA.words[id]; return "<tr><td>" + w.en + "</td><td>" + w.fil + "</td><td>" + w.bcl + "</td></tr>"; }).join("");
+  var pl = new Avatar.Player(document.getElementById("demo"), { tone: 1 }), seq = ["hello", "spell:SENYAS", "thankyou", "iloveyou", "help"], si = 0, LN = ["en", "fil", "bcl"], NAME = { en: "ENGLISH", fil: "FILIPINO", bcl: "BIKOL" };
+  function next() {
+    var s = seq[si % seq.length], l = LN[Math.floor(si / seq.length) % 3]; si++;
+    document.getElementById("capLang").textContent = NAME[l];
+    if (s.indexOf("spell:") === 0) {
+      var word = s.slice(6), shown = "";
+      document.getElementById("capTxt").textContent = "";
+      pl.onitem = function (i) { shown = word.slice(0, i + 1); document.getElementById("capTxt").textContent = shown; };
+      pl.play(word.split("").map(function (c) { return { spec: Avatar.letterSpec(c), hold: 200 }; }));
+    } else {
+      var w = DATA.words[s]; pl.onitem = function () { document.getElementById("capTxt").textContent = w[l].split(" / ")[0]; };
+      pl.play([{ spec: w.spec, face: w.face, hold: 900 }]);
+    }
+  }
+  pl.onend = function () { setTimeout(next, 700); };
+  var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting && !pl.playing && !pl.started) { pl.started = true; next(); } });
+  io.observe(document.getElementById("demo"));
+})();
+</script>
+</body>
+</html>

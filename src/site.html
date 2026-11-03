@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SENYAS · Live sign language translator</title>
+<meta name="description" content="SENYAS translates sign language live with your camera, signs your words with an avatar, and teaches sign language in English, Filipino and Bikol. Free, private and offline.">
+<meta name="theme-color" content="#0E5BD8">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="SENYAS · Live sign language translator">
+<meta property="og:description" content="Sign → words, words → sign, and lessons in English, Filipino and Bikol.">
+<meta property="og:image" content="assets/senyas-logo.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+:root{--bg:#F6F8FD;--card:#fff;--ink:#0B1630;--mut:#56637C;--line:#DDE4F0;--pri:#0E5BD8;--pri2:#0A47AA;--acc:#F2A900;--soft:#E8F0FE;--grad:linear-gradient(135deg,#0E5BD8,#7A3CFF);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0A101D;--card:#121B2D;--ink:#E8EEF9;--mut:#9AA8C0;--line:#223049;--pri:#5B9BFF;--pri2:#7FB0FF;--soft:#172645;color-scheme:dark}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.55 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif}
+a{color:var(--pri)}img,canvas{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left))}
+header.nav{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;text-decoration:none;color:var(--ink)}
+.logo{width:38px;height:38px;display:block}.logo svg{width:100%;height:100%}html,body{overflow-x:hidden}
+.links{display:flex;gap:18px;margin-left:auto}.links a{color:var(--mut);text-decoration:none;font-weight:600}.links a:hover{color:var(--ink)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.lang button{border:0;background:none;padding:6px 10px;font:600 .8rem system-ui;color:var(--mut);cursor:pointer}.lang button.on{background:var(--pri);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:13px 22px;border-radius:14px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:1rem;min-height:48px}
+.btn.pri{background:var(--pri);color:#fff}.btn.pri:hover{background:var(--pri2)}.btn.sec{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:56px 0 40px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;margin:0 0 16px;letter-spacing:-.02em}
+.hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:1.15rem;color:var(--mut);margin:0 0 26px;max-width:36ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.pills span{background:var(--soft);color:var(--pri);border-radius:999px;padding:6px 12px;font-weight:700;font-size:.85rem}
+.phone{justify-self:center;width:min(340px,86vw);aspect-ratio:9/18.5;border-radius:44px;padding:12px;background:#0B1220;box-shadow:0 30px 80px rgba(14,91,216,.25),inset 0 0 0 2px #2a3550}
+.screen{width:100%;height:100%;border-radius:34px;overflow:hidden;background:linear-gradient(180deg,#E8F0FE,#fff);position:relative;display:flex;flex-direction:column}
+.screen canvas{flex:1;width:100%}
+.screen .cap{background:#fff;margin:10px;border-radius:16px;padding:10px 14px;font-weight:800;color:#0B1630;font-size:1.25rem;min-height:56px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.screen .cap small{display:block;font-size:.7rem;color:#56637C;font-weight:700;letter-spacing:.05em}
+section{padding:56px 0}
+h2{font-size:clamp(1.6rem,3.4vw,2.3rem);margin:0 0 10px;letter-spacing:-.01em}.sub{color:var(--mut);margin:0 0 28px;max-width:60ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.f{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}.f b{display:block;font-size:1.08rem;margin:10px 0 6px}.f p{margin:0;color:var(--mut)}.f .ic{font-size:1.8rem}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.steps div{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;position:relative}.steps div::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--grad);color:#fff;font-weight:800;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line)}th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}th{background:var(--soft);font-size:.85rem;letter-spacing:.04em}
+.dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.dl .f{display:flex;flex-direction:column;gap:10px}.dl .f .btn{margin-top:auto}
+.dl ol{margin:0;padding-left:20px;color:var(--mut)}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;margin-bottom:10px}summary{font-weight:700;cursor:pointer}details p{color:var(--mut);margin:.6em 0 0}
+footer{border-top:1px solid var(--line);padding:30px 0 calc(30px + env(safe-area-inset-bottom));color:var(--mut);font-size:.9rem}footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
+footer a{color:var(--mut)}
+.ck{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:50;max-width:620px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.ck p{margin:0 0 12px;font-size:.95rem}.ck .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.ck .btn{padding:10px 16px;min-height:42px}
+.policy h3{margin:1.2em 0 .3em}.policy{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px}
+@media (max-width:860px){.hero{grid-template-columns:1fr;padding-top:28px;text-align:center}.hero p.lead{margin-left:auto;margin-right:auto}.cta,.pills{justify-content:center}.links{display:none}}
+@media (min-width:1800px){html{font-size:19px}.wrap{max-width:1500px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="#top"><span class="logo"></span>SENYAS</a>
+  <nav class="links"><a href="#features" data-i="nFeat">Features</a><a href="#learn" data-i="nLearn">Learn</a><a href="#download" data-i="nDl">Download</a><a href="privacy.html" data-i="nPriv">Privacy</a></nav>
+  <div class="lang" role="group" aria-label="Language"><button data-l="en">EN</button><button data-l="fil">FIL</button><button data-l="bcl">BIK</button></div>
+</div></header>
+
+<main id="top">
+<div class="wrap hero">
+  <div>
+    <h1 data-i="h1">Sign language, <span>translated live.</span></h1>
+    <p class="lead" data-i="lead">Point your camera at signing hands and SENYAS writes and speaks the words. Type or talk and the SENYAS avatar signs it back. Learn it all in English, Filipino and Bikol.</p>
+    <div class="cta">
+      <a class="btn pri" id="apk" href="#download"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span data-i="getApp">Download the app</span></a>
+      <a class="btn sec" href="app/"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg><span data-i="openWeb">Open in browser</span></a>
+    </div>
+    <div class="pills"><span>English</span><span>Filipino</span><span>Bikol</span><span>FSL · ASL</span><span data-i="offline">Works offline</span></div>
+  </div>
+  <div class="phone"><div class="screen"><canvas id="demo"></canvas><div class="cap"><small id="capLang">ENGLISH</small><span id="capTxt">Hello</span></div></div></div>
+</div>
+
+<section id="features"><div class="wrap">
+  <h2 data-i="fTitle">Everything in one app</h2>
+  <p class="sub" data-i="fSub">Two-way translation for Deaf and hearing people, and a full course to learn signing.</p>
+  <div class="grid">
+    <div class="f"><span class="ic">📷</span><b data-i="f1">Live sign → words</b><p data-i="f1d">The camera reads fingerspelling A–Z (with Ñ), numbers 0–10 and everyday signs like hello, thank you, please, help and I love you.</p></div>
+    <div class="f"><span class="ic">🔊</span><b data-i="f2">Read aloud, on or off</b><p data-i="f2d">SENYAS can say each recognised word out loud in English, Filipino or Bikol. Switch it on or off with one tap, and choose whether letters are spoken too.</p></div>
+    <div class="f"><span class="ic">🧑‍🦱</span><b data-i="f3">Words & voice → sign</b><p data-i="f3d">Type or speak a sentence and the 3D avatar signs it, fingerspelling names and new words. Slow it down to follow.</p></div>
+    <div class="f"><span class="ic">⠃</span><b data-i="f9">Braille reader</b><p data-i="f9d">Upload a photo of braille or scan it live with the camera. SENYAS reads Grade 1 braille (with Ñ), shows the text and can say it aloud. Typed words are shown in braille too.</p></div>
+    <div class="f"><span class="ic">🎓</span><b data-i="f4">Lessons that check you</b><p data-i="f4d">Alphabet, numbers, greetings, family, feelings, questions and emergencies, with quizzes, flashcards, games and camera practice.</p></div>
+    <div class="f"><span class="ic">🗣️</span><b data-i="f5">English, Filipino, Bikol</b><p data-i="f5d">The whole app, every word and the phrasebook come in three languages, with Bikol words from Central Bikol.</p></div>
+    <div class="f"><span class="ic">✋</span><b data-i="f6">Teach it your signs</b><p data-i="f6d">Record any sign three times — a local FSL sign, a name sign — and SENYAS reads it from then on.</p></div>
+    <div class="f"><span class="ic">🔒</span><b data-i="f7">Private and offline</b><p data-i="f7d">Video never leaves your phone. After the first start it works with no signal, which matters in an emergency.</p></div>
+    <div class="f"><span class="ic">📱</span><b data-i="f8">Fits every screen</b><p data-i="f8d">Phones, tablets, laptops and TVs, upright or sideways. On big screens both directions sit side by side as a conversation.</p></div>
+  </div>
+</div></section>
+
+<section id="learn"><div class="wrap">
+  <h2 data-i="hTitle">How it works</h2>
+  <div class="steps">
+    <div><b data-i="s1">Start the camera</b><p class="sub" data-i="s1d">Hold your hand in view. SENYAS tracks 21 points on each hand, on your device.</p></div>
+    <div><b data-i="s2">Sign</b><p class="sub" data-i="s2d">Hold a letter for a moment, or make a word sign. The words appear and, if you like, are read aloud.</p></div>
+    <div><b data-i="s3">Answer back</b><p class="sub" data-i="s3d">The hearing person types or speaks, and the avatar signs the reply.</p></div>
+  </div>
+  <h2 style="margin-top:40px" data-i="langTitle">Three languages, one sign</h2>
+  <table><thead><tr><th>English</th><th>Filipino</th><th>Bikol</th></tr></thead><tbody id="langRows"></tbody></table>
+</div></section>
+
+<section id="download"><div class="wrap">
+  <h2 data-i="dTitle">Get SENYAS</h2>
+  <p class="sub" data-i="dSub">Free. No account. Pick your device.</p>
+  <div class="dl">
+    <div class="f"><span class="ic">🤖</span><b>Android</b><p data-i="dAnd">Download the app file and open it to install. Allow “install unknown apps” for your browser if asked.</p><a class="btn pri" id="apkBtn" href="https://github.com/pogi6969/KAMAY/releases/latest/download/SENYAS.apk"><span data-i="dApk">Download APK</span></a></div>
+    <div class="f"><span class="ic">🍎</span><b>iPhone & iPad</b><ol><li data-i="i1">Open this page in Safari.</li><li data-i="i2">Tap Share, then “Add to Home Screen”.</li><li data-i="i3">Open SENYAS from your home screen.</li></ol><a class="btn sec" href="app/"><span data-i="openWeb">Open in browser</span></a></div>
+    <div class="f"><span class="ic">💻</span><b data-i="dPc">Computer & Chromebook</b><p data-i="dPcD">Install it from Chrome or Edge as an app, or just use it in the browser.</p><button class="btn pri" id="installBtn" hidden><span data-i="dInst">Install app</span></button><a class="btn sec" href="app/"><span data-i="openWeb">Open in browser</span></a></div>
+    <div class="f"><span class="ic">📦</span><b data-i="dFile">One-file version</b><p data-i="dFileD">The whole app in one HTML file to keep or share. It needs internet the first time to fetch hand tracking.</p><a class="btn sec" href="app/index.html" download="SENYAS.html"><span data-i="dFileB">Download file</span></a></div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>FAQ</h2>
+  <details><summary data-i="q1">Which sign language does SENYAS use?</summary><p data-i="a1">The one-handed manual alphabet and core everyday signs shared by Filipino Sign Language (FSL) and American Sign Language (ASL). Signs differ by region, so SENYAS lets you teach it your own.</p></details>
+  <details><summary data-i="q2">Is my camera recorded?</summary><p data-i="a2">No. Video is processed on your device and never uploaded or saved. See the privacy policy.</p></details>
+  <details><summary data-i="q3">Does it need internet?</summary><p data-i="a3">Only the first time, to download it. After that it works offline. Voice typing may need internet, depending on your phone.</p></details>
+  <details><summary data-i="q4">Can it replace an interpreter?</summary><p data-i="a4">No. SENYAS helps with everyday talk and learning. For hospitals, courts and emergencies, ask for a qualified FSL interpreter.</p></details>
+</div></section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 SENYAS · Hand tracking by MediaPipe (Apache-2.0)</span><span><a href="privacy.html" data-i="nPriv">Privacy</a> · <a href="#" id="ckOpen" data-i="ckSet">Cookie settings</a> · <a href="app/">App</a></span></div></footer>
+
+<div class="ck" id="ck" hidden role="dialog" aria-label="Cookies">
+  <p><b data-i="ckT">Cookies</b> — <span data-i="ckD">SENYAS uses one essential cookie to remember this choice. With your OK it also remembers your language. No ads, no analytics, no tracking.</span> <a href="privacy.html" data-i="nPriv">Privacy</a></p>
+  <div class="row"><button class="btn sec" id="ckNo" data-i="ckNo">Essential only</button><button class="btn pri" id="ckYes" data-i="ckYes">Accept</button></div>
+</div>
+<script>/*JS*/</script>
+<script>
+(function () {
+  var L = {
+    fil: { nFeat: "Mga Tampok", nLearn: "Matuto", nDl: "I-download", nPriv: "Privacy", h1: "Senyas, <span>isinasalin nang live.</span>", lead: "Itutok ang camera sa mga kamay na nagse-senyas at isusulat at bibigkasin ng SENYAS ang mga salita. Mag-type o magsalita at isesenyas ito ng avatar. Matuto sa Ingles, Filipino at Bikol.", getApp: "I-download ang app", openWeb: "Buksan sa browser", offline: "Gumagana offline", fTitle: "Lahat sa iisang app", fSub: "Dalawang-direksiyong pagsasalin para sa Deaf at nakaririnig, at kumpletong kurso sa pag-senyas.", f1: "Live na senyas → salita", f2: "Basahin nang malakas, bukas o sarado", f3: "Salita at boses → senyas", f4: "Mga aralin na sumusuri sa iyo", f5: "Ingles, Filipino, Bikol", f6: "Turuan ng iyong mga senyas", f7: "Pribado at offline", f8: "Akma sa bawat screen", f9: "Pagbasa ng braille", hTitle: "Paano ito gumagana", s1: "Buksan ang camera", s2: "Mag-senyas", s3: "Sumagot", langTitle: "Tatlong wika, isang senyas", dTitle: "Kunin ang SENYAS", dSub: "Libre. Walang account. Piliin ang iyong device.", dApk: "I-download ang APK", dInst: "I-install ang app", dFileB: "I-download ang file", ckT: "Cookies", ckD: "Gumagamit ang SENYAS ng isang mahalagang cookie para tandaan ang pagpiling ito. Kung papayag ka, tatandaan din nito ang iyong wika. Walang ads, analytics o tracking.", ckNo: "Mahalaga lang", ckYes: "Tanggapin", ckSet: "Settings ng cookie" },
+    bcl: { nFeat: "Mga Tampok", nLearn: "Mag-adal", nDl: "I-download", nPriv: "Privacy", h1: "Senyas, <span>isinasalin nin live.</span>", lead: "Itutok an kamera sa mga kamot na nagsesenyas asin isusurat asin sasabihon kan SENYAS an mga tataramon. Mag-type o magtaram asin isesenyas ini kan avatar. Mag-adal sa Ingles, Filipino asin Bikol.", getApp: "I-download an app", openWeb: "Bukasan sa browser", offline: "Nagagana offline", fTitle: "Gabos sa sarong app", fSub: "Duwang-direksyon na pagsalin para sa Deaf asin nakakadangog, asin kumpletong kurso sa pagsenyas.", f1: "Live na senyas → tataramon", f2: "Basahon nin makusog, bukas o serrado", f3: "Tataramon asin boses → senyas", f4: "Mga leksyon na nagsisiyasat saimo", f5: "Ingles, Filipino, Bikol", f6: "Tukduan kan saimong mga senyas", f7: "Pribado asin offline", f8: "Angay sa kada screen", f9: "Pagbasa kan braille", hTitle: "Paano ini nagagana", s1: "Bukasan an kamera", s2: "Magsenyas", s3: "Magsimbag", langTitle: "Tolong tataramon, sarong senyas", dTitle: "Kuanon an SENYAS", dSub: "Libre. Mayong account. Pilion an saimong device.", dApk: "I-download an APK", dInst: "I-install an app", dFileB: "I-download an file", ckT: "Cookies", ckD: "Naggagamit an SENYAS nin sarong kaipuhan na cookie tanganing girumdomon an pagpili na ini. Kun tugot ka, gigirumdomon man kaini an saimong tataramon. Mayong ads, analytics o tracking.", ckNo: "Kaipuhan sana", ckYes: "Akoon", ckSet: "Settings kan cookie" }
+  };
+  var EN = {};
+  document.querySelectorAll("[data-i]").forEach(function (el) { if (!(el.dataset.i in EN)) EN[el.dataset.i] = el.innerHTML; });
+  function cookie(n) { var m = document.cookie.match(new RegExp("(?:^|; )" + n + "=([^;]*)")); return m ? decodeURIComponent(m[1]) : null; }
+  function setCookie(n, v) { document.cookie = n + "=" + encodeURIComponent(v) + "; Max-Age=31536000; Path=/; SameSite=Lax" + (location.protocol === "https:" ? "; Secure" : ""); }
+  function lang(l) {
+    document.documentElement.lang = l === "en" ? "en" : l;
+    document.querySelectorAll("[data-i]").forEach(function (el) { var k = el.dataset.i; el.innerHTML = (L[l] && L[l][k]) || EN[k]; });
+    document.querySelectorAll(".lang button").forEach(function (b) { b.classList.toggle("on", b.dataset.l === l); });
+    if (cookie("senyas_consent") === "all") setCookie("senyas_lang", l);
+    window.__lang = l;
+  }
+  document.querySelectorAll(".lang button").forEach(function (b) { b.onclick = function () { lang(b.dataset.l); }; });
+  var ck = document.getElementById("ck");
+  if (!cookie("senyas_consent")) ck.hidden = false;
+  document.getElementById("ckYes").onclick = function () { setCookie("senyas_consent", "all"); setCookie("senyas_lang", window.__lang || "en"); ck.hidden = true; };
+  document.getElementById("ckNo").onclick = function () { setCookie("senyas_consent", "essential"); document.cookie = "senyas_lang=; Max-Age=0; Path=/"; ck.hidden = true; };
+  document.getElementById("ckOpen").onclick = function (e) { e.preventDefault(); ck.hidden = false; };
+  lang(cookie("senyas_lang") || (/^(fil|tl)/i.test(navigator.language) ? "fil" : "en"));
+
+  /* Install buttons: Android gets the APK, others the browser install. */
+  var ua = navigator.userAgent, ev = null;
+  if (/Android/i.test(ua)) document.getElementById("apk").href = document.getElementById("apkBtn").href;
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); ev = e; document.getElementById("installBtn").hidden = false; });
+  document.getElementById("installBtn").onclick = function () { if (ev) { ev.prompt(); ev = null; this.hidden = true; } };
+  if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(function () {});
+
+  /* Language table and the signing demo. */
+  var rows = ["hello", "thankyou", "please", "sorry", "help", "iloveyou", "water", "friend"];
+  document.getElementById("langRows").innerHTML = rows.map(function (id) { var w = DATA.words[id]; return "<tr><td>" + w.en + "</td><td>" + w.fil + "</td><td>" + w.bcl + "</td></tr>"; }).join("");
+  var pl = new Avatar.Player(document.getElementById("demo"), { tone: 1 }), seq = ["hello", "spell:SENYAS", "thankyou", "iloveyou", "help"], si = 0, LN = ["en", "fil", "bcl"], NAME = { en: "ENGLISH", fil: "FILIPINO", bcl: "BIKOL" };
+  function next() {
+    var s = seq[si % seq.length], l = LN[Math.floor(si / seq.length) % 3]; si++;
+    document.getElementById("capLang").textContent = NAME[l];
+    if (s.indexOf("spell:") === 0) {
+      var word = s.slice(6), shown = "";
+      document.getElementById("capTxt").textContent = "";
+      pl.onitem = function (i) { shown = word.slice(0, i + 1); document.getElementById("capTxt").textContent = shown; };
+      pl.play(word.split("").map(function (c) { return { spec: Avatar.letterSpec(c), hold: 200 }; }));
+    } else {
+      var w = DATA.words[s]; pl.onitem = function () { document.getElementById("capTxt").textContent = w[l].split(" / ")[0]; };
+      pl.play([{ spec: w.spec, face: w.face, hold: 900 }]);
+    }
+  }
+  pl.onend = function () { setTimeout(next, 700); };
+  var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting && !pl.playing && !pl.started) { pl.started = true; next(); } });
+  io.observe(document.getElementById("demo"));
+})();
+</script>
+</body>
+</html>

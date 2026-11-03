@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs><linearGradient id="bg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="512" y2="512"><stop offset="0" stop-color="#1F6BFF"/><stop offset="1" stop-color="#7A3CFF"/></linearGradient></defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <g transform="translate(256 256) scale(SCALE) translate(-256 -270)">
+  <path d="M150 58h212a102 102 0 0 1 102 102v148a102 102 0 0 1-102 102H232l-104 72 22-76a102 102 0 0 1-102-98V160A102 102 0 0 1 150 58z" fill="#fff" fill-opacity=".16" stroke="#fff" stroke-width="16"/>
+  <g fill="#fff">
+    <rect x="176" y="90" width="30" height="150" rx="15"/>
+    <rect x="264" y="112" width="28" height="128" rx="14"/>
+    <rect x="170" y="196" width="126" height="118" rx="46"/>
+  </g>
+  <path d="M190 284L128 226" stroke="#fff" stroke-width="30" stroke-linecap="round" fill="none"/>
+  <g fill="#FFC23A"><circle cx="216" cy="256" r="10"/><circle cx="216" cy="286" r="10"/><circle cx="248" cy="226" r="10"/></g>
+  <g stroke="#fff" stroke-width="18" stroke-linecap="round" fill="none"><path d="M340 196a62 62 0 0 1 0 88"/><path d="M378 160a112 112 0 0 1 0 160"/></g>
+  </g>
+</svg>

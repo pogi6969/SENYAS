@@ -1,0 +1,8 @@
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+ios/SENYAS.xcodeproj/
+ios/build/
+*.jks
+*.keystore

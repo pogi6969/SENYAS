@@ -1,0 +1,853 @@
+{
+ "static": [
+  {
+   "level": 0.5,
+   "n": 960,
+   "k": 959,
+   "acc": 0.9989583333333333,
+   "lo": 0.9941231517745599,
+   "hi": 0.9998161013143292
+  },
+  {
+   "level": 1,
+   "n": 960,
+   "k": 950,
+   "acc": 0.9895833333333334,
+   "lo": 0.9809317583532987,
+   "hi": 0.9943322269322504
+  },
+  {
+   "level": 1.5,
+   "n": 960,
+   "k": 903,
+   "acc": 0.940625,
+   "lo": 0.9238459771347406,
+   "hi": 0.9538916096222535
+  },
+  {
+   "level": 2,
+   "n": 960,
+   "k": 853,
+   "acc": 0.8885416666666667,
+   "lo": 0.8670650490443161,
+   "hi": 0.9069210499163429
+  }
+ ],
+ "H1": {
+  "n": 960,
+  "k": 950,
+  "p0": 0.9,
+  "p": 6.5406014211141e-31
+ },
+ "topConfusions": [
+  [
+   "U",
+   "R",
+   34
+  ],
+  [
+   "R",
+   "U",
+   21
+  ],
+  [
+   "V",
+   "U",
+   15
+  ],
+  [
+   "N",
+   "M",
+   12
+  ],
+  [
+   "G",
+   "Q",
+   10
+  ],
+  [
+   "T",
+   "S",
+   9
+  ],
+  [
+   "S",
+   "T",
+   9
+  ],
+  [
+   "U",
+   "V",
+   7
+  ]
+ ],
+ "moving": [
+  {
+   "sign": "hello",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "yes",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "no",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "please",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "sorry",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "thankyou",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "where",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "water",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "eat",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "bathroom",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "J",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "Z",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "Ñ",
+   "two": false,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "love",
+   "two": true,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "more",
+   "two": true,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "friend",
+   "two": true,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "name",
+   "two": true,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "house",
+   "two": true,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  },
+  {
+   "sign": "help",
+   "two": true,
+   "n": 30,
+   "k": 30,
+   "rate": 1,
+   "lo": 0.8864829086095221,
+   "hi": 1
+  }
+ ],
+ "movingAll": {
+  "k": 570,
+  "n": 570,
+  "rate": 1.0,
+  "ci": [
+   0.9933054696627083,
+   0.9999999999999999
+  ]
+ },
+ "H2": {
+  "n": 570,
+  "k": 570,
+  "p0": 0.9,
+  "p": 8.283814791255726e-27
+ },
+ "still": {
+  "sequences": 144,
+  "firstCommitCorrect": 1,
+  "movingSignFalseAlarms": 0,
+  "falseAlarmCI": [
+   0,
+   0.025984567266588023
+  ]
+ },
+ "braille": [
+  {
+   "group": "All photos",
+   "n": 300,
+   "cer": 0.12632558139534883,
+   "exact": 0.8166666666666667,
+   "ci": [
+    0.7689704376794906,
+    0.85635538998861
+   ]
+  },
+  {
+   "group": "Printed dots",
+   "n": 141,
+   "cer": 0.15342250196695514,
+   "exact": 0.8014184397163121,
+   "ci": [
+    0.7279646270433555,
+    0.8588833503333098
+   ]
+  },
+  {
+   "group": "Embossed dots",
+   "n": 159,
+   "cer": 0.10201200141193081,
+   "exact": 0.8301886792452831,
+   "ci": [
+    0.7642061413781436,
+    0.8805922393795991
+   ]
+  },
+  {
+   "group": "Skew 0–2°",
+   "n": 96,
+   "cer": 0.06325301204819277,
+   "exact": 0.8958333333333334,
+   "ci": [
+    0.8187766618632338,
+    0.9424290880446203
+   ]
+  },
+  {
+   "group": "Skew 2–4°",
+   "n": 100,
+   "cer": 0.16244180031039834,
+   "exact": 0.77,
+   "ci": [
+    0.6784543514317231,
+    0.841568452531236
+   ]
+  },
+  {
+   "group": "Skew 4–6°",
+   "n": 104,
+   "cer": 0.14590347923681257,
+   "exact": 0.7884615384615384,
+   "ci": [
+    0.7004227763289637,
+    0.8559487908584666
+   ]
+  },
+  {
+   "group": "Blur < 0.8 px",
+   "n": 149,
+   "cer": 0.13132743362831859,
+   "exact": 0.8053691275167785,
+   "ci": [
+    0.7344582427401484,
+    0.8609294004145948
+   ]
+  },
+  {
+   "group": "Blur ≥ 0.8 px",
+   "n": 151,
+   "cer": 0.1207843137254902,
+   "exact": 0.8278145695364238,
+   "ci": [
+    0.7596608208115505,
+    0.8797022444112319
+   ]
+  },
+  {
+   "group": "Dot pitch < 15 px",
+   "n": 107,
+   "cer": 0.16743002544529262,
+   "exact": 0.7757009345794392,
+   "ci": [
+    0.6879055661077256,
+    0.8443855592459322
+   ]
+  },
+  {
+   "group": "Dot pitch 15–18 px",
+   "n": 119,
+   "cer": 0.11758989310009718,
+   "exact": 0.8403361344537815,
+   "ci": [
+    0.7640484451643166,
+    0.8953373003811664
+   ]
+  },
+  {
+   "group": "Dot pitch ≥ 18 px",
+   "n": 74,
+   "cer": 0.07988165680473373,
+   "exact": 0.8378378378378378,
+   "ci": [
+    0.7375997655871838,
+    0.904730299570778
+   ]
+  }
+ ],
+ "brailleMs": {
+  "median": 25.6,
+  "p90": 35.1
+ },
+ "H3": {
+  "n": 300,
+  "cer": 0.12632558139534883,
+  "k20": 253
+ },
+ "mediapipe": {
+  "n": 288,
+  "detected": 235,
+  "detRate": 0.8159722222222222,
+  "correct": 142,
+  "accDet": 0.6042553191489362,
+  "ms": 71
+ },
+ "mediapipePer": {
+  "A": [
+   12,
+   12,
+   10
+  ],
+  "B": [
+   12,
+   1,
+   1
+  ],
+  "C": [
+   12,
+   11,
+   11
+  ],
+  "D": [
+   12,
+   12,
+   0
+  ],
+  "E": [
+   12,
+   12,
+   6
+  ],
+  "F": [
+   12,
+   12,
+   12
+  ],
+  "G": [
+   12,
+   0,
+   0
+  ],
+  "H": [
+   12,
+   6,
+   5
+  ],
+  "I": [
+   12,
+   12,
+   12
+  ],
+  "K": [
+   12,
+   12,
+   6
+  ],
+  "L": [
+   12,
+   12,
+   12
+  ],
+  "M": [
+   12,
+   12,
+   0
+  ],
+  "N": [
+   12,
+   12,
+   0
+  ],
+  "O": [
+   12,
+   6,
+   4
+  ],
+  "P": [
+   12,
+   7,
+   6
+  ],
+  "Q": [
+   12,
+   1,
+   1
+  ],
+  "R": [
+   12,
+   12,
+   12
+  ],
+  "S": [
+   12,
+   12,
+   0
+  ],
+  "T": [
+   12,
+   12,
+   12
+  ],
+  "U": [
+   12,
+   12,
+   4
+  ],
+  "V": [
+   12,
+   12,
+   10
+  ],
+  "W": [
+   12,
+   11,
+   0
+  ],
+  "X": [
+   12,
+   12,
+   10
+  ],
+  "Y": [
+   12,
+   12,
+   8
+  ]
+ },
+ "timing": {
+  "recognizerMs": 0.089599255,
+  "templates": 572,
+  "mediapipeMs": 71,
+  "brailleMs": 25.6
+ },
+ "coverage": {
+  "en": {
+   "signs": 63,
+   "spelled": 0
+  },
+  "fil": {
+   "signs": 63,
+   "spelled": 0
+  },
+  "bcl": {
+   "signs": 63,
+   "spelled": 0
+  },
+  "words": 93,
+  "numbers": 11,
+  "phrases": 32,
+  "live": 21
+ },
+ "perLetter": {
+  "A": 1.0,
+  "B": 1.0,
+  "C": 1.0,
+  "D": 1.0,
+  "E": 0.95,
+  "F": 1.0,
+  "G": 0.95,
+  "H": 1.0,
+  "I": 1.0,
+  "K": 0.9833333333333333,
+  "L": 1.0,
+  "M": 0.9666666666666667,
+  "N": 0.8166666666666667,
+  "O": 1.0,
+  "P": 0.9833333333333333,
+  "Q": 0.9833333333333333,
+  "R": 0.8166666666666667,
+  "S": 0.95,
+  "T": 0.8833333333333333,
+  "U": 0.6333333333333333,
+  "V": 0.8833333333333333,
+  "W": 1.0,
+  "X": 1.0,
+  "Y": 1.0
+ },
+ "ablation": {
+  "Full design": {
+   "n": 720,
+   "accuracy": 0.9597222222222223
+  },
+  "No mirror check (trust the hand label)": {
+   "n": 720,
+   "accuracy": 0.8930555555555556
+  },
+  "No orientation features": {
+   "n": 720,
+   "accuracy": 0.8347222222222223
+  },
+  "Camera-frame coordinates (no palm frame)": {
+   "n": 720,
+   "accuracy": 0.7541666666666667
+  },
+  "One example per letter": {
+   "n": 720,
+   "accuracy": 0.9541666666666667
+  }
+ },
+ "words": [
+  {
+   "holdMs": 300,
+   "signerMs": 500,
+   "words": 40,
+   "wordAccuracy": 0.875,
+   "cer": 0.02358490566037736
+  },
+  {
+   "holdMs": 300,
+   "signerMs": 700,
+   "words": 40,
+   "wordAccuracy": 0.95,
+   "cer": 0.009433962264150943
+  },
+  {
+   "holdMs": 300,
+   "signerMs": 1000,
+   "words": 40,
+   "wordAccuracy": 0.925,
+   "cer": 0.014150943396226415
+  },
+  {
+   "holdMs": 400,
+   "signerMs": 500,
+   "words": 40,
+   "wordAccuracy": 0.85,
+   "cer": 0.02830188679245283
+  },
+  {
+   "holdMs": 400,
+   "signerMs": 700,
+   "words": 40,
+   "wordAccuracy": 0.875,
+   "cer": 0.02358490566037736
+  },
+  {
+   "holdMs": 400,
+   "signerMs": 1000,
+   "words": 40,
+   "wordAccuracy": 0.95,
+   "cer": 0.009433962264150943
+  },
+  {
+   "holdMs": 600,
+   "signerMs": 500,
+   "words": 40,
+   "wordAccuracy": 0,
+   "cer": 0.46226415094339623
+  },
+  {
+   "holdMs": 600,
+   "signerMs": 700,
+   "words": 40,
+   "wordAccuracy": 0.8,
+   "cer": 0.03773584905660377
+  },
+  {
+   "holdMs": 600,
+   "signerMs": 1000,
+   "words": 40,
+   "wordAccuracy": 0.875,
+   "cer": 0.02358490566037736
+  }
+ ],
+ "custom": {
+  "perSign": {
+   "spiral": {
+    "trials": 30,
+    "detected": 1,
+    "recordedAsMoving": 3
+   },
+   "climb": {
+    "trials": 30,
+    "detected": 1,
+    "recordedAsMoving": 3
+   },
+   "swipe": {
+    "trials": 30,
+    "detected": 1,
+    "recordedAsMoving": 3
+   },
+   "knock": {
+    "trials": 30,
+    "detected": 1,
+    "recordedAsMoving": 3
+   }
+  },
+  "lookalikes": {
+   "trials": 104,
+   "falseAccepts": 0
+  }
+ },
+ "brailleAblation": {
+  "+ box smoothing": {
+   "cer": 0.14790697674418604,
+   "exact": 0.8033333333333333
+  },
+  "+ neighbour filter": {
+   "cer": 0.12744186046511627,
+   "exact": 0.81
+  },
+  "+ both steps": {
+   "cer": 0.14902325581395348,
+   "exact": 0.7933333333333333
+  }
+ },
+ "ui": [
+  {
+   "name": "Small phone",
+   "w": 320,
+   "h": 568,
+   "layout": "bottom tabs",
+   "overflow": 0,
+   "small": 0,
+   "loadMs": 65,
+   "errors": 0
+  },
+  {
+   "name": "Android phone",
+   "w": 360,
+   "h": 740,
+   "layout": "bottom tabs",
+   "overflow": 0,
+   "small": 0,
+   "loadMs": 51,
+   "errors": 0
+  },
+  {
+   "name": "iPhone",
+   "w": 390,
+   "h": 844,
+   "layout": "bottom tabs",
+   "overflow": 0,
+   "small": 0,
+   "loadMs": 54,
+   "errors": 0
+  },
+  {
+   "name": "Large phone",
+   "w": 412,
+   "h": 915,
+   "layout": "bottom tabs",
+   "overflow": 0,
+   "small": 0,
+   "loadMs": 121,
+   "errors": 0
+  },
+  {
+   "name": "Phone, sideways",
+   "w": 844,
+   "h": 390,
+   "layout": "side rail",
+   "overflow": 0,
+   "small": 0,
+   "loadMs": 50,
+   "errors": 0
+  },
+  {
+   "name": "Small tablet",
+   "w": 768,
+   "h": 1024,
+   "layout": "side rail",
+   "overflow": 0,
+   "small": 0,
+   "loadMs": 50,
+   "errors": 0
+  },
+  {
+   "name": "Tablet",
+   "w": 820,
+   "h": 1180,
+   "layout": "side rail",
+   "overflow": 0,
+   "small": 0,
+   "loadMs": 65,
+   "errors": 0
+  },
+  {
+   "name": "Tablet, sideways",
+   "w": 1180,
+   "h": 820,
+   "layout": "side rail",
+   "overflow": 0,
+   "small": 0,
+   "loadMs": 54,
+   "errors": 0
+  },
+  {
+   "name": "Laptop",
+   "w": 1366,
+   "h": 768,
+   "layout": "side rail",
+   "overflow": 0,
+   "small": 0,
+   "loadMs": 58,
+   "errors": 0
+  },
+  {
+   "name": "Desktop",
+   "w": 1920,
+   "h": 1080,
+   "layout": "side rail",
+   "overflow": 0,
+   "small": 4,
+   "loadMs": 61,
+   "errors": 0
+  },
+  {
+   "name": "TV / 4K (scaled)",
+   "w": 2560,
+   "h": 1440,
+   "layout": "side rail",
+   "overflow": 0,
+   "small": 0,
+   "loadMs": 57,
+   "errors": 0
+  }
+ ],
+ "contrast": [
+  {
+   "pair": "Light: body text on page",
+   "ratio": 16.691154585159232
+  },
+  {
+   "pair": "Light: muted text on card",
+   "ratio": 5.6199956839596
+  },
+  {
+   "pair": "Light: button text on blue",
+   "ratio": 5.988570059244588
+  },
+  {
+   "pair": "Dark: body text on page",
+   "ratio": 16.074128960362604
+  },
+  {
+   "pair": "Dark: muted text on card",
+   "ratio": 7.083937728429227
+  },
+  {
+   "pair": "Dark: button text on blue",
+   "ratio": 6.878224546134746
+  },
+  {
+   "pair": "Camera caption on glass",
+   "ratio": 12.18431921849719
+  }
+ ]
+}
