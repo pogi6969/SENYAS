@@ -642,5 +642,5 @@ ap("n", ["Open SENYAS and choose what it may save on the device. Choose the app 
          "Learn: choose a unit, watch each sign, take the quiz, and practise with the camera. Teach a sign: record it three times."])
 ap("h2", "Appendix H. Source code and data")
 ap("p", "The app, website, Android project, benchmarks and the scripts that produced every number, table and figure in this paper are in the "
-       "KAMAY repository (github.com/pogi6969/KAMAY): src/ (hand.js, avatar.js, recog.js, braille.js, data.js, app.js), research/code/ "
+       "SENYAS repository (github.com/pogi6969/SENYAS): src/ (hand.js, avatar.js, recog.js, braille.js, data.js, app.js), research/code/ "
        "(bench_recognizer.js, bench_browser.js, bench_page.html, bench_ui.js, analyze.py, and their results) and research/paper/ (this paper's generator).")

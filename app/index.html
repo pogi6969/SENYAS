@@ -2447,7 +2447,7 @@ if (typeof module !== "undefined") module.exports = Braille;
       row(t("reset"), '<button class="link" id="sReset">↺</button>') + row(t("wipe"), '<button class="link" id="sWipe" style="color:var(--bad)">✕</button>') + "</div>" +
       '<div class="card group"><h3>' + esc(t("about")) + '</h3><p class="small">' + esc(t("aboutText")) + "</p>" + row(t("version"), "<span>" + VERSION + "</span>") +
       (installEvt && !INAPP ? row(t("install"), '<button class="pill" id="sInst"><svg><use href="#i-dl"/></svg>' + esc(t("install")) + "</button>") : "") +
-      '<p class="muted small">Hand tracking: MediaPipe (Apache-2.0). <a href="' + (INAPP ? "https://pogi6969.github.io/KAMAY/" : "../") + '" target="_blank" rel="noopener">SENYAS website</a></p></div>';
+      '<p class="muted small">Hand tracking: MediaPipe (Apache-2.0). <a href="' + (INAPP ? "https://pogi6969.github.io/SENYAS/" : "../") + '" target="_blank" rel="noopener">SENYAS website</a></p></div>';
     var on = function (id, ev, f) { var e = $("#" + id); if (e) e.addEventListener(ev, f); };
     on("sUi", "change", function () { S.ui = this.value; saveS(); applyText(); renderQuick(); renderSettings(); });
     on("sOut", "change", function () { S.out = this.value; $("#outLang").value = S.out; saveS(); renderCaption(); });

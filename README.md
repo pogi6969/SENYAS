@@ -1,4 +1,4 @@
-# KAMAY
+# SENYAS
 
 SENYAS: a live sign language translator, braille reader and sign language course in English, Filipino and Bikol. The camera reads fingerspelling, numbers and everyday signs and can say the words aloud (Read aloud on or off); an avatar signs typed or spoken words back; braille is read from a photo or the live camera; and lessons, quizzes and camera practice teach signing. This repository holds the SENYAS website and the SENYAS app (version 1.0.0). Visitors install the app from the website on Android, iPhone, iPad and computers, and it opens without a signal once installed.
 
@@ -29,9 +29,9 @@ SENYAS: a live sign language translator, braille reader and sign language course
 
 Installing needs HTTPS. With GitHub Pages: Settings → Pages → Build and deployment → Deploy from a branch → `main` and `/ (root)` → Save.
 
-- Website: https://pogi6969.github.io/KAMAY/
-- App: https://pogi6969.github.io/KAMAY/app/
-- Android app: https://github.com/pogi6969/KAMAY/releases/latest/download/SENYAS.apk (built on every push to `main`; release downloads need the repository to be public)
+- Website: https://pogi6969.github.io/SENYAS/
+- App: https://pogi6969.github.io/SENYAS/app/
+- Android app: https://github.com/pogi6969/SENYAS/releases/latest/download/SENYAS.apk (built on every push to `main`; release downloads need the repository to be public)
 
 For Play Store builds add the secrets `SENYAS_KEYSTORE_B64`, `SENYAS_KEYSTORE_PASSWORD`, `SENYAS_KEY_ALIAS` and `SENYAS_KEY_PASSWORD`. For the iPhone app, run `xcodegen` in `native/ios` on a Mac and open `SENYAS.xcodeproj` in Xcode.
 

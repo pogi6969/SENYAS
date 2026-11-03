@@ -6,7 +6,7 @@ import WebKit
    app-bound domain); with no signal on first start it opens the copy bundled in the app. */
 final class SenyasViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
-    private static let site = URL(string: "https://pogi6969.github.io/KAMAY/app/")!
+    private static let site = URL(string: "https://pogi6969.github.io/SENYAS/app/")!
     private var usedBundle = false
 
     private let web: WKWebView = {
@@ -51,7 +51,7 @@ final class SenyasViewController: UIViewController, WKNavigationDelegate, WKUIDe
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = action.request.url else { return decisionHandler(.allow) }
         if url.isFileURL || url.scheme == "about" || url.scheme == "blob" || url.scheme == "data" ||
-            (url.host == Self.site.host && url.path.hasPrefix("/KAMAY/app")) || action.targetFrame?.isMainFrame == false {
+            (url.host == Self.site.host && url.path.hasPrefix("/SENYAS/app")) || action.targetFrame?.isMainFrame == false {
             return decisionHandler(.allow)
         }
         UIApplication.shared.open(url)
