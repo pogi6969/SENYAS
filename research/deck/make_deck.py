@@ -15,11 +15,12 @@ import content as C
 S, pc = C.S, C.pc
 FIG = HERE.parent / "figures"
 TPL = HERE / "template" / "LegaSci_PR2_template.pptx"
-RED, INK, CAP, LINE, PINK, ALT = "8B0707", "2B2020", "6A5656", "E3C9C9", "F8EAEA", "FBF3F3"
+RED, INK, CAP, LINE, PINK, ALT = "8B0707", "2B2020", "FFFFFF", "E3C9C9", "F8EAEA", "FBF3F3"
+SCALE = 1.1  # every font is enlarged by this for legibility
 FONT = "ITC Avant Garde Gothic"
 prs = Presentation(str(TPL))
 SRC = list(prs.slides)
-KEEP = {"Freeform 2", "Group 3", "TextBox 6", "Subtitle", "Slide number"}
+KEEP = {"Group 3", "TextBox 6", "Subtitle", "Slide number"}
 n_slide = [0]
 
 
@@ -56,8 +57,25 @@ def set_text(shape, text):
 def named(s, name): return [x for x in s.shapes if x.name == name][0]
 
 
+def red_photo(s):
+    """The title slide's look: a red background with the school photo at 26% over it."""
+    photo = named(SRC[0], "Freeform 4")
+    rmap = {}
+    for rId, rel in SRC[0].part.rels.items():
+        if "image" in rel.reltype: rmap[rId] = s.part.relate_to(rel._target, rel.reltype)
+    el = copy.deepcopy(photo._element)
+    for node in el.iter():
+        for a in (qn("r:embed"), qn("r:link")):
+            if node.get(a) in rmap: node.set(a, rmap[node.get(a)])
+    s.shapes._spTree.insert(2, el)
+    bg = copy.deepcopy(SRC[0]._element.cSld.find(qn("p:bg"))); cs = s._element.cSld
+    if cs.find(qn("p:bg")) is not None: cs.remove(cs.find(qn("p:bg")))
+    cs.insert(0, bg)
+
+
 def content_slide(title, sub=None):
     s = clone(SRC[1], KEEP); n_slide[0] += 1
+    red_photo(s)
     set_text(named(s, "TextBox 6"), title)
     if len(title) > 22: named(s, "TextBox 6").text_frame.paragraphs[0].runs[0].font.size = Pt(40)
     if sub: set_text(named(s, "Subtitle"), sub)
@@ -67,7 +85,7 @@ def content_slide(title, sub=None):
 
 
 def run(p, text, size, color=INK, bold=False):
-    r = p.add_run(); r.text = text; f = r.font; f.size = Pt(size); f.bold = bold; f.name = FONT; f.color.rgb = RGBColor.from_string(color)
+    r = p.add_run(); r.text = text; f = r.font; f.size = Pt(round(size * SCALE, 1)); f.bold = bold; f.name = FONT; f.color.rgb = RGBColor.from_string(color)
     return r
 
 
@@ -90,7 +108,7 @@ def box(s, x, y, w, h, fill="FFFFFF", line=LINE, shape=MSO_SHAPE.RECTANGLE):
 
 
 def label(s, x, y, w, h, t, size=18):
-    b = box(s, x, y, w, h, RED, None); tf = b.text_frame; tf.word_wrap = True
+    b = box(s, x, y, w, h, RED, "FFFFFF"); b.line.width = Pt(1.5); tf = b.text_frame; tf.word_wrap = True
     p = tf.paragraphs[0]; p.alignment = PP_ALIGN.CENTER; run(p, t, size, "FFFFFF", True)
     return b
 
@@ -103,7 +121,7 @@ def bar(s, y, t, h=1.0):
 def caption(s, x, y, w, t): text(s, x, y, w, 0.4, [t], 14, CAP)
 
 
-def table(s, x, y, w, widths, rows, size=13, rh=0.42):
+def table(s, x, y, w, widths, rows, size=14, rh=0.42):
     t = s.shapes.add_table(len(rows), len(rows[0]), Inches(x), Inches(y), Inches(w), Inches(rh * len(rows))).table
     tot = sum(widths)
     for j, cw in enumerate(widths): t.columns[j].width = Inches(w * cw / tot)
@@ -117,7 +135,7 @@ def table(s, x, y, w, widths, rows, size=13, rh=0.42):
 
 
 def arrow(s, x, y, w=0.9, h=0.6, shape=MSO_SHAPE.RIGHT_ARROW):
-    a = s.shapes.add_shape(shape, Inches(x), Inches(y), Inches(w), Inches(h)); a.fill.solid(); a.fill.fore_color.rgb = RGBColor.from_string(RED); a.line.fill.background()
+    a = s.shapes.add_shape(shape, Inches(x), Inches(y), Inches(w), Inches(h)); a.fill.solid(); a.fill.fore_color.rgb = RGBColor.from_string("FFFFFF"); a.line.fill.background()
 
 
 def pic(s, path, x, y, w=None, h=None):
@@ -177,8 +195,8 @@ bar(s, 8.85, "Synthesis. No free tool joins sign, braille, text and speech offli
 s = content_slide("THEORETICAL/CONCEPTUAL FRAMEWORK PARADIGM")
 named(s, "TextBox 6").text_frame.paragraphs[0].runs[0].font.size = Pt(34)
 text(s, 0.9, 1.55, 18.2, 0.5, ["Theoretical Framework"], 20, "FFFFFF")
-text(s, 0.9, 2.2, 7.85, 0.5, ["Research gap"], 18, RED).text_frame.paragraphs[0].runs[0].font.bold = True
-text(s, 10.15, 2.2, 8.95, 0.5, ["Theory or method that addresses it"], 18, RED).text_frame.paragraphs[0].runs[0].font.bold = True
+text(s, 0.9, 2.2, 7.85, 0.5, ["Research gap"], 18, "FFFFFF").text_frame.paragraphs[0].runs[0].font.bold = True
+text(s, 10.15, 2.2, 8.95, 0.5, ["Theory or method that addresses it"], 18, "FFFFFF").text_frame.paragraphs[0].runs[0].font.bold = True
 G = [("G1  No FSL dataset", "Robot-hand kinematics generates labelled handshapes (FK, FABRIK)."),
      ("G2  Hands vary in place, size, angle", "Palm-frame coordinates are invariant to translation, scale, rotation."),
      ("G3  Signs move at different speeds", "Hysteresis counting, winding number, dynamic time warping."),
@@ -186,7 +204,7 @@ G = [("G1  No FSL dataset", "Robot-hand kinematics generates labelled handshapes
 for i, (g, th) in enumerate(G):
     y = 2.8 + i * 1.8
     box(s, 0.9, y, 7.85, 1.6); text(s, 1.2, y + 0.3, 7.3, 1.1, [g], 18, INK).text_frame.paragraphs[0].runs[0].font.bold = True
-    arrow(s, 8.9, y + 0.5); b = box(s, 10.15, y, 8.95, 1.6, RED, None); text(s, 10.45, y + 0.3, 8.4, 1.1, [th], 18, "FFFFFF")
+    arrow(s, 8.9, y + 0.5); b = box(s, 10.15, y, 8.95, 1.6, RED, "FFFFFF"); b.line.width = Pt(1.5); text(s, 10.45, y + 0.3, 8.4, 1.1, [th], 18, "FFFFFF")
 caption(s, 0.9, 10.05, 18.2, "Figure 1. Research gaps (left) and the theories and methods used to address them (right)")
 
 # 6. Conceptual paradigm
@@ -255,7 +273,7 @@ table(s, 0.9, 7.4, 18.2, [2.4, 6.4, 2.6], [["Experiment", "Data", "Measure"], ["
 
 # 11. Research design
 s = content_slide("METHODOLOGY", "Research Design")
-text(s, 0.9, 2.2, 18.2, 1.0, ["A developmental engineering-design study (Hevner et al., 2004). SENYAS is designed from kinematic and geometric models, built as working software, and evaluated with nine repeatable computational experiments."], 16)
+text(s, 0.9, 2.2, 18.2, 1.0, ["A developmental engineering-design study (Hevner et al., 2004). SENYAS is designed from kinematic and geometric models, built as working software, and evaluated with nine repeatable computational experiments."], 16, "FFFFFF")
 for i, t in enumerate(["1. Model", "2. Build", "3. Benchmark", "4. Analyse"]):
     label(s, 1.0 + i * 4.6, 3.55, 3.6, 0.8, t, 18)
     if i < 3: arrow(s, 4.7 + i * 4.6, 3.65, 0.8, 0.6)
@@ -296,7 +314,7 @@ text(s, 1.2, 2.5, 7.6, 0.5, ["Formulas"], 19, RED).text_frame.paragraphs[0].runs
 text(s, 1.2, 3.1, 7.6, 6.6, ["Accuracy = correct ÷ trials", "Wilson CI: (p̂ + z²/2n ± z√(p̂(1−p̂)/n + z²/4n²)) ÷ (1 + z²/n)",
      "Binomial test: p = P(X ≥ k | n, p₀)", "CER = Σ Levenshtein(read, true) ÷ Σ length(true)", "Palm frame: Y = (p₉−p₀)/s, Z = (p₅−p₁₇)×Y, X = Y×Z",
      "Grid fit: min over P, x₀ of Σ min(|u−kP|, |u−δ−k′P|)"], 15, gap=12)
-text(s, 9.5, 2.3, 9.6, 0.5, ["Statistical treatment"], 19, RED).text_frame.paragraphs[0].runs[0].font.bold = True
+text(s, 9.5, 2.3, 9.6, 0.5, ["Statistical treatment"], 19, "FFFFFF").text_frame.paragraphs[0].runs[0].font.bold = True
 table(s, 9.5, 2.9, 9.6, [0.8, 5.0, 2.8], [["SOP", "Question", "Tool"], ["1", "Static-letter accuracy; ablation", "Accuracy, Wilson CI, binomial"],
       ["2", "Moving and two-handed signs", "Detection rate, binomial"], ["3", "Fingerspelled words", "Word accuracy, CER, binomial"],
       ["4", "Taught signs", "Detection, false accepts"], ["5", "Braille photos", "Exact rate, CER"], ["6", "Speed", "Median ms"], ["7", "Screens, contrast, coverage", "Faults, WCAG ratio"]], 13, 0.7)
