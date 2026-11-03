@@ -1,7 +1,7 @@
 /* SENYAS service worker: keeps the app, the website and the hand-tracking files so SENYAS opens
    and works without a signal. Pages come from the network when online (updates show at once) and
    from the copy when offline. Bump VERSION after changing icons, the manifest or vendor files. */
-var VERSION = "senyas-v1";
+var VERSION = "senyas-v2";
 var PRECACHE = ["app/", "./", "privacy.html", "manifest.webmanifest", "favicon.ico", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 
 self.addEventListener("install", function (e) {

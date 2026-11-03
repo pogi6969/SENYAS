@@ -8,6 +8,8 @@
 <meta name="theme-color" content="#0E5BD8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!--CSP-->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SENYAS">
@@ -129,7 +131,7 @@
           <div class="chips gloss" id="gloss"></div>
           <div class="brlline" id="t2sBrl" aria-label="Braille"></div>
           <form class="ask card" id="askForm">
-            <textarea id="askText" rows="2" data-ph="typeHere"></textarea>
+            <textarea id="askText" rows="2" data-ph="typeHere" maxlength="600"></textarea>
             <div class="askrow">
               <select id="inLang" aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="bcl">Bikol</option></select>
               <button type="button" class="ib" id="mic" data-tt="speakNow"><svg><use href="#i-mic"/></svg></button>

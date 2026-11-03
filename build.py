@@ -1,9 +1,18 @@
 #!/usr/bin/env python3
 """Builds SENYAS from src/: app/index.html (the app, one file), index.html (the website) and privacy.html."""
-import pathlib
+import base64, hashlib, pathlib, re
 R = pathlib.Path(__file__).resolve().parent
 S = R / "src"
 rd = lambda n: (S / n).read_text(encoding="utf-8")
+def csp(html, extra_script="", extra_connect=""):
+    """Only the page's own scripts (by hash) may run; nothing may be framed, posted or loaded from elsewhere."""
+    hashes = " ".join("'sha256-" + base64.b64encode(hashlib.sha256(m.encode("utf-8")).digest()).decode() + "'" for m in re.findall(r"<script>(.*?)</script>", html, re.S))
+    pol = ("default-src 'self'; script-src 'self' " + hashes + extra_script + "; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; "
+           "media-src 'self' blob: mediastream:; connect-src 'self'" + extra_connect + "; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; "
+           "form-action 'self'; upgrade-insecure-requests")
+    return html.replace("<!--CSP-->", '<meta http-equiv="Content-Security-Policy" content="' + pol + '">')
+
+
 def js(*names): return "\n".join(rd(n) for n in names).replace("</script", "<\\/script")
 policy = rd("policy.html")
 logo = (R / "assets" / "senyas-logo.svg").read_text(encoding="utf-8").replace('id="sg"', 'id="lg"').replace("url(#sg)", "url(#lg)")
@@ -13,10 +22,11 @@ def brand(h): return h.replace('<span class="logo" aria-hidden="true"></span>', 
 app = brand(rd("app.html")).replace("/*CSS*/", rd("app.css")).replace("<!--PRIVACY-->", policy)
 app = app.replace("/*JS*/", js("hand.js", "avatar.js", "data.js", "recog.js", "braille.js", "app.js"))
 (R / "app").mkdir(exist_ok=True)
+app = csp(app, " 'wasm-unsafe-eval' https://cdn.jsdelivr.net", " https://cdn.jsdelivr.net https://storage.googleapis.com")
 (R / "app" / "index.html").write_text(app, encoding="utf-8")
 
 site = brand(rd("site.html"))
-(R / "index.html").write_text(site.replace("/*JS*/", js("hand.js", "avatar.js", "data.js")), encoding="utf-8")
+(R / "index.html").write_text(csp(site.replace("/*JS*/", js("hand.js", "avatar.js", "data.js"))), encoding="utf-8")
 
 head, _, rest = site.partition("<main id=\"top\">")
 _, _, tail = rest.partition("</main>")
@@ -31,5 +41,5 @@ document.getElementById("ckYes").onclick=function(){s("senyas_consent","all");k.
 document.getElementById("ckNo").onclick=function(){s("senyas_consent","essential");document.cookie="senyas_lang=; Max-Age=0; Path=/";k.hidden=true};
 document.getElementById("ckOpen").onclick=function(e){e.preventDefault();k.hidden=false};
 document.querySelectorAll(".lang button").forEach(function(b){b.onclick=function(){location.href="index.html"}});})();</script></body></html>"""
-(R / "privacy.html").write_text(priv, encoding="utf-8")
+(R / "privacy.html").write_text(csp(priv), encoding="utf-8")
 print("built", len(app) // 1024, "KB app,", len(site) // 1024, "KB site")

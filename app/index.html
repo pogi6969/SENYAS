@@ -8,6 +8,8 @@
 <meta name="theme-color" content="#0E5BD8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-uMv4doMsdqjKl3468znUaimIxHPOkZf6WwIFGpupsJ8=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src 'self' https://cdn.jsdelivr.net https://storage.googleapis.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SENYAS">
@@ -346,7 +348,7 @@ input[type=range]{accent-color:var(--pri);width:140px;min-height:40px}
           <div class="chips gloss" id="gloss"></div>
           <div class="brlline" id="t2sBrl" aria-label="Braille"></div>
           <form class="ask card" id="askForm">
-            <textarea id="askText" rows="2" data-ph="typeHere"></textarea>
+            <textarea id="askText" rows="2" data-ph="typeHere" maxlength="600"></textarea>
             <div class="askrow">
               <select id="inLang" aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="bcl">Bikol</option></select>
               <button type="button" class="ib" id="mic" data-tt="speakNow"><svg><use href="#i-mic"/></svg></button>
@@ -1686,7 +1688,7 @@ if (typeof module !== "undefined") module.exports = Braille;
 
   /* ---------- words on screen ---------- */
   var T = {
-    en: { bLive: "Scan braille live", bUpload: "Upload photo", bTip: "Hold the page flat and straight in good light. Reads Grade 1 (uncontracted) braille.", bHint: "Scan a page or upload a photo of braille. The text appears here.", bNone: "No braille found. Move closer, hold it flat and add light.", bChart: "Braille alphabet", bCellsN: "cells", tabTranslate: "Translate", tabLearn: "Learn", tabDict: "Dictionary", tabPhrases: "Phrases", tabSettings: "Settings", signToText: "Sign → Words", textToSign: "Words → Sign",
+    en: { badFile: "That file can't be used. Choose a photo (or a SENYAS data file) under the size limit.", bLive: "Scan braille live", bUpload: "Upload photo", bTip: "Hold the page flat and straight in good light. Reads Grade 1 (uncontracted) braille.", bHint: "Scan a page or upload a photo of braille. The text appears here.", bNone: "No braille found. Move closer, hold it flat and add light.", bChart: "Braille alphabet", bCellsN: "cells", tabTranslate: "Translate", tabLearn: "Learn", tabDict: "Dictionary", tabPhrases: "Phrases", tabSettings: "Settings", signToText: "Sign → Words", textToSign: "Words → Sign",
       startCamera: "Start camera", stopCamera: "Stop camera", camPrivacy: "Video stays on this device. Nothing is uploaded.", flip: "Switch camera", modeAll: "All", modeWords: "Words",
       readAloud: "Read aloud", captionHint: "Sign in front of the camera. Letters, numbers and words appear here.", space: "Space", backspace: "Delete", newLine: "New line", speak: "Speak",
       copy: "Copy", share: "Share", clear: "Clear", teachSign: "Teach a sign", play: "Play", replay: "Replay", typeHere: "Type or say something…", speakNow: "Speak", signIt: "Sign it",
@@ -1710,7 +1712,7 @@ if (typeof module !== "undefined") module.exports = Braille;
       showHand: "Show your hand", reading: "Reading…", camError: "The camera could not start. Allow camera access and try again.", modelError: "Hand tracking could not load. Connect once, then it works offline.",
       copied: "Copied", noSpeech: "Voice input isn't available here. Type instead.", listening: "Listening…", signer: "Signer", speaker: "Speaker", record: "Record", save: "Save", word: "Word",
       newWord: "or a new word", delete: "Delete", passed: "Passed!", tryAgain: "Try again", knew: "I knew it", again: "Again", reveal: "Show answer", personal: "Personal examples", saved: "Saved", unitDone: "Unit complete", badges: "Badges" },
-    fil: { bLive: "I-scan ang braille nang live", bUpload: "Mag-upload ng larawan", bTip: "Ilapag nang patag at tuwid ang papel sa maliwanag na lugar. Bumabasa ng Grade 1 na braille.", bHint: "Mag-scan ng pahina o mag-upload ng larawan ng braille. Lalabas dito ang teksto.", bNone: "Walang nakitang braille. Lumapit, ituwid at dagdagan ang ilaw.", bChart: "Alpabeto ng braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Matuto", tabDict: "Diksiyonaryo", tabPhrases: "Mga Pahayag", tabSettings: "Mga Setting", signToText: "Senyas → Salita", textToSign: "Salita → Senyas",
+    fil: { badFile: "Hindi magagamit ang file. Pumili ng larawan (o SENYAS data file) na hindi lampas sa limit.", bLive: "I-scan ang braille nang live", bUpload: "Mag-upload ng larawan", bTip: "Ilapag nang patag at tuwid ang papel sa maliwanag na lugar. Bumabasa ng Grade 1 na braille.", bHint: "Mag-scan ng pahina o mag-upload ng larawan ng braille. Lalabas dito ang teksto.", bNone: "Walang nakitang braille. Lumapit, ituwid at dagdagan ang ilaw.", bChart: "Alpabeto ng braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Matuto", tabDict: "Diksiyonaryo", tabPhrases: "Mga Pahayag", tabSettings: "Mga Setting", signToText: "Senyas → Salita", textToSign: "Salita → Senyas",
       startCamera: "Buksan ang camera", stopCamera: "Isara ang camera", camPrivacy: "Nananatili sa device na ito ang video. Walang ina-upload.", flip: "Palitan ang camera", modeAll: "Lahat", modeWords: "Mga Salita",
       readAloud: "Basahin nang malakas", captionHint: "Mag-senyas sa harap ng camera. Lalabas dito ang mga titik, numero at salita.", space: "Espasyo", backspace: "Burahin", newLine: "Bagong linya", speak: "Bigkasin",
       copy: "Kopyahin", share: "Ibahagi", clear: "Linisin", teachSign: "Magturo ng senyas", play: "I-play", replay: "Ulitin", typeHere: "Mag-type o magsalita…", speakNow: "Magsalita", signIt: "I-senyas",
@@ -1734,7 +1736,7 @@ if (typeof module !== "undefined") module.exports = Braille;
       showHand: "Ipakita ang iyong kamay", reading: "Binabasa…", camError: "Hindi nagsimula ang camera. Payagan ang camera at subukang muli.", modelError: "Hindi na-load ang hand tracking. Kumonekta minsan, saka ito gagana offline.",
       copied: "Nakopya", noSpeech: "Walang voice input dito. Mag-type na lang.", listening: "Nakikinig…", signer: "Nag-senyas", speaker: "Nagsalita", record: "I-record", save: "I-save", word: "Salita",
       newWord: "o bagong salita", delete: "Burahin", passed: "Pasado!", tryAgain: "Subukang muli", knew: "Alam ko", again: "Ulitin", reveal: "Ipakita ang sagot", personal: "Sariling halimbawa", saved: "Na-save", unitDone: "Tapos ang aralin", badges: "Mga Badge" },
-    bcl: { bLive: "I-scan an braille nin live", bUpload: "Mag-upload nin ladawan", bTip: "Ilapag nin patag asin tuwid an papel sa maliwanag na lugar. Nagbabasa nin Grade 1 na braille.", bHint: "Mag-scan nin pahina o mag-upload nin ladawan kan braille. Maluwas digdi an teksto.", bNone: "Mayong nahiling na braille. Magdani, tuwidon asin dugangan an liwanag.", bChart: "Alpabeto kan braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Mag-adal", tabDict: "Diksiyonaryo", tabPhrases: "Mga Taram", tabSettings: "Mga Setting", signToText: "Senyas → Tataramon", textToSign: "Tataramon → Senyas",
+    bcl: { badFile: "Dai magagamit an file. Magpili nin ladawan (o SENYAS data file) na dai lampas sa limit.", bLive: "I-scan an braille nin live", bUpload: "Mag-upload nin ladawan", bTip: "Ilapag nin patag asin tuwid an papel sa maliwanag na lugar. Nagbabasa nin Grade 1 na braille.", bHint: "Mag-scan nin pahina o mag-upload nin ladawan kan braille. Maluwas digdi an teksto.", bNone: "Mayong nahiling na braille. Magdani, tuwidon asin dugangan an liwanag.", bChart: "Alpabeto kan braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Mag-adal", tabDict: "Diksiyonaryo", tabPhrases: "Mga Taram", tabSettings: "Mga Setting", signToText: "Senyas → Tataramon", textToSign: "Tataramon → Senyas",
       startCamera: "Bukasan an kamera", stopCamera: "Serrahan an kamera", camPrivacy: "Yaon sana sa device na ini an video. Mayong ina-upload.", flip: "Ribayan an kamera", modeAll: "Gabos", modeWords: "Mga Tataramon",
       readAloud: "Basahon nin makusog", captionHint: "Magsenyas sa atubangan kan kamera. Maluwas digdi an mga letra, numero asin tataramon.", space: "Espasyo", backspace: "Puraon", newLine: "Bagong linya", speak: "Sabihon",
       copy: "Kopyahon", share: "I-share", clear: "Limpyohan", teachSign: "Magtukdo nin senyas", play: "I-play", replay: "Giraray", typeHere: "Mag-type o magtaram…", speakNow: "Magtaram", signIt: "I-senyas",
@@ -1777,13 +1779,58 @@ if (typeof module !== "undefined") module.exports = Braille;
     else { try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf("senyas.") === 0 && k !== "senyas.consent") localStorage.removeItem(k); }); } catch (e) {} }
   }
 
+
+  /* ---------- checking saved and imported data (it may have been edited by hand) ---------- */
+  var LANG_OK = { en: 1, fil: 1, bcl: 1 };
+  function str(v, max) { return typeof v === "string" ? v.slice(0, max) : ""; }
+  function num(v, lo, hi, d) { v = Number(v); return isFinite(v) ? Math.min(hi, Math.max(lo, v)) : d; }
+  function nums(a, n) { return Array.isArray(a) && a.length === n && a.every(function (x) { return typeof x === "number" && isFinite(x); }) ? a : null; }
+  function cleanSettings(o) {
+    o = o && typeof o === "object" ? o : {}; var r = {};
+    ["ui", "out", "inLang"].forEach(function (k) { if (LANG_OK[o[k]]) r[k] = o[k]; });
+    ["aloud", "letters", "mirror", "points", "repeat", "swap", "hc", "rm"].forEach(function (k) { if (typeof o[k] === "boolean") r[k] = o[k]; });
+    if (o.hand === "left" || o.hand === "right") r.hand = o.hand;
+    if (o.facing === "user" || o.facing === "environment") r.facing = o.facing;
+    if (["auto", "light", "dark"].indexOf(o.theme) >= 0) r.theme = o.theme;
+    if (["all", "abc", "num", "word"].indexOf(o.mode) >= 0) r.mode = o.mode;
+    if (o.rate !== undefined) r.rate = num(o.rate, 0.5, 1.5, 1);
+    if (o.hold !== undefined) r.hold = num(o.hold, 200, 1200, 400);
+    if (o.tone !== undefined) r.tone = Math.round(num(o.tone, 0, 3, 1));
+    if (o.fs !== undefined) r.fs = Math.round(num(o.fs, 12, 24, 16));
+    if (o.speed !== undefined) r.speed = num(o.speed, 0.25, 2, 1);
+    return r;
+  }
+  function cleanProgress(o) {
+    o = o && typeof o === "object" ? o : {};
+    function flags(m) { var r = {}; if (m && typeof m === "object") Object.keys(m).slice(0, 500).forEach(function (k) { if (/^[a-z]:[A-Za-z0-9Ñ]{1,20}$/.test(k) || /^[a-z0-9]{1,20}$/.test(k)) r[k] = num(m[k], 0, 1000, 0); }); return r; }
+    return { xp: Math.round(num(o.xp, 0, 1e7, 0)), days: Array.isArray(o.days) ? o.days.filter(function (d) { return /^\d{4}-\d{1,2}-\d{1,2}$/.test(d); }).slice(-400) : [],
+      learned: flags(o.learned), quiz: flags(o.quiz), cam: flags(o.cam), flash: flags(o.flash) };
+  }
+  function cleanCustom(a) {
+    return (Array.isArray(a) ? a : []).slice(0, 200).map(function (c) {
+      if (!c || typeof c !== "object" || !/^[a-z0-9]{1,20}$/.test(c.id)) return null;
+      var r = { id: c.id, word: typeof c.word === "string" && DATA.words[c.word] ? c.word : null,
+        label: { en: str(c.label && c.label.en, 60), fil: str(c.label && c.label.fil, 60), bcl: str(c.label && c.label.bcl, 60) },
+        means: (Array.isArray(c.means) ? c.means : []).map(function (f) { return nums(f, 41); }).filter(Boolean).slice(0, 5) };
+      if (Array.isArray(c.dyn)) r.dyn = c.dyn.map(function (q) { return Array.isArray(q) && q.length === 16 && q.every(function (f) { return nums(f, 44); }) ? q : null; }).filter(Boolean).slice(0, 5);
+      if (r.dyn && !r.dyn.length) delete r.dyn;
+      return r.means.length || r.dyn ? r : null;
+    }).filter(Boolean);
+  }
+  function cleanPersonal(a) {
+    return (Array.isArray(a) ? a : []).slice(0, 500).map(function (x) { return x && /^[A-Z]{1,6}$/.test(x.l) && nums(x.f, 41) ? { l: x.l, f: x.f, k: str(x.k, 20) } : null; }).filter(Boolean);
+  }
+  function cleanHistory(a) {
+    return (Array.isArray(a) ? a : []).slice(-60).map(function (h) { return h && (h.w === "si" || h.w === "sp") ? { w: h.w, t: str(h.t, 500), at: num(h.at, 0, 4e12, 0) } : null; }).filter(Boolean);
+  }
+
   var guess = /^(fil|tl)/i.test(navigator.language || "") ? "fil" : "en";
   var S = Object.assign({ ui: guess, out: guess, inLang: guess, aloud: true, letters: false, rate: 1, hand: "right", facing: "user", mirror: true, points: true, hold: 400,
-    repeat: false, swap: false, tone: 1, theme: "auto", fs: 16, hc: false, rm: false, mode: "all", speed: 1 }, load("settings", {}));
+    repeat: false, swap: false, tone: 1, theme: "auto", fs: 16, hc: false, rm: false, mode: "all", speed: 1 }, cleanSettings(load("settings", {})));
   function saveS() { save("settings", S); }
-  var P = Object.assign({ xp: 0, days: [], learned: {}, quiz: {}, cam: {}, flash: {} }, load("progress", {}));
+  var P = cleanProgress(load("progress", {}));
   function saveP() { save("progress", P); }
-  var CUSTOM = load("custom", []), PERSONAL = load("personal", []), HIST = load("history", []);
+  var CUSTOM = cleanCustom(load("custom", [])), PERSONAL = cleanPersonal(load("personal", [])), HIST = cleanHistory(load("history", []));
 
   /* ---------- speech out and in ---------- */
   var synth = window.speechSynthesis, CODES = { en: ["en-PH", "en-US", "en-GB", "en"], fil: ["fil-PH", "fil", "tl-PH", "tl"], bcl: ["fil-PH", "fil", "tl-PH", "tl"] };
@@ -2106,9 +2153,12 @@ if (typeof module !== "undefined") module.exports = Braille;
     }
     B.file = function (f) {
       if (!f) return;
+      if (!/^image\/(png|jpe?g|webp|gif|bmp|heic|heif)$/i.test(f.type) || f.size > 25e6) { toast(t("badFile")); return; }
       B.stop();
       var url = URL.createObjectURL(f);
+      img.onerror = function () { URL.revokeObjectURL(url); toast(t("badFile")); };
       img.onload = function () {
+        URL.revokeObjectURL(url);
         img.hidden = false; $("#bcam").classList.add("live"); $("#bstart").hidden = true;
         var res = Braille.scan(img, 1400);
         drawMarks(res, img.naturalWidth, img.naturalHeight); show(res, false);
@@ -2391,8 +2441,8 @@ if (typeof module !== "undefined") module.exports = Braille;
   $("#tTeach").onclick = function () { teach(); };
   function teach() {
     var takes = [], opts = DATA.list.map(function (w) { return '<option value="' + esc(wordText(w)) + '">'; }).join("");
-    var el = openSheet('<h2>' + esc(t("tTitle")) + '</h2><div id="pcam"></div><div class="form"><p class="muted small">' + esc(t("tPickD")) + '</p><label>' + esc(t("word")) + '<input id="tw" list="twl" autocomplete="off"><datalist id="twl">' + opts + "</datalist></label>" +
-      '<details><summary class="muted">' + esc(t("newWord")) + '</summary><label>English<input id="ten"></label><label>Filipino<input id="tfil"></label><label>Bikol<input id="tbcl"></label></details>' +
+    var el = openSheet('<h2>' + esc(t("tTitle")) + '</h2><div id="pcam"></div><div class="form"><p class="muted small">' + esc(t("tPickD")) + '</p><label>' + esc(t("word")) + '<input id="tw" list="twl" autocomplete="off" maxlength="60"><datalist id="twl">' + opts + "</datalist></label>" +
+      '<details><summary class="muted">' + esc(t("newWord")) + '</summary><label>English<input id="ten" maxlength="60"></label><label>Filipino<input id="tfil" maxlength="60"></label><label>Bikol<input id="tbcl" maxlength="60"></label></details>' +
       "<b>" + esc(t("tRec")) + '</b><p class="muted small">' + esc(t("tRecD")) + '</p><div class="takes"><span></span><span></span><span></span></div><div class="count" id="tcount"></div>' +
       '<div class="navrow"><button class="ghost" id="trec"><svg><use href="#i-cam"/></svg>' + esc(t("record")) + '</button><button class="primary" id="tsave" disabled>' + esc(t("save")) + "</button></div></div>");
     Cam.mount($("#pcam", el)); if (!Cam.on) Cam.start();
@@ -2447,7 +2497,7 @@ if (typeof module !== "undefined") module.exports = Braille;
       row(t("reset"), '<button class="link" id="sReset">↺</button>') + row(t("wipe"), '<button class="link" id="sWipe" style="color:var(--bad)">✕</button>') + "</div>" +
       '<div class="card group"><h3>' + esc(t("about")) + '</h3><p class="small">' + esc(t("aboutText")) + "</p>" + row(t("version"), "<span>" + VERSION + "</span>") +
       (installEvt && !INAPP ? row(t("install"), '<button class="pill" id="sInst"><svg><use href="#i-dl"/></svg>' + esc(t("install")) + "</button>") : "") +
-      '<p class="muted small">Hand tracking: MediaPipe (Apache-2.0). <a href="' + (INAPP ? "https://pogi6969.github.io/SENYAS/" : "../") + '" target="_blank" rel="noopener">SENYAS website</a></p></div>';
+      '<p class="muted small">Hand tracking: MediaPipe (Apache-2.0). <a href="' + (INAPP ? "https://pogi6969.github.io/SENYAS/" : "../") + '" target="_blank" rel="noopener noreferrer">SENYAS website</a></p></div>';
     var on = function (id, ev, f) { var e = $("#" + id); if (e) e.addEventListener(ev, f); };
     on("sUi", "change", function () { S.ui = this.value; saveS(); applyText(); renderQuick(); renderSettings(); });
     on("sOut", "change", function () { S.out = this.value; $("#outLang").value = S.out; saveS(); renderCaption(); });
@@ -2469,12 +2519,13 @@ if (typeof module !== "undefined") module.exports = Braille;
       var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "senyas-data.json"; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
     });
     on("sImp", "change", function () {
-      var f = this.files[0]; if (!f) return;
+      var f = this.files[0]; this.value = ""; if (!f) return;
+      if (f.size > 5e6 || !/json|text|^$/.test(f.type)) { toast(t("badFile")); return; }
       f.text().then(function (s) {
-        var d = JSON.parse(s); if (d.app !== "SENYAS") return;
-        Object.assign(S, d.settings || {}); P = Object.assign(P, d.progress || {}); CUSTOM = d.custom || CUSTOM; PERSONAL = d.personal || PERSONAL; HIST = d.history || HIST;
+        var d = JSON.parse(s); if (!d || d.app !== "SENYAS") { toast(t("badFile")); return; }
+        Object.assign(S, cleanSettings(d.settings)); P = cleanProgress(d.progress); CUSTOM = cleanCustom(d.custom); PERSONAL = cleanPersonal(d.personal); HIST = cleanHistory(d.history);
         saveS(); saveP(); save("custom", CUSTOM); save("personal", PERSONAL); save("history", HIST); Cam.refresh(); applyLook(); applyText(); renderSettings(); renderHist(); toast(t("saved"));
-      }).catch(function () {});
+      }).catch(function () { toast(t("badFile")); });
     });
     on("sReset", "click", function () { if (!confirm(t("sure"))) return; P = { xp: 0, days: [], learned: {}, quiz: {}, cam: {}, flash: {} }; saveP(); toast("✓"); });
     on("sWipe", "click", function () {

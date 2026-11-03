@@ -15,6 +15,8 @@ SENYAS: a live sign language translator, braille reader and sign language course
 - `assets/senyas-icon.svg` – the app-icon version of the logo
 - `native/android/` – the Android app: the same `app/` in a WebView with the camera, microphone, phone voice and photo picker
 - `native/ios/` – the iPhone and iPad app (XcodeGen `project.yml`): the same `app/` in a WKWebView, with the bundled copy for first start offline
+- `SECURITY.md` – the security report (27-point pre-launch checklist)
+- `.github/workflows/pages.yml` – publishes the website and app to GitHub Pages
 - `.github/workflows/store-apps.yml` – builds the Android app and publishes `SENYAS.apk` for the website's download button
 - `src/` – the sources of the app and website; `python3 build.py` rebuilds `app/index.html`, `index.html` and `privacy.html`
   - `hand.js` 3D hand model, renderer and features · `avatar.js` signing avatar · `recog.js` sign recogniser · `braille.js` braille reader and writer · `data.js` words and phrases in three languages · `app.js`, `app.html`, `app.css` the app · `site.html` the website · `policy.html` the privacy policy
