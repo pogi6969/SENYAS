@@ -22,7 +22,7 @@ def brand(h): return h.replace('<span class="logo" aria-hidden="true"></span>', 
 app = brand(rd("app.html")).replace("/*CSS*/", rd("app.css")).replace("<!--PRIVACY-->", policy)
 app = app.replace("/*JS*/", js("hand.js", "avatar.js", "data.js", "recog.js", "braille.js", "species.js", "app.js"))
 (R / "app").mkdir(exist_ok=True)
-app = csp(app, " 'wasm-unsafe-eval' https://cdn.jsdelivr.net", " https://cdn.jsdelivr.net https://storage.googleapis.com https://en.wikipedia.org")
+app = csp(app, " 'wasm-unsafe-eval' https://cdn.jsdelivr.net", " https://cdn.jsdelivr.net https://storage.googleapis.com https://en.wikipedia.org https://my-api.plantnet.org")
 (R / "app" / "index.html").write_text(app, encoding="utf-8")
 
 site = brand(rd("site.html"))

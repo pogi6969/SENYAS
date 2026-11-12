@@ -1,6 +1,6 @@
 # SENYAS
 
-SENYAS: a live sign language translator, braille reader and sign language course in English, Filipino and Bikol. The camera reads fingerspelling, numbers and everyday signs and can say the words aloud (Read aloud on or off); an avatar signs typed or spoken words back; braille is read from a photo or the live camera; one photo names a plant or an animal (over 4,000 species) and says it, signs it and writes it in braille; and lessons, quizzes and camera practice teach signing. This repository holds the SENYAS website and the SENYAS app (version 1.1.0). Visitors install the app from the website on Android, iPhone, iPad and computers, and it opens without a signal once installed.
+SENYAS: a live sign language translator, braille reader and sign language course in English, Filipino and Bikol. The camera reads fingerspelling, numbers and everyday signs and can say the words aloud (Read aloud on or off); an avatar signs typed or spoken words back; braille is read from a photo or the live camera; one photo names a plant or an animal (over 4,000 species) and says it, signs it and writes it in braille; and lessons, quizzes and camera practice teach signing. This repository holds the SENYAS website and the SENYAS app (version 1.2.0). Visitors install the app from the website on Android, iPhone, iPad and computers, and it opens without a signal once installed.
 
 ## Files
 
@@ -25,7 +25,8 @@ SENYAS: a live sign language translator, braille reader and sign language course
 - `research/` – the NSTF research (Robotics and Intelligent Machines, Team); it describes version 1.0.0
   - `paper/SENYAS_NSTF_RIM_Research_Paper.docx`, `.pdf` – the full research paper; `python3 make_paper.py` rebuilds it
   - `deck/SENYAS_RIM_PR2_Presentation.pptx`, `.pdf` – the PR2 deck in the LegaSci template; `python3 make_deck.py` rebuilds it
-  - `script/SENYAS_Rationale_Narration_Script_v1.docx`, `.pdf` – the 1:45 rationale narration script
+  - `script/SENYAS_Rationale_Narration_Script_v1.docx`, `.pdf` – the 1:45 rationale narration script (NSTF)
+  - `script/SENYAS_Rationale_Video_Script_v2_BIOGLOW.docx`, `.pdf` – the 1:45 rationale video script for FIRST LEGO League BIOGLOW, with the six Core Values
   - `code/` – the nine benchmarks, their results and `analyze.py` (statistics and figures)
   - `figures/` – charts and screenshots used in the paper and deck
 
@@ -42,6 +43,14 @@ For Play Store builds add the secrets `SENYAS_KEYSTORE_B64`, `SENYAS_KEYSTORE_PA
 Test locally with `python3 -m http.server 8000`, then open http://localhost:8000.
 
 After changing the app, the icons or the manifest, run `python3 build.py` and `node tests/app.test.js`, and bump `VERSION` in `sw.js` so installed copies refresh.
+
+## Version 1.2.0
+
+- Nature scan from any part: choose Plant, Bird, Insect or Other animal so that a leaf, flower, fruit, bark or whole tree is named even when it does not look like a "plant"; add photos of other parts and the answers are combined; tap another candidate if it fits better
+- Optional online plant identification through Pl@ntNet (35,000+ plants from a leaf, flower, fruit or bark). It is off by default, needs your own free key from my.plantnet.org (add `pogi6969.github.io` as an authorised domain there), and sends the plant photo to Pl@ntNet only while it is on
+- The interface adapts to what it runs on: Android app, iPhone/iPad app, installed app or browser; phone, tablet, computer or TV. It shows keyboard hints with a mouse, offers to install only in a browser, enlarges focus on a TV, and follows the device's dark mode, text size, contrast and motion settings. Settings → About shows what was detected
+- `tests/app.test.js` now runs 171 checks
+- Limits, stated plainly: no phone model knows every species. Offline, SENYAS names 2,101 plants, 964 birds, 1,021 insects and about 400 other kinds of animals; online mode widens plants only. Roots alone can rarely be named
 
 ## Version 1.1.0
 

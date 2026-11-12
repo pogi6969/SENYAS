@@ -70,6 +70,7 @@
   </nav>
 
   <main>
+    <div class="install card" id="inst" hidden><span id="instTxt"></span><span class="row"><button class="link" id="instNo" data-t="later"></button><button class="primary" id="instGo" data-t="install"></button></span></div>
     <!-- TRANSLATE -->
     <section id="v-translate" class="view">
       <header class="top">
@@ -121,6 +122,7 @@
               <button class="ib" id="tClear" data-tt="clear"><svg><use href="#i-trash"/></svg></button>
               <button class="pill" id="tTeach"><svg><use href="#i-plus"/></svg><span data-t="teachSign"></span></button>
             </div>
+            <p class="keys muted small" data-t="keys"></p>
           </div>
         </div>
 
@@ -195,6 +197,12 @@
               <button class="ib glass" id="sStop" data-tt="stopCamera"><svg><use href="#i-x"/></svg></button>
             </div>
             <button class="shutter" id="sShot" hidden><svg><use href="#i-leaf"/></svg><span data-t="sScan"></span></button>
+          </div>
+          <div class="chips" id="sSubj">
+            <button data-m="auto" data-t="sSubjAuto"></button><button data-m="plant" data-t="sSubjPlant"></button><button data-m="bird" data-t="sSubjBird"></button><button data-m="insect" data-t="sSubjInsect"></button><button data-m="animal" data-t="sSubjAnimal"></button>
+          </div>
+          <div class="chips" id="sPart" hidden>
+            <button data-p="auto" data-t="pAuto"></button><button data-p="leaf" data-t="pLeaf"></button><button data-p="flower" data-t="pFlower"></button><button data-p="fruit" data-t="pFruit"></button><button data-p="bark" data-t="pBark"></button>
           </div>
           <div class="out card">
             <div class="outhead">

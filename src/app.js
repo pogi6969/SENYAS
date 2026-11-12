@@ -1,7 +1,7 @@
 /* SENYAS app: live sign translator, text/voice to sign avatar, lessons, dictionary and phrasebook. */
 (function () {
   "use strict";
-  var VERSION = "1.1.0";
+  var VERSION = "1.2.0";
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -10,7 +10,7 @@
 
   /* ---------- words on screen ---------- */
   var T = {
-    en: { scan: "Nature", sOpen: "Open camera", sScan: "Scan", sTip: "Point at one plant or animal, fill the frame, then press Scan. Works offline.", sHint: "Scan a plant or an animal. SENYAS names it, says it, signs it and shows it in braille.", sLoading: "Loading the species models…", sNone: "No plant or animal recognised. Move closer, fill the frame and try again.", sUnsure: "Not sure", sAlso: "Could also be", sMoreInfo: "More info", sNoNet: "More info needs the internet.", sSafe: "A guide only. Never use it to decide whether a plant, mushroom or animal is safe to eat or touch.", sFinds: "My finds", sModelErr: "The species models could not load. Connect once, then it works offline.", bigShow: "Show big", flash: "Flash", sod: "Sign of the day", watch: "Watch", sVoiceEn: "English voice", sVoiceFil: "Filipino and Bikol voice", sTest: "Test voice", sNoFil: "This device has no Filipino voice, so Filipino and Bikol are read with the closest voice. Install Filipino in the phone's text-to-speech settings for the best sound.", sNoVoice: "This device has no speech voices installed.", cat_nature: "Animals & plants", badFile: "That file can't be used. Choose a photo (or a SENYAS data file) under the size limit.", bLive: "Scan braille live", bUpload: "Upload photo", bTip: "Hold the page flat and straight in good light. Reads Grade 1 (uncontracted) braille.", bHint: "Scan a page or upload a photo of braille. The text appears here.", bNone: "No braille found. Move closer, hold it flat and add light.", bChart: "Braille alphabet", bCellsN: "cells", tabTranslate: "Translate", tabLearn: "Learn", tabDict: "Dictionary", tabPhrases: "Phrases", tabSettings: "Settings", signToText: "Sign → Words", textToSign: "Words → Sign",
+    en: { sSubjAuto: "Auto", sSubjPlant: "Plant", sSubjBird: "Bird", sSubjInsect: "Insect", sSubjAnimal: "Other animal", pAuto: "Any part", pLeaf: "Leaf", pFlower: "Flower", pFruit: "Fruit", pBark: "Bark or stem", sAdd: "Add a photo of another part", sAddTip: "Now scan or upload another photo of the same plant or animal.", sShots: "photos combined", sPick: "tap a name if it fits better", sPlantTip: "For a plant, choose Plant above, then photograph a leaf, flower, fruit, bark or the whole plant. Several photos of different parts give a better answer. Roots alone can rarely be named.", sNature: "Nature scan", sCover: "On this device, with no internet: 2,101 plants, 964 birds, 1,021 insects and about 400 other kinds of animals.", sOnline: "Online plant identification", sOnlineD: "Sends plant photos to Pl@ntNet, which knows 35,000+ plants from a leaf, flower, fruit or bark. Off unless you turn it on.", sKey: "Pl@ntNet key", sKeyD: "Free at my.plantnet.org. Kept only on this device.", sOnlineUsed: "identified online by Pl@ntNet", sOnlineFail: "Online identification did not answer. Showing the on-device result.", sAsking: "Asking Pl@ntNet…", envAs: "Running as", env_android: "Android app", env_ios: "iPhone or iPad app", env_pwa: "Installed app", env_browser: "Browser", form_phone: "phone", form_tablet: "tablet", form_desktop: "computer", form_tv: "TV", keys: "Keys: Space = space · Backspace = delete · Enter = new line", installTip: "Install SENYAS on this device to use it offline.", iosTip: "To install: tap Share, then Add to Home Screen.", later: "Later", scan: "Nature", sOpen: "Open camera", sScan: "Scan", sTip: "Point at one plant or animal, fill the frame, then press Scan. Works offline.", sHint: "Scan a plant or an animal. SENYAS names it, says it, signs it and shows it in braille.", sLoading: "Loading the species models…", sNone: "No plant or animal recognised. Move closer, fill the frame and try again.", sUnsure: "Not sure", sAlso: "Could also be", sMoreInfo: "More info", sNoNet: "More info needs the internet.", sSafe: "A guide only. Never use it to decide whether a plant, mushroom or animal is safe to eat or touch.", sFinds: "My finds", sModelErr: "The species models could not load. Connect once, then it works offline.", bigShow: "Show big", flash: "Flash", sod: "Sign of the day", watch: "Watch", sVoiceEn: "English voice", sVoiceFil: "Filipino and Bikol voice", sTest: "Test voice", sNoFil: "This device has no Filipino voice, so Filipino and Bikol are read with the closest voice. Install Filipino in the phone's text-to-speech settings for the best sound.", sNoVoice: "This device has no speech voices installed.", cat_nature: "Animals & plants", badFile: "That file can't be used. Choose a photo (or a SENYAS data file) under the size limit.", bLive: "Scan braille live", bUpload: "Upload photo", bTip: "Hold the page flat and straight in good light. Reads Grade 1 (uncontracted) braille.", bHint: "Scan a page or upload a photo of braille. The text appears here.", bNone: "No braille found. Move closer, hold it flat and add light.", bChart: "Braille alphabet", bCellsN: "cells", tabTranslate: "Translate", tabLearn: "Learn", tabDict: "Dictionary", tabPhrases: "Phrases", tabSettings: "Settings", signToText: "Sign → Words", textToSign: "Words → Sign",
       startCamera: "Start camera", stopCamera: "Stop camera", camPrivacy: "Video stays on this device. Nothing is uploaded.", flip: "Switch camera", modeAll: "All", modeWords: "Words",
       readAloud: "Read aloud", captionHint: "Sign in front of the camera. Letters, numbers and words appear here.", space: "Space", backspace: "Delete", newLine: "New line", speak: "Speak",
       copy: "Copy", share: "Share", clear: "Clear", teachSign: "Teach a sign", play: "Play", replay: "Replay", typeHere: "Type or say something…", speakNow: "Speak", signIt: "Sign it",
@@ -34,7 +34,7 @@
       showHand: "Show your hand", reading: "Reading…", camError: "The camera could not start. Allow camera access and try again.", modelError: "Hand tracking could not load. Connect once, then it works offline.",
       copied: "Copied", noSpeech: "Voice input isn't available here. Type instead.", listening: "Listening…", signer: "Signer", speaker: "Speaker", record: "Record", save: "Save", word: "Word",
       newWord: "or a new word", delete: "Delete", passed: "Passed!", tryAgain: "Try again", knew: "I knew it", again: "Again", reveal: "Show answer", personal: "Personal examples", saved: "Saved", unitDone: "Unit complete", badges: "Badges" },
-    fil: { scan: "Kalikasan", sOpen: "Buksan ang camera", sScan: "I-scan", sTip: "Itutok sa isang halaman o hayop, punuin ang frame, saka pindutin ang I-scan. Gumagana offline.", sHint: "Mag-scan ng halaman o hayop. Papangalanan, bibigkasin, isesenyas at ipapakita ito ng SENYAS sa braille.", sLoading: "Nilo-load ang mga modelo ng species…", sNone: "Walang nakilalang halaman o hayop. Lumapit, punuin ang frame at subukang muli.", sUnsure: "Hindi sigurado", sAlso: "Maaari ring", sMoreInfo: "Dagdag na impormasyon", sNoNet: "Kailangan ng internet para sa dagdag na impormasyon.", sSafe: "Gabay lamang. Huwag gamitin para pagpasyahan kung ligtas kainin o hawakan ang halaman, kabute o hayop.", sFinds: "Aking mga nakita", sModelErr: "Hindi na-load ang mga modelo ng species. Kumonekta minsan, saka ito gagana offline.", bigShow: "Ipakita nang malaki", flash: "Kislap", sod: "Senyas ng araw", watch: "Panoorin", sVoiceEn: "Boses sa Ingles", sVoiceFil: "Boses sa Filipino at Bikol", sTest: "Subukan ang boses", sNoFil: "Walang boses na Filipino sa device na ito, kaya binabasa ang Filipino at Bikol gamit ang pinakamalapit na boses. I-install ang Filipino sa text-to-speech settings ng telepono.", sNoVoice: "Walang naka-install na boses sa device na ito.", cat_nature: "Hayop at halaman", badFile: "Hindi magagamit ang file. Pumili ng larawan (o SENYAS data file) na hindi lampas sa limit.", bLive: "I-scan ang braille nang live", bUpload: "Mag-upload ng larawan", bTip: "Ilapag nang patag at tuwid ang papel sa maliwanag na lugar. Bumabasa ng Grade 1 na braille.", bHint: "Mag-scan ng pahina o mag-upload ng larawan ng braille. Lalabas dito ang teksto.", bNone: "Walang nakitang braille. Lumapit, ituwid at dagdagan ang ilaw.", bChart: "Alpabeto ng braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Matuto", tabDict: "Diksiyonaryo", tabPhrases: "Mga Pahayag", tabSettings: "Mga Setting", signToText: "Senyas → Salita", textToSign: "Salita → Senyas",
+    fil: { sSubjAuto: "Awto", sSubjPlant: "Halaman", sSubjBird: "Ibon", sSubjInsect: "Insekto", sSubjAnimal: "Ibang hayop", pAuto: "Kahit anong bahagi", pLeaf: "Dahon", pFlower: "Bulaklak", pFruit: "Bunga", pBark: "Balat o tangkay", sAdd: "Magdagdag ng larawan ng ibang bahagi", sAddTip: "I-scan o i-upload ngayon ang isa pang larawan ng parehong halaman o hayop.", sShots: "larawang pinagsama", sPick: "pindutin ang pangalan kung mas akma", sPlantTip: "Para sa halaman, piliin ang Halaman sa itaas, saka kunan ang dahon, bulaklak, bunga, balat o ang buong halaman. Mas tama ang sagot kapag ilang larawan ng iba-ibang bahagi. Bihirang makilala ang ugat lamang.", sNature: "Scan ng kalikasan", sCover: "Sa device na ito, kahit walang internet: 2,101 halaman, 964 ibon, 1,021 insekto at mga 400 iba pang uri ng hayop.", sOnline: "Online na pagkilala ng halaman", sOnlineD: "Ipinapadala ang larawan ng halaman sa Pl@ntNet, na nakakakilala ng 35,000+ halaman mula sa dahon, bulaklak, bunga o balat. Nakasara hangga't hindi mo binubuksan.", sKey: "Pl@ntNet key", sKeyD: "Libre sa my.plantnet.org. Sa device na ito lang itinatago.", sOnlineUsed: "kinilala online ng Pl@ntNet", sOnlineFail: "Hindi sumagot ang online na pagkilala. Ipinapakita ang resulta ng device.", sAsking: "Tinatanong ang Pl@ntNet…", envAs: "Tumatakbo bilang", env_android: "Android app", env_ios: "iPhone o iPad app", env_pwa: "Naka-install na app", env_browser: "Browser", form_phone: "telepono", form_tablet: "tablet", form_desktop: "computer", form_tv: "TV", keys: "Mga key: Space = espasyo · Backspace = burahin · Enter = bagong linya", installTip: "I-install ang SENYAS sa device na ito para magamit offline.", iosTip: "Para i-install: pindutin ang Share, saka Add to Home Screen.", later: "Mamaya", scan: "Kalikasan", sOpen: "Buksan ang camera", sScan: "I-scan", sTip: "Itutok sa isang halaman o hayop, punuin ang frame, saka pindutin ang I-scan. Gumagana offline.", sHint: "Mag-scan ng halaman o hayop. Papangalanan, bibigkasin, isesenyas at ipapakita ito ng SENYAS sa braille.", sLoading: "Nilo-load ang mga modelo ng species…", sNone: "Walang nakilalang halaman o hayop. Lumapit, punuin ang frame at subukang muli.", sUnsure: "Hindi sigurado", sAlso: "Maaari ring", sMoreInfo: "Dagdag na impormasyon", sNoNet: "Kailangan ng internet para sa dagdag na impormasyon.", sSafe: "Gabay lamang. Huwag gamitin para pagpasyahan kung ligtas kainin o hawakan ang halaman, kabute o hayop.", sFinds: "Aking mga nakita", sModelErr: "Hindi na-load ang mga modelo ng species. Kumonekta minsan, saka ito gagana offline.", bigShow: "Ipakita nang malaki", flash: "Kislap", sod: "Senyas ng araw", watch: "Panoorin", sVoiceEn: "Boses sa Ingles", sVoiceFil: "Boses sa Filipino at Bikol", sTest: "Subukan ang boses", sNoFil: "Walang boses na Filipino sa device na ito, kaya binabasa ang Filipino at Bikol gamit ang pinakamalapit na boses. I-install ang Filipino sa text-to-speech settings ng telepono.", sNoVoice: "Walang naka-install na boses sa device na ito.", cat_nature: "Hayop at halaman", badFile: "Hindi magagamit ang file. Pumili ng larawan (o SENYAS data file) na hindi lampas sa limit.", bLive: "I-scan ang braille nang live", bUpload: "Mag-upload ng larawan", bTip: "Ilapag nang patag at tuwid ang papel sa maliwanag na lugar. Bumabasa ng Grade 1 na braille.", bHint: "Mag-scan ng pahina o mag-upload ng larawan ng braille. Lalabas dito ang teksto.", bNone: "Walang nakitang braille. Lumapit, ituwid at dagdagan ang ilaw.", bChart: "Alpabeto ng braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Matuto", tabDict: "Diksiyonaryo", tabPhrases: "Mga Pahayag", tabSettings: "Mga Setting", signToText: "Senyas → Salita", textToSign: "Salita → Senyas",
       startCamera: "Buksan ang camera", stopCamera: "Isara ang camera", camPrivacy: "Nananatili sa device na ito ang video. Walang ina-upload.", flip: "Palitan ang camera", modeAll: "Lahat", modeWords: "Mga Salita",
       readAloud: "Basahin nang malakas", captionHint: "Mag-senyas sa harap ng camera. Lalabas dito ang mga titik, numero at salita.", space: "Espasyo", backspace: "Burahin", newLine: "Bagong linya", speak: "Bigkasin",
       copy: "Kopyahin", share: "Ibahagi", clear: "Linisin", teachSign: "Magturo ng senyas", play: "I-play", replay: "Ulitin", typeHere: "Mag-type o magsalita…", speakNow: "Magsalita", signIt: "I-senyas",
@@ -58,7 +58,7 @@
       showHand: "Ipakita ang iyong kamay", reading: "Binabasa…", camError: "Hindi nagsimula ang camera. Payagan ang camera at subukang muli.", modelError: "Hindi na-load ang hand tracking. Kumonekta minsan, saka ito gagana offline.",
       copied: "Nakopya", noSpeech: "Walang voice input dito. Mag-type na lang.", listening: "Nakikinig…", signer: "Nag-senyas", speaker: "Nagsalita", record: "I-record", save: "I-save", word: "Salita",
       newWord: "o bagong salita", delete: "Burahin", passed: "Pasado!", tryAgain: "Subukang muli", knew: "Alam ko", again: "Ulitin", reveal: "Ipakita ang sagot", personal: "Sariling halimbawa", saved: "Na-save", unitDone: "Tapos ang aralin", badges: "Mga Badge" },
-    bcl: { scan: "Kalikasan", sOpen: "Bukasan an kamera", sScan: "I-scan", sTip: "Itutok sa sarong tanom o hayop, panoon an frame, dangan pinduton an I-scan. Nagagana offline.", sHint: "Mag-scan nin tanom o hayop. Papangaranan, sasabihon, isesenyas asin ipapahiling ini kan SENYAS sa braille.", sLoading: "Nilo-load an mga modelo kan species…", sNone: "Mayong namidbid na tanom o hayop. Magdani, panoon an frame asin probaran giraray.", sUnsure: "Dai sigurado", sAlso: "Puwede man na", sMoreInfo: "Dugang na impormasyon", sNoNet: "Kaipuhan nin internet para sa dugang na impormasyon.", sSafe: "Giya sana. Dai paggamiton tanganing magdesisyon kun ligtas kakanon o kaputan an tanom, kabute o hayop.", sFinds: "Sakong mga nahiling", sModelErr: "Dai na-load an mga modelo kan species. Magkonekta minsan, dangan magagana offline.", bigShow: "Ipahiling nin dakula", flash: "Kislap", sod: "Senyas kan aldaw", watch: "Hilingon", sVoiceEn: "Boses sa Ingles", sVoiceFil: "Boses sa Filipino asin Bikol", sTest: "Probaran an boses", sNoFil: "Mayong boses na Filipino sa device na ini, kaya binabasa an Filipino asin Bikol gamit an pinakaharaning boses. I-install an Filipino sa text-to-speech settings kan selpon.", sNoVoice: "Mayong naka-install na boses sa device na ini.", cat_nature: "Hayop asin tanom", badFile: "Dai magagamit an file. Magpili nin ladawan (o SENYAS data file) na dai lampas sa limit.", bLive: "I-scan an braille nin live", bUpload: "Mag-upload nin ladawan", bTip: "Ilapag nin patag asin tuwid an papel sa maliwanag na lugar. Nagbabasa nin Grade 1 na braille.", bHint: "Mag-scan nin pahina o mag-upload nin ladawan kan braille. Maluwas digdi an teksto.", bNone: "Mayong nahiling na braille. Magdani, tuwidon asin dugangan an liwanag.", bChart: "Alpabeto kan braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Mag-adal", tabDict: "Diksiyonaryo", tabPhrases: "Mga Taram", tabSettings: "Mga Setting", signToText: "Senyas → Tataramon", textToSign: "Tataramon → Senyas",
+    bcl: { sSubjAuto: "Awto", sSubjPlant: "Tanom", sSubjBird: "Gamgam", sSubjInsect: "Insekto", sSubjAnimal: "Ibang hayop", pAuto: "Maski anong parte", pLeaf: "Dahon", pFlower: "Burak", pFruit: "Bunga", pBark: "Ubak o sanga", sAdd: "Magdugang nin ladawan kan ibang parte", sAddTip: "I-scan o i-upload ngunyan an saro pang ladawan kan parehong tanom o hayop.", sShots: "ladawan na pinagsaro", sPick: "pinduton an pangaran kun mas angay", sPlantTip: "Para sa tanom, pilion an Tanom sa itaas, dangan kuanan nin ladawan an dahon, burak, bunga, ubak o an bilog na tanom. Mas tama an simbag kun pirang ladawan kan manlain-lain na parte. Bihirang mamidbid an gamot sana.", sNature: "Scan kan kalikasan", sCover: "Sa device na ini, maski mayong internet: 2,101 tanom, 964 gamgam, 1,021 insekto asin mga 400 pang klase nin hayop.", sOnline: "Online na pagmidbid nin tanom", sOnlineD: "Ipinapadara an ladawan kan tanom sa Pl@ntNet, na nakakamidbid nin 35,000+ tanom gikan sa dahon, burak, bunga o ubak. Serrado sagkod na dai mo binubukasan.", sKey: "Pl@ntNet key", sKeyD: "Libre sa my.plantnet.org. Sa device na ini sana itinatago.", sOnlineUsed: "namidbid online kan Pl@ntNet", sOnlineFail: "Dai nagsimbag an online na pagmidbid. Ipinapahiling an resulta kan device.", sAsking: "Hinahapot an Pl@ntNet…", envAs: "Nagdadalagan bilang", env_android: "Android app", env_ios: "iPhone o iPad app", env_pwa: "Naka-install na app", env_browser: "Browser", form_phone: "selpon", form_tablet: "tablet", form_desktop: "kompyuter", form_tv: "TV", keys: "Mga key: Space = espasyo · Backspace = puraon · Enter = bagong linya", installTip: "I-install an SENYAS sa device na ini tanganing magamit offline.", iosTip: "Para i-install: pinduton an Share, dangan Add to Home Screen.", later: "Atyan", scan: "Kalikasan", sOpen: "Bukasan an kamera", sScan: "I-scan", sTip: "Itutok sa sarong tanom o hayop, panoon an frame, dangan pinduton an I-scan. Nagagana offline.", sHint: "Mag-scan nin tanom o hayop. Papangaranan, sasabihon, isesenyas asin ipapahiling ini kan SENYAS sa braille.", sLoading: "Nilo-load an mga modelo kan species…", sNone: "Mayong namidbid na tanom o hayop. Magdani, panoon an frame asin probaran giraray.", sUnsure: "Dai sigurado", sAlso: "Puwede man na", sMoreInfo: "Dugang na impormasyon", sNoNet: "Kaipuhan nin internet para sa dugang na impormasyon.", sSafe: "Giya sana. Dai paggamiton tanganing magdesisyon kun ligtas kakanon o kaputan an tanom, kabute o hayop.", sFinds: "Sakong mga nahiling", sModelErr: "Dai na-load an mga modelo kan species. Magkonekta minsan, dangan magagana offline.", bigShow: "Ipahiling nin dakula", flash: "Kislap", sod: "Senyas kan aldaw", watch: "Hilingon", sVoiceEn: "Boses sa Ingles", sVoiceFil: "Boses sa Filipino asin Bikol", sTest: "Probaran an boses", sNoFil: "Mayong boses na Filipino sa device na ini, kaya binabasa an Filipino asin Bikol gamit an pinakaharaning boses. I-install an Filipino sa text-to-speech settings kan selpon.", sNoVoice: "Mayong naka-install na boses sa device na ini.", cat_nature: "Hayop asin tanom", badFile: "Dai magagamit an file. Magpili nin ladawan (o SENYAS data file) na dai lampas sa limit.", bLive: "I-scan an braille nin live", bUpload: "Mag-upload nin ladawan", bTip: "Ilapag nin patag asin tuwid an papel sa maliwanag na lugar. Nagbabasa nin Grade 1 na braille.", bHint: "Mag-scan nin pahina o mag-upload nin ladawan kan braille. Maluwas digdi an teksto.", bNone: "Mayong nahiling na braille. Magdani, tuwidon asin dugangan an liwanag.", bChart: "Alpabeto kan braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Mag-adal", tabDict: "Diksiyonaryo", tabPhrases: "Mga Taram", tabSettings: "Mga Setting", signToText: "Senyas → Tataramon", textToSign: "Tataramon → Senyas",
       startCamera: "Bukasan an kamera", stopCamera: "Sarahan an kamera", camPrivacy: "Yaon sana sa device na ini an video. Mayong ina-upload.", flip: "Ribayan an kamera", modeAll: "Gabos", modeWords: "Mga Tataramon",
       readAloud: "Basahon nin makusog", captionHint: "Magsenyas sa atubangan kan kamera. Maluwas digdi an mga letra, numero asin tataramon.", space: "Espasyo", backspace: "Puraon", newLine: "Bagong linya", speak: "Sabihon",
       copy: "Kopyahon", share: "I-share", clear: "Limpyohan", teachSign: "Magtukdo nin senyas", play: "I-play", replay: "Giraray", typeHere: "Mag-type o magtaram…", speakNow: "Magtaram", signIt: "I-senyas",
@@ -121,6 +121,8 @@
     if (o.fs !== undefined) r.fs = Math.round(num(o.fs, 12, 24, 16));
     if (o.speed !== undefined) r.speed = num(o.speed, 0.25, 2, 1);
     if (o.voice && typeof o.voice === "object") r.voice = { en: str(o.voice.en, 200), fil: str(o.voice.fil, 200) };
+    if (typeof o.pnOn === "boolean") r.pnOn = o.pnOn;
+    if (typeof o.pnKey === "string") r.pnKey = o.pnKey.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 80);
     return r;
   }
   function cleanProgress(o) {
@@ -152,7 +154,7 @@
 
   var guess = /^(fil|tl)/i.test(navigator.language || "") ? "fil" : "en";
   var S = Object.assign({ ui: guess, out: guess, inLang: guess, aloud: true, letters: false, rate: 1, hand: "right", facing: "user", mirror: true, points: true, hold: 400,
-    repeat: false, swap: false, tone: 1, theme: "auto", fs: 16, hc: false, rm: false, mode: "all", speed: 1, voice: {} }, cleanSettings(load("settings", {})));
+    repeat: false, swap: false, tone: 1, theme: "auto", fs: 16, hc: false, rm: false, mode: "all", speed: 1, voice: {}, pnOn: false, pnKey: "" }, cleanSettings(load("settings", {})));
   function saveS() { save("settings", S); }
   var P = cleanProgress(load("progress", {}));
   function saveP() { save("progress", P); }
@@ -214,6 +216,32 @@
     rec.start(); return true;
   }
 
+  /* ---------- what SENYAS is running on: the interface adapts to the app, the device and the screen ---------- */
+  var ENV = { app: "browser", form: "phone", touch: false, low: false, ios: false };
+  function detect() {
+    var ua = navigator.userAgent, W = window.innerWidth, H = window.innerHeight, short = Math.min(W, H);
+    var fine = matchMedia("(pointer: fine)").matches, touch = matchMedia("(pointer: coarse)").matches || ((navigator.maxTouchPoints || 0) > 0 && !fine);
+    ENV.app = /SENYAS-App\/Android/.test(ua) ? "android" : /SENYAS-App\/iOS/.test(ua) ? "ios"
+      : (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: window-controls-overlay)").matches || navigator.standalone === true) ? "pwa" : "browser";
+    ENV.touch = touch;
+    ENV.form = /\b(TV|Tizen|Web0S|WebOS|BRAVIA|GoogleTV|CrKey|AppleTV)\b|AFT[A-Z]/i.test(ua) || (!touch && W >= 2200) ? "tv" : touch ? (short < 600 ? "phone" : "tablet") : "desktop";
+    ENV.low = (navigator.hardwareConcurrency || 4) <= 4 && (navigator.deviceMemory || 4) <= 2;
+    ENV.ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && (navigator.maxTouchPoints || 0) > 1);
+    var r = document.documentElement;
+    r.dataset.app = ENV.app; r.dataset.form = ENV.form; r.dataset.input = touch ? "touch" : "mouse";
+    return ENV;
+  }
+  function envText() { return t("env_" + ENV.app) + " · " + t("form_" + ENV.form) + " · " + window.innerWidth + " × " + window.innerHeight; }
+  /* In a browser on a phone or tablet, offer to install; inside the app or once installed, never. */
+  function installBar() {
+    var el = $("#inst"), can = ENV.app === "browser" && ENV.touch && (installEvt || ENV.ios) && !load("instNo", false);
+    el.hidden = !can; if (!can) return;
+    $("#instTxt").textContent = t("installTip") + (installEvt ? "" : " " + t("iosTip"));
+    $("#instGo").hidden = !installEvt;
+  }
+  var envT = 0;
+  window.addEventListener("resize", function () { clearTimeout(envT); envT = setTimeout(function () { detect(); installBar(); var e = $("#envRow"); if (e) e.textContent = envText(); }, 150); });
+
   /* ---------- small helpers ---------- */
   var toastT = 0;
   function toast(msg) { var el = $("#toast"); el.textContent = msg; el.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(function () { el.classList.remove("on"); }, 2200); }
@@ -248,7 +276,7 @@
     var r = document.documentElement;
     if (S.theme === "auto") r.removeAttribute("data-theme"); else r.dataset.theme = S.theme;
     r.classList.toggle("hc", !!S.hc); r.classList.toggle("rm", !!S.rm);
-    r.style.setProperty("--fs", S.fs + "px");
+    r.style.setProperty("--fs", (S.fs / 16 * 100) + "%");
     var dark = S.theme === "dark" || (S.theme === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
     $$('meta[name="theme-color"]').forEach(function (m) { m.content = dark ? "#0B1220" : "#0E5BD8"; });
   }
@@ -613,14 +641,20 @@
 
   /* ---------- species scan: a plant or an animal from one photo, said, signed and in braille ---------- */
   function makeSpecies() {
-    var P = { on: false, stream: null, res: null, pl: null }, v = $("#svideo"), img = $("#simg"), box = $("#scam");
+    var P = { on: false, stream: null, res: null, pl: null, raws: [], blobs: [], mode: "auto", part: "auto", combine: false }, v = $("#svideo"), img = $("#simg"), box = $("#scam");
     function st(s) { $("#sStatus").textContent = s || ""; }
     function models() {
       st(t("sLoading"));
       return Species.load(Vision, new URL("vendor/species/", location.href).href).then(function () { st(""); }, function (e) { st(""); toast(t("sModelErr")); throw e; });
     }
+    function online() { return !!(S.pnOn && S.pnKey && navigator.onLine !== false); }
     function renderFinds() {
       $("#finds").innerHTML = FINDS.slice().reverse().map(function (f) { return "<li>" + esc(f.n) + "<small>" + esc(f.s || f.k) + "</small></li>"; }).join("");
+    }
+    function chips() {
+      $$("#sSubj button").forEach(function (b) { b.classList.toggle("on", b.dataset.m === P.mode); });
+      $("#sPart").hidden = !(P.mode === "plant" && S.pnOn && S.pnKey);
+      $$("#sPart button").forEach(function (b) { b.classList.toggle("on", b.dataset.p === P.part); });
     }
     /* The avatar signs the kind (bird, tree, dog...) and then fingerspells the name. */
     function signItems(res) {
@@ -632,18 +666,20 @@
     function show(res, quiet) {
       P.res = res;
       var el = $("#sRes");
-      if (!res || !res.ok) { el.innerHTML = '<span class="ph">' + esc(t(res ? "sNone" : "sHint")) + "</span>"; $("#sInfo").textContent = ""; return; }
+      if (!res || !res.ok) { el.innerHTML = '<span class="ph">' + esc(t(res ? "sNone" : "sHint")) + "</span>" + (res ? '<p class="muted small">' + esc(t("sPlantTip")) + "</p>" : ""); $("#sInfo").textContent = ""; return; }
       var name = Species.nameIn(res, S.out), low = res.score < 0.5, pct = Math.round(res.score * 100);
-      $("#sInfo").textContent = (low ? t("sUnsure") + " · " : "") + pct + "%";
+      $("#sInfo").textContent = (low ? t("sUnsure") + " · " : "") + pct + "%" + (P.raws.length > 1 ? " · " + P.raws.length + " " + t("sShots") : "") + (res.source === "plantnet" ? " · " + t("sOnlineUsed") : "");
       el.innerHTML = '<div class="spname">' + esc(name) + '</div><div class="spsci">' + (res.sci ? "<i>" + esc(res.sci) + "</i> · " : "") + esc(Species.kindWord(res, S.out)) + "</div>" +
         '<div class="spbar' + (low ? " low" : "") + '"><i style="width:' + pct + '%"></i></div>' +
-        (res.alts && res.alts.length ? '<p class="muted small">' + esc(t("sAlso")) + ": " + res.alts.map(function (a) { return esc(a.name) + " (" + Math.round(a.score * 100) + "%)"; }).join(", ") + "</p>" : "") +
+        (res.alts && res.alts.length ? '<p class="muted small" style="margin:6px 0 2px">' + esc(t("sAlso")) + " — " + esc(t("sPick")) + '</p><div class="chips" id="sAlts">' + res.alts.map(function (a, i) { return '<button data-i="' + i + '">' + esc(a.name) + " " + Math.round(a.score * 100) + "%</button>"; }).join("") + "</div>" : "") +
+        (low && Species.isPlant(res) ? '<p class="muted small">' + esc(t("sPlantTip")) + "</p>" : "") +
         '<div class="brlline" id="sBrl" aria-label="Braille">' + esc(Braille.write(name)) + '</div><canvas class="avatar mini" id="sAv"></canvas>' +
         '<div class="tools"><button class="ib" id="sSay" title="' + esc(t("speak")) + '" aria-label="' + esc(t("speak")) + '"><svg><use href="#i-spk"/></svg></button>' +
         '<button class="pill" id="sSign"><svg><use href="#i-hand"/></svg>' + esc(t("signIt")) + "</button>" +
         '<button class="ib" id="sBig" title="' + esc(t("bigShow")) + '" aria-label="' + esc(t("bigShow")) + '"><svg><use href="#i-big"/></svg></button>' +
         '<button class="ib" id="sCopy" title="' + esc(t("copy")) + '" aria-label="' + esc(t("copy")) + '"><svg><use href="#i-copy"/></svg></button>' +
-        '<button class="pill" id="sWiki"><svg><use href="#i-info"/></svg>' + esc(t("sMoreInfo")) + '</button></div><div class="muted small" id="sMore"></div><p class="muted small">' + esc(t("sSafe")) + "</p>";
+        '<button class="pill" id="sWiki"><svg><use href="#i-info"/></svg>' + esc(t("sMoreInfo")) + "</button></div>" +
+        '<button class="pill" id="sAdd" style="margin-top:10px"><svg><use href="#i-plus"/></svg>' + esc(t("sAdd")) + '</button><div class="muted small" id="sMore"></div><p class="muted small">' + esc(t("sSafe")) + "</p>";
       P.pl = new Avatar.Player($("#sAv"), { tone: S.tone, lefty: S.hand === "left" });
       var play = function () { P.pl.speed = S.speed; P.pl.play(signItems(res)); };
       $("#sSay").onclick = function () { say(name, S.out, true); };
@@ -651,6 +687,8 @@
       $("#sBig").onclick = function () { bigText(name, S.out); };
       $("#sCopy").onclick = function () { if (navigator.clipboard) navigator.clipboard.writeText(name + (res.sci ? " (" + res.sci + ")" : "")).then(function () { toast(t("copied")); }); };
       $("#sWiki").onclick = function () { more(res); };
+      $("#sAdd").onclick = function () { P.combine = true; this.classList.add("on"); toast(t("sAddTip")); };
+      $$("#sAlts button").forEach(function (b) { b.onclick = function () { var r = Species.choose(res, +b.dataset.i); show(r); record(r, true); }; });
       if (!quiet) { if (S.aloud) say(name, S.out, true); setTimeout(play, 250); }
     }
     /* More info: only the name is sent, to Wikipedia, and only when the user asks. */
@@ -667,18 +705,50 @@
         })
         .catch(function () { out.textContent = t("sNoNet"); });
     }
+    function record(res, replace) {
+      if (!res || !res.ok) return;
+      if (replace) FINDS.pop();
+      FINDS.push({ n: res.name + (res.detail ? " (" + res.detail + ")" : ""), s: res.sci, k: res.kind, at: Date.now() });
+      if (FINDS.length > 12) FINDS.shift();
+      save("finds", FINDS); renderFinds();
+      if (!replace) addHist("si", "🌿 " + Species.nameIn(res, S.out));
+    }
+    /* A small JPEG of what was scanned, for the online plant service (only when the user turned it on). */
+    function snap(source) {
+      var w = source.videoWidth || source.naturalWidth || source.width, h = source.videoHeight || source.naturalHeight || source.height, k = Math.min(1, 1280 / Math.max(w, h));
+      var c = document.createElement("canvas"); c.width = Math.round(w * k); c.height = Math.round(h * k);
+      c.getContext("2d").drawImage(source, 0, 0, c.width, c.height);
+      return new Promise(function (done, fail) { c.toBlob(function (b) { if (b) done(b); else fail(new Error("no image")); }, "image/jpeg", 0.85); });
+    }
+    function plantnet() {
+      var fd = new FormData();
+      P.blobs.forEach(function (b) { fd.append("images", b, "photo.jpg"); fd.append("organs", P.part); });
+      return fetch("https://my-api.plantnet.org/v2/identify/all?nb-results=4&lang=en&include-related-images=false&api-key=" + encodeURIComponent(S.pnKey), { method: "POST", body: fd })
+        .then(function (r) { if (!r.ok) throw new Error("plantnet " + r.status); return r.json(); })
+        .then(function (d) {
+          var list = (Array.isArray(d && d.results) ? d.results : []).slice(0, 4).map(function (x) {
+            var sp = (x && x.species) || {}, sci = str(sp.scientificNameWithoutAuthor, 80), cn = Array.isArray(sp.commonNames) ? str(sp.commonNames[0], 80) : "";
+            return { sci: sci, name: cn ? cn.charAt(0).toUpperCase() + cn.slice(1) : sci, score: num(x && x.score, 0, 1, 0) };
+          }).filter(function (x) { return x.sci; });
+          var res = Species.fromList("plant", list, "plantnet");
+          if (!res.ok) throw new Error("empty");
+          return res;
+        });
+    }
     function scan(source) {
       $("#sShot").disabled = true;
       return models().then(function () {
-        var res = Species.classify(source);
-        show(res);
-        if (res.ok) {
-          FINDS.push({ n: res.name + (res.detail ? " (" + res.detail + ")" : ""), s: res.sci, k: res.kind, at: Date.now() });
-          if (FINDS.length > 12) FINDS.shift();
-          save("finds", FINDS); renderFinds(); addHist("si", "🌿 " + Species.nameIn(res, S.out));
-        }
-        return res;
-      }).catch(function () { return null; }).then(function (r) { $("#sShot").disabled = false; return r; });
+        var joined = P.combine && P.raws.length > 0;
+        if (!joined) { P.raws = []; P.blobs = []; }
+        P.combine = false;
+        P.raws.push(Species.look(source)); if (P.raws.length > 5) P.raws.shift();
+        var res = Species.name(P.raws, P.mode);
+        if (!(online() && (P.mode === "plant" || (P.mode === "auto" && Species.isPlant(res))))) return { res: res, joined: joined };
+        st(t("sAsking"));
+        return snap(source).then(function (b) { P.blobs.push(b); if (P.blobs.length > 5) P.blobs.shift(); return plantnet(); })
+          .then(function (r) { st(""); return { res: r, joined: joined }; }, function () { st(""); toast(t("sOnlineFail")); return { res: res, joined: joined }; });
+      }).then(function (o) { show(o.res); record(o.res, o.joined && FINDS.length > 0); return o.res; })
+        .catch(function () { return null; }).then(function (r) { $("#sShot").disabled = false; return r; });
     }
     P.file = function (f) {
       if (!f) return;
@@ -704,13 +774,16 @@
       if (was) { img.hidden = true; box.classList.remove("live"); $("#sstart").hidden = false; }
     };
     P.scan = scan;
-    P.refresh = function () { if (P.res) show(P.res, true); else show(null); renderFinds(); };
+    P.refresh = function () { chips(); if (P.res) show(P.res, true); else show(null); renderFinds(); };
     $("#sLive").onclick = function () { P.start(); };
     $("#sStop").onclick = function () { P.stop(); };
     $("#sShot").onclick = function () { if (v.readyState >= 2) scan(v); };
     $("#sFile").onchange = function () { P.file(this.files[0]); this.value = ""; };
     $("#sFindsClear").onclick = function () { FINDS = []; save("finds", FINDS); renderFinds(); };
-    show(null); renderFinds();
+    /* Saying what is in the picture lets a leaf, a piece of bark or a root be named even when it does not look like a "plant". */
+    $$("#sSubj button").forEach(function (b) { b.onclick = function () { P.mode = b.dataset.m; chips(); if (P.raws.length && !(P.res && P.res.source === "plantnet")) { var r = Species.name(P.raws, P.mode); show(r); record(r, FINDS.length > 0 && r.ok); } }; });
+    $$("#sPart button").forEach(function (b) { b.onclick = function () { P.part = b.dataset.p; chips(); }; });
+    chips(); show(null); renderFinds();
     return P;
   }
 
@@ -993,7 +1066,10 @@
 
   /* ---------- settings ---------- */
   var installEvt = null;
-  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEvt = e; });
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEvt = e; installBar(); });
+  window.addEventListener("appinstalled", function () { installEvt = null; detect(); installBar(); });
+  $("#instGo").onclick = function () { if (installEvt) { installEvt.prompt(); installEvt = null; } $("#inst").hidden = true; };
+  $("#instNo").onclick = function () { save("instNo", true); $("#inst").hidden = true; };
   function sel(id, val, opts) { return '<select id="' + id + '">' + opts.map(function (o) { return '<option value="' + o[0] + '"' + (String(o[0]) === String(val) ? " selected" : "") + ">" + esc(o[1]) + "</option>"; }).join("") + "</select>"; }
   function sw(id, on) { return '<label class="switch"><input type="checkbox" id="' + id + '"' + (on ? " checked" : "") + '><span class="knob"></span></label>'; }
   function row(label, ctl, sub) { return '<div class="set"><span>' + esc(label) + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</span>" + ctl + "</div>"; }
@@ -1024,13 +1100,15 @@
       '<div class="card group"><h3>' + esc(t("sAvatar")) + "</h3>" + row(t("sTone"), '<div class="tones">' + Hand.TONES.map(function (c, i) { return '<button data-tone="' + i + '" class="' + (i === S.tone ? "on" : "") + '" style="background:' + c[0] + '" aria-label="' + (i + 1) + '"></button>'; }).join("") + "</div>") + "</div>" +
       '<div class="card group"><h3>' + esc(t("sDisplay")) + "</h3>" + row(t("sTheme"), sel("sTheme", S.theme, [["auto", t("auto")], ["light", t("light")], ["dark", t("dark")]])) +
       row(t("sText"), sel("sFs", S.fs, [[14, "A−"], [16, "A"], [18, "A+"], [21, "A++"]])) + row(t("sContrast"), sw("sHc", S.hc)) + row(t("sMotion"), sw("sRm", S.rm)) + "</div>" +
+      '<div class="card group"><h3>' + esc(t("sNature")) + '</h3><p class="muted small">' + esc(t("sCover")) + "</p>" + row(t("sOnline"), sw("sPnOn", S.pnOn), t("sOnlineD")) +
+      row(t("sKey"), '<input type="text" id="sPnKey" maxlength="80" autocomplete="off" autocapitalize="off" spellcheck="false" value="' + esc(S.pnKey) + '" style="max-width:170px;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--bg)">', t("sKeyD")) + "</div>" +
       '<div class="card group"><h3>' + esc(t("sMine")) + "</h3><p class=\"muted small\">" + esc(t("sMineD")) + "</p>" + mine + row(t("personal"), "<b>" + PERSONAL.length + "</b>") +
       '<div class="set"><button class="pill" id="sTeach"><svg><use href="#i-plus"/></svg>' + esc(t("teachSign")) + "</button></div></div>" +
       '<div class="card group"><h3>' + esc(t("sData")) + "</h3>" + row(t("privacy"), '<button class="link" id="sPriv">›</button>') + row(t("cookies"), '<button class="link" id="sCk">›</button>') +
       row(t("export"), '<button class="link" id="sExp"><svg><use href="#i-dl"/></svg></button>') + row(t("import"), '<label class="link" style="cursor:pointer">…<input type="file" id="sImp" accept="application/json" hidden></label>') +
       row(t("reset"), '<button class="link" id="sReset">↺</button>') + row(t("wipe"), '<button class="link" id="sWipe" style="color:var(--bad)">✕</button>') + "</div>" +
-      '<div class="card group"><h3>' + esc(t("about")) + '</h3><p class="small">' + esc(t("aboutText")) + "</p>" + row(t("version"), "<span>" + VERSION + "</span>") +
-      (installEvt && !INAPP ? row(t("install"), '<button class="pill" id="sInst"><svg><use href="#i-dl"/></svg>' + esc(t("install")) + "</button>") : "") +
+      '<div class="card group"><h3>' + esc(t("about")) + '</h3><p class="small">' + esc(t("aboutText")) + "</p>" + row(t("version"), "<span>" + VERSION + "</span>") + row(t("envAs"), '<span id="envRow" style="text-align:right">' + esc(envText()) + "</span>") +
+      (installEvt && ENV.app === "browser" ? row(t("install"), '<button class="pill" id="sInst"><svg><use href="#i-dl"/></svg>' + esc(t("install")) + "</button>") : "") +
       '<p class="muted small">Hand tracking: MediaPipe (Apache-2.0). <a href="' + (INAPP ? "https://pogi6969.github.io/SENYAS/" : "../") + '" target="_blank" rel="noopener noreferrer">SENYAS website</a></p></div>';
     var on = function (id, ev, f) { var e = $("#" + id); if (e) e.addEventListener(ev, f); };
     on("sUi", "change", function () { S.ui = this.value; saveS(); applyText(); renderQuick(); renderSettings(); if (SP) SP.refresh(); });
@@ -1045,6 +1123,8 @@
     on("sFacing", "change", function () { S.facing = this.value; saveS(); if (Cam.on) { Cam.stop(); Cam.start(); } Cam.refresh(); });
     ["Mirror", "Points", "Repeat", "Swap", "Hc", "Rm"].forEach(function (k) { on("s" + k, "change", function () { S[k.toLowerCase()] = this.checked; saveS(); Cam.refresh(); applyLook(); }); });
     on("sHold", "change", function () { S.hold = +this.value; saveS(); Cam.refresh(); });
+    on("sPnOn", "change", function () { S.pnOn = this.checked; saveS(); if (SP) SP.refresh(); });
+    on("sPnKey", "change", function () { S.pnKey = this.value.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 80); this.value = S.pnKey; saveS(); if (SP) SP.refresh(); });
     on("sTheme", "change", function () { S.theme = this.value; saveS(); applyLook(); });
     on("sFs", "change", function () { S.fs = +this.value; saveS(); applyLook(); });
     $$("[data-tone]").forEach(function (b) { b.onclick = function () { S.tone = +b.dataset.tone; player.opts.tone = S.tone; saveS(); player.redraw(); renderSettings(); }; });
@@ -1087,6 +1167,7 @@
   }
 
   /* ---------- start ---------- */
+  detect();
   BR = makeBraille(); SP = makeSpecies();
   applyLook(); applyText();
   $("#aloud").checked = S.aloud; $("#bAloud").checked = S.aloud; $("#sAloudSw").checked = S.aloud; $("#sLang").value = S.out; $("#outLang").value = S.out; $("#inLang").value = S.inLang; $("#aSpeed").value = String(S.speed);
@@ -1094,11 +1175,12 @@
   player.opts.lefty = S.hand === "left";
   renderCaption(); renderHist(); renderQuick();
   go((location.hash || "#translate").slice(1));
+  installBar();
   if (!consent) setTimeout(function () { consentSheet(false); }, 400);
   if (synth && synth.addEventListener) synth.addEventListener("voiceschanged", function () { if (current === "settings") renderSettings(); });
   matchMedia("(prefers-color-scheme: dark)").addEventListener && matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyLook);
   if ("serviceWorker" in navigator && !INAPP && /^https:|^http:\/\/localhost/.test(location.href)) navigator.serviceWorker.register("../sw.js", { scope: "../" }).catch(function () {});
   var cn = navigator.connection;
   if (!(cn && (cn.saveData || /2g/.test(cn.effectiveType || "")))) { if ("requestIdleCallback" in window) requestIdleCallback(function () { Cam.preload(); }); else setTimeout(Cam.preload, 2000); }
-  window.SENYAS = { version: VERSION, signText: signText, onToken: onToken, go: go, setDir: setDir, bigText: bigText, species: function () { return SP; } };
+  window.SENYAS = { version: VERSION, signText: signText, onToken: onToken, go: go, setDir: setDir, bigText: bigText, species: function () { return SP; }, env: function () { return detect(); } };
 })();

@@ -58,32 +58,35 @@ var Species = (function () {
   var FLUTTER = /butterfly|moth|swallowtail|monarch|skipper|sulphur|fritillary|admiral|hairstreak|buckeye|emperor|bluewing|nymph|checkerspot|crescent|azure|copper|satyr|sphinx|tussock/i;
 
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-  function best(list, labels) {
+  function plantKind(name) { return FLOWER.test(name) ? "flower" : TREE.test(name) ? "tree" : "plant"; }
+  function best(list, labels, minAlt) {
     /* A specialist's top answers without its "background" class; bg is that class's score. */
     var bgIndex = labels.length - 1, bg = 0, out = [];
     list.forEach(function (c) { if (c.index === bgIndex) bg = c.score; else out.push({ sci: labels[c.index][0], name: labels[c.index][1] || labels[c.index][0], score: c.score }); });
-    return { top: out[0] || null, alts: out.slice(1, 3).filter(function (a) { return a.score >= 0.05; }), bg: bg };
+    return { top: out[0] || null, alts: out.slice(1, 4).filter(function (a) { return a.score >= minAlt; }), bg: bg };
   }
 
-  /* gen: the general model's answers [{index, name, score}], best first. sp: {plant, bird, insect}, each the
-     specialist's answers [{index, score}]. labels: {plant, bird, insect} name lists. */
-  function decide(gen, sp, labels) {
-    var sums = {}, lead = {}, dead = 0;
+  /* raw: what the four models said: {gen: [{index, name, score}], plant, bird, insect: [{index, score}]}, best first.
+     mode: "auto", or what the user says is in the picture: "plant", "bird", "insect" or "animal". */
+  function decide(raw, labels, mode) {
+    var gen = raw.gen, sums = {}, lead = {}, dead = 0, asked = mode === "plant" || mode === "bird" || mode === "insect";
     gen.forEach(function (c) {
       var k = kind(c.index);
       if (!k) { dead = Math.max(dead, c.score); return; }
       var route = k === "bird" || k === "insect" || k === "plant" ? k : "animal";
+      if (mode === "animal" && route === "plant") return;
       sums[route] = (sums[route] || 0) + c.score;
       if (!lead[route]) lead[route] = { kind: k, name: c.name, score: c.score };
     });
     var gate = null;
     Object.keys(sums).forEach(function (r) { if (!gate || sums[r] > sums[gate]) gate = r; });
     if (gate && (sums[gate] < 0.18 || sums[gate] < dead * 0.6)) gate = null;
-    var B = { plant: best(sp.plant, labels.plant), bird: best(sp.bird, labels.bird), insect: best(sp.insect, labels.insect) };
+    var minAlt = asked ? 0.02 : 0.05;
+    var B = { plant: best(raw.plant, labels.plant, minAlt), bird: best(raw.bird, labels.bird, minAlt), insect: best(raw.insect, labels.insect, minAlt) };
 
     function fromSpecialist(route, why) {
       var b = B[route], t = b.top, k = route;
-      if (route === "plant") k = FLOWER.test(t.name) ? "flower" : TREE.test(t.name) ? "tree" : "plant";
+      if (route === "plant") k = plantKind(t.name);
       if (route === "insect" && FLUTTER.test(t.name)) k = "butterfly";
       return { ok: true, kind: k, name: t.name, sci: t.sci, score: t.score, alts: b.alts, source: route, why: why };
     }
@@ -94,6 +97,13 @@ var Species = (function () {
       return { ok: true, kind: k, name: name, sci: "", detail: detail, key: l.name, score: Math.min(1, sums[route]), alts: [], source: "general" };
     }
 
+    /* The user said what it is (a leaf, bark or root rarely looks like a "plant" to the general model),
+       so the specialist answers even when it is unsure, and its other guesses are offered too. */
+    if (asked) {
+      if (B[mode].top && B[mode].top.score >= 0.02) return fromSpecialist(mode, "asked");
+      if (lead[mode]) return fromGeneral(mode);
+      return { ok: false };
+    }
     if (gate === "animal") return fromGeneral("animal");
     if (gate) {
       var t = B[gate].top;
@@ -102,10 +112,37 @@ var Species = (function () {
       return fromSpecialist(gate, "weak");
     }
     /* The general model saw no living thing: believe a specialist only when it is sure. */
-    var need = { plant: 0.35, bird: 0.6, insect: 0.6 }, pick = null;
-    Object.keys(B).forEach(function (r) { var t = B[r].top; if (t && t.score >= need[r] && t.score > B[r].bg && (!pick || t.score > B[pick].top.score)) pick = r; });
+    var need = mode === "animal" ? { bird: 0.6, insect: 0.6 } : { plant: 0.35, bird: 0.6, insect: 0.6 }, pick = null;
+    Object.keys(need).forEach(function (r) { var t = B[r].top; if (t && t.score >= need[r] && t.score > B[r].bg && (!pick || t.score > B[pick].top.score)) pick = r; });
     if (pick) return fromSpecialist(pick, "alone");
     return { ok: false };
+  }
+
+  /* Several photos of the same plant or animal (a leaf, the bark, the whole tree): the models' scores are
+     averaged, so what the photos agree on wins. */
+  function merge(raws) {
+    if (raws.length === 1) return raws[0];
+    var out = {};
+    ["gen", "plant", "bird", "insect"].forEach(function (m) {
+      var sum = {}, name = {};
+      raws.forEach(function (r) { r[m].forEach(function (c) { sum[c.index] = (sum[c.index] || 0) + c.score; if (c.name) name[c.index] = c.name; }); });
+      out[m] = Object.keys(sum).map(function (i) { return { index: +i, name: name[i] || "", score: sum[i] / raws.length }; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 10);
+    });
+    return out;
+  }
+
+  /* A result from a list of names, such as the answer of an online service: [{name, sci, score}], best first. */
+  function fromList(route, list, source) {
+    if (!list || !list.length) return { ok: false };
+    var t = list[0], k = route === "plant" ? plantKind(t.name) : route;
+    return { ok: true, kind: k, name: t.name || t.sci, sci: t.sci || "", score: t.score, alts: list.slice(1, 4), source: source };
+  }
+  /* The same result with one of its other guesses moved to the top (the user tapped it). */
+  function choose(res, i) {
+    var a = res.alts[i]; if (!a) return res;
+    var alts = res.alts.slice(); alts[i] = { name: res.name, sci: res.sci, score: res.score };
+    var k = res.source === "plant" || res.source === "plantnet" ? plantKind(a.name) : res.source === "insect" ? (FLUTTER.test(a.name) ? "butterfly" : "insect") : res.kind;
+    return { ok: true, kind: k, name: a.name, sci: a.sci, score: a.score, alts: alts, source: res.source, chosen: true };
   }
 
   /* The name to show and say in a language: a local name if there is one, else the kind and the English name. */
@@ -121,6 +158,7 @@ var Species = (function () {
   }
   function kindWord(res, lang) { return KINDS[res.kind] ? KINDS[res.kind][LI[lang] || 0] : ""; }
   function signId(res) { return SIGN[res.kind] || res.kind; }
+  function isPlant(res) { return !!res && res.ok && (res.kind === "plant" || res.kind === "flower" || res.kind === "tree"); }
 
   /* ---------- running the models ---------- */
   var ready = null, C = {}, LABELS = null;
@@ -131,18 +169,21 @@ var Species = (function () {
       LABELS = await (await fetch(base + "labels.json")).json();
       var names = ["general", "plants", "birds", "insects"];
       for (var i = 0; i < names.length; i++) {
-        C[names[i]] = await v.mp.ImageClassifier.createFromOptions(v.files, { baseOptions: { modelAssetPath: base + names[i] + ".tflite", delegate: "CPU" }, runningMode: "IMAGE", maxResults: names[i] === "general" ? 10 : 4 });
+        C[names[i]] = await v.mp.ImageClassifier.createFromOptions(v.files, { baseOptions: { modelAssetPath: base + names[i] + ".tflite", delegate: "CPU" }, runningMode: "IMAGE", maxResults: 10 });
       }
     })();
     ready.catch(function () { ready = null; });
     return ready;
   }
-  /* source: an image, a video frame or a canvas. */
-  function classify(source) {
+  /* source: an image, a video frame or a canvas. Returns what the four models said. */
+  function look(source) {
     function run(n) { return C[n].classify(source).classifications[0].categories.map(function (c) { return { index: c.index, name: c.categoryName || c.displayName || "", score: c.score }; }); }
-    return decide(run("general"), { plant: run("plants"), bird: run("birds"), insect: run("insects") }, LABELS);
+    return { gen: run("general"), plant: run("plants"), bird: run("birds"), insect: run("insects") };
   }
+  /* raws: one look() per photo of the same subject. */
+  function name(raws, mode) { return decide(merge(raws), LABELS, mode || "auto"); }
 
-  return { kind: kind, decide: decide, nameIn: nameIn, kindWord: kindWord, signId: signId, load: load, classify: classify, KINDS: KINDS, count: { plants: 2101, birds: 964, insects: 1021, general: 398 } };
+  return { kind: kind, decide: decide, merge: merge, fromList: fromList, choose: choose, nameIn: nameIn, kindWord: kindWord, signId: signId, isPlant: isPlant, load: load, look: look, name: name, KINDS: KINDS,
+    count: { plants: 2101, birds: 964, insects: 1021, general: 398 } };
 })();
 if (typeof module !== "undefined") module.exports = Species;

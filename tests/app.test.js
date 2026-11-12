@@ -144,9 +144,35 @@ const tab = (p, v) => p.evaluate((v) => window.SENYAS.go(v), v);
     r = await scan("grace_hopper.jpg"); ok("species: a photo of a person gives no species", r.none.includes("No plant or animal"), r.none || r.name);
     r = await scan("kite_and_cold.jpg"); ok("species: a beach scene gives no species", r.none.includes("No plant or animal"), r.none || r.name);
     ok("species: my finds list", (await p.$$eval("#finds li", (e) => e.length)) >= 5, await p.$$eval("#finds li", (e) => e.length));
+    // any part of a plant: say what it is, combine photos, pick another candidate
+    await p.click('#sSubj button[data-m="plant"]'); r = await scan("sunflower.jpg"); ok("species: Plant mode names a plant photo", r.name === "Sunflower", r.name);
+    await p.click("#sAdd"); r = await scan("sunflower.jpg"); ok("species: two photos of the same plant are combined", (await p.textContent("#sInfo")).includes("2 photos combined") && r.name === "Sunflower", await p.textContent("#sInfo"));
+    r = await scan("kite_and_cold.jpg"); ok("species: Plant mode answers even for a hard photo, marked not sure", r.name.length > 2 && /Not sure/.test(await p.textContent("#sInfo")), r.name + " · " + (await p.textContent("#sInfo")));
+    await p.click('#sSubj button[data-m="bird"]'); r = await scan("bird.jpg"); const altN = await p.$$eval("#sAlts button", (e) => e.length);
+    ok("species: Bird mode offers other candidates", altN >= 1, altN + " candidates");
+    if (altN) { const want = (await p.textContent("#sAlts button")).replace(/ \d+%$/, ""); await p.click("#sAlts button"); await p.waitForTimeout(200); ok("species: tapping a candidate chooses it", (await p.textContent(".spname")) === want, want); }
+    await p.click('#sSubj button[data-m="animal"]'); r = await scan("cat.jpg"); ok("species: Other animal mode", /^Cat/.test(r.name), r.name);
+    await p.click('#sSubj button[data-m="auto"]'); r = await scan("parrot.jpg"); ok("species: back to Auto", r.name === "Scarlet Macaw", r.name);
+    // optional online plant identification (Pl@ntNet), with the service imitated
+    let pnReq = null;
+    await p.route("https://my-api.plantnet.org/**", async (route) => { const q = route.request(); pnReq = { url: q.url(), method: q.method(), body: (q.postDataBuffer() || Buffer.alloc(0)).toString("latin1").slice(0, 3000) };
+      await route.fulfill({ status: 200, contentType: "application/json", headers: { "access-control-allow-origin": "*" }, body: JSON.stringify({ results: [{ score: 0.91, species: { scientificNameWithoutAuthor: "Mangifera indica", commonNames: ["mango"] } }, { score: 0.05, species: { scientificNameWithoutAuthor: "Anacardium occidentale", commonNames: ["cashew"] } }] }) }); });
+    await tab(p, "settings"); ok("online: off by default", !(await p.isChecked("#sPnOn")));
+    await p.fill("#sPnKey", "test-key_123"); await p.dispatchEvent("#sPnKey", "change"); await p.click("label:has(#sPnOn)"); await tab(p, "translate");
+    await p.click('#sSubj button[data-m="plant"]'); ok("online: plant-part choices appear", await p.isVisible("#sPart")); await p.click('#sPart button[data-p="leaf"]');
+    await p.evaluate(() => { const f = window.fetch; window.__pn = null; window.fetch = function (u, o) { if (String(u).includes("plantnet") && o && o.body instanceof FormData) window.__pn = { organs: o.body.getAll("organs"), images: o.body.getAll("images").map((b) => ({ size: b.size, type: b.type })) }; return f.apply(this, arguments); }; });
+    r = await scan("sunflower.jpg");
+    ok("online: Pl@ntNet answer is shown", r.name === "Mango" && r.sci.includes("Mangifera indica") && (await p.textContent("#sInfo")).includes("Pl@ntNet"), r.name + " · " + (await p.textContent("#sInfo")));
+    const sent = await p.evaluate(() => window.__pn);
+    ok("online: request carries the photo, the part and the key", !!pnReq && pnReq.method === "POST" && /api-key=test-key_123/.test(pnReq.url) && !!sent && sent.organs[0] === "leaf" && sent.images.length === 1 && sent.images[0].type === "image/jpeg" && sent.images[0].size > 2000, JSON.stringify(sent));
+    await p.selectOption("#sLang", "bcl"); ok("online: local name of the online answer", (await p.textContent(".spname")) === "Mangga", await p.textContent(".spname")); await p.selectOption("#sLang", "en");
+    await p.unroute("https://my-api.plantnet.org/**"); await p.route("https://my-api.plantnet.org/**", (route) => route.abort());
+    r = await scan("sunflower.jpg"); ok("online: if the service fails, the on-device answer is used", r.name === "Sunflower" && /did not answer/.test(await p.textContent("#toast")), r.name);
+    await p.unroute("https://my-api.plantnet.org/**"); await tab(p, "settings"); await p.click("label:has(#sPnOn)"); await tab(p, "translate"); await p.click('#sSubj button[data-m="auto"]');
+    ok("online: switching it off hides the part choices", !(await p.isVisible("#sPart")));
   }
   await p.setInputFiles("#sFile", junk); await p.waitForTimeout(300); ok("species: a non-image file is refused", /can't be used/.test(await p.textContent("#toast")));
-  await p.click("#sStop"); await p.click("#sLive"); await p.waitForSelector("#sShot:not([hidden])", { timeout: 20000 }); await p.waitForTimeout(800); await p.click("#sShot");
+  if (await p.isVisible("#sStop")) await p.click("#sStop"); await p.click("#sLive"); await p.waitForSelector("#sShot:not([hidden])", { timeout: 20000 }); await p.waitForTimeout(800); await p.click("#sShot");
   await p.waitForFunction(() => !document.querySelector("#sShot").disabled, null, { timeout: 90000 });
   ok("species: live camera scan runs", (await p.textContent("#sRes")).length > 10, (await p.textContent("#sRes")).slice(0, 60));
   await p.click("#sStop"); ok("species: camera stops", await p.isVisible("#sstart"));
@@ -198,7 +224,7 @@ const tab = (p, v) => p.evaluate((v) => window.SENYAS.go(v), v);
   await said(p); await p.click("#sTestV"); await p.waitForTimeout(300); s = await said(p); ok("settings: test voice says English, Filipino, Bikol", s.length === 3 && s[2].text.includes("Dios mabalos"), JSON.stringify(s.map((x) => x.voice)));
   ok("settings: voice pickers", (await p.$$eval("#sVen option", (e) => e.length)) >= 2 && (await p.$$eval("#sVfil option", (e) => e.length)) >= 2);
   for (const [id, v] of [["sHand", "left"], ["sFacing", "environment"], ["sHold", "600"], ["sTheme", "dark"], ["sFs", "18"]]) await p.selectOption("#" + id, v);
-  ok("settings: theme and text size apply", await p.evaluate(() => document.documentElement.dataset.theme === "dark" && getComputedStyle(document.documentElement).getPropertyValue("--fs").trim() === "18px"));
+  ok("settings: theme and text size apply", await p.evaluate(() => document.documentElement.dataset.theme === "dark" && getComputedStyle(document.documentElement).getPropertyValue("--fs").trim() === "112.5%"));
   for (const id of ["sMirror", "sPoints", "sRepeat", "sSwap", "sHc", "sRm", "sLetters"]) await p.click(`label:has(#${id})`);
   ok("settings: switches", await p.evaluate(() => document.documentElement.classList.contains("hc")));
   await p.click("[data-tone='2']"); ok("settings: avatar skin tone", await p.evaluate(() => document.querySelector("[data-tone='2']").classList.contains("on")));
@@ -229,6 +255,29 @@ const tab = (p, v) => p.evaluate((v) => window.SENYAS.go(v), v);
   ({ ctx, p } = await newPage(browser, { width: 390, height: 844 }, []));
   await p.goto(B + "app/"); await p.waitForTimeout(600); await p.click("#cAll"); await p.evaluate(() => SENYAS.onToken("w:hello")); s = await said(p);
   ok("voice: with no voices at all the app still asks the device to speak", s.length === 1 && s[0].lang === "en-US", JSON.stringify(s)); await ctx.close();
+
+  // ---------- the interface adapts to the app it runs in and to the device ----------
+  const UA = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Mobile Safari/537.36";
+  for (const [name, opt, want] of [
+    ["Android app on a phone", { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, userAgent: UA + " SENYAS-App/Android" }, { app: "android", form: "phone", input: "touch", keys: false, rail: false }],
+    ["iPad app", { viewport: { width: 820, height: 1180 }, hasTouch: true, isMobile: true, userAgent: "Mozilla/5.0 (iPad; CPU OS 17_5 like Mac OS X) AppleWebKit/605.1.15 SENYAS-App/iOS" }, { app: "ios", form: "tablet", input: "touch", keys: false, rail: true }],
+    ["browser on a phone", { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, userAgent: UA }, { app: "browser", form: "phone", input: "touch", keys: false, rail: false }],
+    ["browser on a laptop", { viewport: { width: 1366, height: 768 } }, { app: "browser", form: "desktop", input: "mouse", keys: true, rail: true }],
+    ["smart TV", { viewport: { width: 1920, height: 1080 }, userAgent: "Mozilla/5.0 (SMART-TV; Linux; Tizen 7.0) AppleWebKit/537.36 TV Safari/537.36" }, { app: "browser", form: "tv", input: "mouse", keys: true, rail: true }]]) {
+    const c = await browser.newContext(Object.assign({ permissions: ["camera"] }, opt)); await c.addInitScript(FAKE_SPEECH([["English", "en-US"]])); const q = await c.newPage(); q.on("pageerror", (e) => errs.push(e.message));
+    await q.goto(B + "app/"); await q.waitForTimeout(500); await q.click("#cAll");
+    const got = await q.evaluate(() => ({ app: document.documentElement.dataset.app, form: document.documentElement.dataset.form, input: document.documentElement.dataset.input,
+      keys: getComputedStyle(document.querySelector(".keys")).display !== "none", rail: getComputedStyle(document.querySelector(".rail")).display !== "none", inst: !document.querySelector("#inst").hidden }));
+    ok("adapts: " + name, Object.keys(want).every((k) => got[k] === want[k]) && !(want.app !== "browser" && got.inst), JSON.stringify(got));
+    await q.evaluate(() => SENYAS.go("settings")); ok("adapts: " + name + " is named in Settings", (await q.textContent("#envRow")).length > 8, await q.textContent("#envRow"));
+    if (name === "browser on a phone") { await q.setViewportSize({ width: 844, height: 390 }); await q.waitForTimeout(400); ok("adapts: turning the phone sideways switches to the side rail", await q.evaluate(() => getComputedStyle(document.querySelector(".rail")).display !== "none" && getComputedStyle(document.querySelector(".bar")).display === "none")); }
+    await c.close();
+  }
+  // the device's own settings: dark mode, larger text, less motion
+  { const c = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: "dark", reducedMotion: "reduce" }); const q = await c.newPage(); await q.goto(B + "app/"); await q.waitForTimeout(400);
+    ok("adapts: follows the device's dark mode", await q.evaluate(() => getComputedStyle(document.body).backgroundColor === "rgb(11, 18, 32)"));
+    ok("adapts: follows the device's reduce-motion setting", await q.evaluate(() => getComputedStyle(document.querySelector(".view")).animationName === "none"));
+    await q.evaluate(() => { document.documentElement.style.fontSize = ""; }); ok("adapts: text size follows the device's text-size setting", await q.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--fs").trim() === "100%")); await c.close(); }
 
   // ---------- every screen size ----------
   for (const [name, w, h] of [["small phone", 320, 568], ["phone sideways", 844, 390], ["tablet", 820, 1180], ["laptop", 1366, 768], ["TV", 2560, 1440]]) {
