@@ -2,7 +2,7 @@
   "id": "app/",
   "name": "SENYAS: Sign Language Translator",
   "short_name": "SENYAS",
-  "description": "Live sign language translator, braille reader and sign language lessons in English, Filipino and Bikol.",
+  "description": "Live sign language translator, braille reader, plant and animal scan, and sign language lessons in English, Filipino and Bikol.",
   "lang": "en",
   "start_url": "app/",
   "scope": "./",

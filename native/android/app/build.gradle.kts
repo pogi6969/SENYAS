@@ -21,8 +21,8 @@ android {
         applicationId = "ph.senyas.app"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
     }
     signingConfigs {
         if (keystorePath != null) create("upload") {
@@ -38,7 +38,7 @@ android {
             if (keystorePath != null) signingConfig = signingConfigs.getByName("upload")
         }
     }
-    androidResources { noCompress += listOf("wasm", "task") }
+    androidResources { noCompress += listOf("wasm", "task", "tflite") }
     sourceSets["main"].assets.srcDir(web)
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
     kotlinOptions { jvmTarget = "17" }

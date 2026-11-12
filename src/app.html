@@ -53,6 +53,9 @@
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></symbol>
   <symbol id="i-brl" viewBox="0 0 24 24"><circle cx="8" cy="5" r="1.8" fill="currentColor"/><circle cx="8" cy="12" r="1.8" fill="currentColor"/><circle cx="16" cy="5" r="1.8" fill="currentColor"/><circle cx="16" cy="19" r="1.8" fill="currentColor"/><circle cx="8" cy="19" r="1.8"/><circle cx="16" cy="12" r="1.8"/></symbol>
   <symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-9 5-14 15-14 0 10-5 15-14 14zM5 19c3-5 6-8 11-10"/></symbol>
+  <symbol id="i-big" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
   <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
 </svg>
 
@@ -75,6 +78,7 @@
           <button data-dir="s2t" class="on"><svg><use href="#i-hand"/></svg><span data-t="signToText"></span></button>
           <button data-dir="t2s"><svg><use href="#i-chat"/></svg><span data-t="textToSign"></span></button>
           <button data-dir="brl"><svg><use href="#i-brl"/></svg><span>Braille</span></button>
+          <button data-dir="spc"><svg><use href="#i-leaf"/></svg><span data-t="scan"></span></button>
         </div>
       </header>
       <div class="tgrid">
@@ -113,6 +117,7 @@
               <button class="ib" id="tSpeak" data-tt="speak"><svg><use href="#i-spk"/></svg></button>
               <button class="ib" id="tCopy" data-tt="copy"><svg><use href="#i-copy"/></svg></button>
               <button class="ib" id="tShare" data-tt="share"><svg><use href="#i-share"/></svg></button>
+              <button class="ib" id="tBig" data-tt="bigShow"><svg><use href="#i-big"/></svg></button>
               <button class="ib" id="tClear" data-tt="clear"><svg><use href="#i-trash"/></svg></button>
               <button class="pill" id="tTeach"><svg><use href="#i-plus"/></svg><span data-t="teachSign"></span></button>
             </div>
@@ -130,6 +135,7 @@
           </div>
           <div class="chips gloss" id="gloss"></div>
           <div class="brlline" id="t2sBrl" aria-label="Braille"></div>
+          <div class="mean" id="t2sMean"></div>
           <form class="ask card" id="askForm">
             <textarea id="askText" rows="2" data-ph="typeHere" maxlength="600"></textarea>
             <div class="askrow">
@@ -173,6 +179,36 @@
           </div>
           <details class="card chart"><summary data-t="bChart"></summary><div class="bchart" id="bChart"></div></details>
         </div>
+        <div class="pane spc">
+          <div class="cam" id="scam">
+            <video id="svideo" playsinline muted autoplay></video>
+            <img id="simg" alt="" hidden>
+            <div class="camstart" id="sstart">
+              <button class="big primary" id="sLive"><svg><use href="#i-cam"/></svg><span data-t="sOpen"></span></button>
+              <label class="pill" for="sFile" style="cursor:pointer"><svg><use href="#i-img"/></svg><span data-t="bUpload"></span></label>
+              <input type="file" id="sFile" accept="image/*" hidden>
+              <p class="muted small" data-t="sTip"></p>
+            </div>
+            <div class="status" id="sStatus"></div>
+            <div class="camtools">
+              <label class="ib glass" for="sFile" style="cursor:pointer" data-tt="bUpload"><svg><use href="#i-img"/></svg></label>
+              <button class="ib glass" id="sStop" data-tt="stopCamera"><svg><use href="#i-x"/></svg></button>
+            </div>
+            <button class="shutter" id="sShot" hidden><svg><use href="#i-leaf"/></svg><span data-t="sScan"></span></button>
+          </div>
+          <div class="out card">
+            <div class="outhead">
+              <label class="switch"><input type="checkbox" id="sAloudSw"><span class="knob"></span><svg><use href="#i-spk"/></svg><span data-t="readAloud"></span></label>
+              <select id="sLang" aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="bcl">Bikol</option></select>
+            </div>
+            <div class="muted small" id="sInfo"></div>
+            <div id="sRes" aria-live="polite"></div>
+          </div>
+          <div class="card finds">
+            <div class="row between"><h3 data-t="sFinds"></h3><button class="link" id="sFindsClear" data-t="clear"></button></div>
+            <ol id="finds"></ol>
+          </div>
+        </div>
       </div>
       <div class="card hist">
         <div class="row between"><h3 data-t="conversation"></h3><button class="link" id="histClear" data-t="clear"></button></div>
@@ -184,6 +220,7 @@
     <section id="v-learn" class="view" hidden>
       <header class="top"><h1 data-t="tabLearn"></h1></header>
       <div class="stats card" id="stats"></div>
+      <div class="card sod" id="sod"></div>
       <h2 data-t="units"></h2>
       <div class="units" id="units"></div>
       <h2 data-t="games"></h2>
@@ -226,6 +263,14 @@
 </div>
 
 <div class="sheet" id="sheet" hidden><div class="sheetbox" role="dialog" aria-modal="true"><button class="ib close" id="sheetX" aria-label="Close"><svg><use href="#i-x"/></svg></button><div id="sheetBody"></div></div></div>
+<div class="bigtext" id="big" hidden role="dialog" aria-modal="true">
+  <div id="bigTxt"></div>
+  <div class="bigbar">
+    <button class="ib glass" id="bigSpeak" data-tt="speak"><svg><use href="#i-spk"/></svg></button>
+    <button class="pill" id="bigFlash"><span data-t="flash"></span></button>
+    <button class="ib glass" id="bigX" aria-label="Close"><svg><use href="#i-x"/></svg></button>
+  </div>
+</div>
 <div class="toast" id="toast" role="status"></div>
 <template id="privacyTpl"><!--PRIVACY--></template>
 <script>/*JS*/</script>

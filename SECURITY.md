@@ -15,11 +15,11 @@ SENYAS is a static app: the website and app are plain files on GitHub Pages, and
 | 9 | Parameterized queries | Not applicable: no database queries. |
 | 10 | Check the environment | No debug switches or environment files; builds use fixed tool versions. |
 | 11 | Rate limiting | Not applicable: no server endpoints. |
-| 12 | Restrict CORS | Not applicable: no API. The policy limits network requests to the site itself and the two hand-tracking download hosts. |
+| 12 | Restrict CORS | Not applicable: no API. The policy limits network requests to the site itself, the two hand-tracking download hosts and Wikipedia (only for *More info* in the species scan, which sends the species name and nothing else). |
 | 13 | Security headers | Content-Security-Policy and Referrer-Policy are set in every page (GitHub Pages does not allow custom headers). Plugins, other sites' forms and changing the base URL are blocked. |
 | 14 | CSRF protection | Not applicable: no forms that change anything on a server. |
 | 15 | Expiring reset links | Not applicable: no passwords. |
-| 16 | Restrict file uploads | Braille photos: image types only, at most 25 MB, read on the device and never uploaded. Data import: SENYAS JSON only, at most 5 MB. |
+| 16 | Restrict file uploads | Braille and species photos: image types only, at most 25 MB, read on the device and never uploaded. Data import: SENYAS JSON only, at most 5 MB. |
 | 17 | Verify prices | Not applicable: SENYAS is free, with no payments. |
 | 18 | Disable debug output | No debug mode; source maps removed from the hand-tracking engine. |
 | 19 | Update dependencies | No package manager dependencies. The hand-tracking engine is pinned to MediaPipe 0.10.14 (Apache-2.0); Android libraries are pinned in Gradle. |
@@ -28,7 +28,7 @@ SENYAS is a static app: the website and app are plain files on GitHub Pages, and
 | 22 | Scan Git history for leaked secrets | Scanned every file and the full history for cloud, GitHub, Stripe and Google keys and private keys: none found. |
 | 23 | Revoke compromised keys | None found, so none to revoke. |
 | 24 | Thorough security review | Done (this report). |
-| 25–27 | Test the protections and report | Automated browser tests: 40 functional checks pass with the security policy on; bad file types are refused; script injection through imported data is blocked; the app still works offline. |
+| 25–27 | Test the protections and report | Automated browser tests (`tests/app.test.js`): 143 functional checks pass with the security policy on; bad file types are refused; script injection through imported data is blocked; the app still works offline. |
 
 **Privacy:** video, photos and audio never leave the device. See `privacy.html`.
 

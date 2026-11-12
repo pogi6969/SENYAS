@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-uMv4doMsdqjKl3468znUaimIxHPOkZf6WwIFGpupsJ8=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src 'self' https://cdn.jsdelivr.net https://storage.googleapis.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QaC4fl/yByB4mIhxeo/SJrVEsPTGzFfNrQjbY8QXOLY=' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src 'self' https://cdn.jsdelivr.net https://storage.googleapis.com https://en.wikipedia.org; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SENYAS">
@@ -51,6 +51,7 @@ main{flex:1;min-width:0;padding:calc(env(safe-area-inset-top) + 12px) max(16px,e
 .seg{display:inline-flex;background:var(--soft);border-radius:999px;padding:4px;gap:4px}
 .seg button{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-weight:600;font-size:.9rem;color:var(--mut)}
 .seg button.on{background:var(--card);color:var(--pri);box-shadow:var(--shadow)}
+@media (max-width:719px){#dir{display:grid;grid-template-columns:repeat(4,1fr);width:100%;border-radius:18px}#dir button{flex-direction:column;gap:2px;padding:8px 2px;font-size:.72rem;border-radius:14px;text-align:center;line-height:1.15}}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 .chips.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.chips.scroll::-webkit-scrollbar{display:none}
 .chips button,.chip{white-space:nowrap;padding:8px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:.88rem;min-height:40px}
@@ -74,8 +75,23 @@ input[type=search],input[type=text],textarea{width:100%;background:transparent;b
 .switch input:focus-visible+.knob{outline:3px solid var(--acc);outline-offset:2px}
 /* translate */
 .tgrid{display:grid;gap:16px}
-.pane.t2s,.pane.brl{display:none}
-.tgrid.t2s .pane.s2t,.tgrid.brl .pane.s2t{display:none}.tgrid.t2s .pane.t2s,.tgrid.brl .pane.brl{display:block}
+.pane.t2s,.pane.brl,.pane.spc{display:none}
+.tgrid.t2s .pane.s2t,.tgrid.brl .pane.s2t,.tgrid.spc .pane.s2t{display:none}.tgrid.t2s .pane.t2s,.tgrid.brl .pane.brl,.tgrid.spc .pane.spc{display:block}
+#scam video,#scam img{object-fit:contain}
+.shutter{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:#fff;color:#0B1630;font-weight:800;font-size:1.05rem;padding:12px 26px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.35);min-height:52px;z-index:2}
+.shutter:active{transform:translateX(-50%) scale(.96)}.shutter[disabled]{opacity:.6}
+.spname{font-size:1.7rem;font-weight:800;line-height:1.15;margin-top:10px}.spsci{color:var(--mut);margin:2px 0 8px}
+.spbar{height:8px;border-radius:8px;background:var(--soft);overflow:hidden;margin-bottom:8px}.spbar i{display:block;height:100%;background:var(--ok);border-radius:8px}.spbar.low i{background:var(--acc)}
+.avatar.mini{height:230px;border-radius:14px;background:linear-gradient(180deg,var(--soft),var(--card));margin:8px 0}
+#sMore{margin-top:8px}.finds{margin-top:12px;padding:12px 14px}
+#finds{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}#finds li{background:var(--soft);border-radius:12px;padding:6px 10px;font-weight:600;font-size:.9rem}#finds small{display:block;color:var(--mut);font-weight:400;font-size:.72rem}
+#finds:empty::before{content:"—";color:var(--mut)}
+.mean{display:grid;gap:4px;margin:6px 0}.mean button{text-align:left;padding:6px 10px;border-radius:10px;background:var(--soft);min-height:40px}.mean .l{font-size:.7rem;font-weight:800;color:var(--mut);letter-spacing:.06em;margin-right:8px}
+.sod{display:flex;gap:14px;align-items:center;padding:12px 14px;margin-top:12px}.sod canvas{width:84px;height:84px;border-radius:14px;background:var(--soft);flex:none}.sod b{font-size:1.2rem;display:block}.sod small{color:var(--mut)}.sod .primary{margin-left:auto}
+.bigtext{position:fixed;inset:0;z-index:70;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top) + 24px) 5vw calc(env(safe-area-inset-bottom) + 90px);text-align:center}
+.bigtext #bigTxt{font-weight:900;line-height:1.1;word-break:break-word;max-height:100%;overflow:hidden}
+.bigtext.flash{animation:flash .7s steps(1) infinite}@keyframes flash{50%{background:#D90000;color:#fff}}
+.bigbar{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 18px);display:flex;gap:12px;justify-content:center;align-items:center}.bigbar .ib.glass{background:#111}
 .cam img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
 #bcam canvas{object-fit:contain}#bcam video{object-fit:contain}
 .brlline{font-size:1.6rem;letter-spacing:.08em;line-height:1.3;word-break:break-all;color:var(--pri);min-height:1.3em;white-space:pre-wrap}
@@ -195,8 +211,9 @@ input[type=range]{accent-color:var(--pri);width:140px;min-height:40px}
   :root{--rail:220px}
   .rail .brand b{display:inline}.rail .brand{justify-content:flex-start}
   .rail .tab{flex:none;flex-direction:row;justify-content:flex-start;gap:12px;padding:12px 14px;font-size:.95rem}
-  .tgrid:not(.brl){grid-template-columns:1.1fr 1fr}
-  .tgrid:not(.brl) .pane.s2t,.tgrid:not(.brl) .pane.t2s{display:block}
+  .tgrid:not(.brl):not(.spc){grid-template-columns:1.1fr 1fr}
+  .tgrid:not(.brl):not(.spc) .pane.s2t,.tgrid:not(.brl):not(.spc) .pane.t2s{display:block}
+  .tgrid.spc .pane.spc{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:start}.tgrid.spc .finds{grid-column:1/-1;margin:0}
   .tgrid.brl .pane.brl{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:start}.tgrid.brl .chart{grid-column:1/-1;margin:0}
   .cam{max-height:62dvh}
   .avatar{height:min(56dvh,520px)}
@@ -257,6 +274,9 @@ input[type=range]{accent-color:var(--pri);width:140px;min-height:40px}
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></symbol>
   <symbol id="i-brl" viewBox="0 0 24 24"><circle cx="8" cy="5" r="1.8" fill="currentColor"/><circle cx="8" cy="12" r="1.8" fill="currentColor"/><circle cx="16" cy="5" r="1.8" fill="currentColor"/><circle cx="16" cy="19" r="1.8" fill="currentColor"/><circle cx="8" cy="19" r="1.8"/><circle cx="16" cy="12" r="1.8"/></symbol>
   <symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-9 5-14 15-14 0 10-5 15-14 14zM5 19c3-5 6-8 11-10"/></symbol>
+  <symbol id="i-big" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
   <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
 </svg>
 
@@ -292,6 +312,7 @@ input[type=range]{accent-color:var(--pri);width:140px;min-height:40px}
           <button data-dir="s2t" class="on"><svg><use href="#i-hand"/></svg><span data-t="signToText"></span></button>
           <button data-dir="t2s"><svg><use href="#i-chat"/></svg><span data-t="textToSign"></span></button>
           <button data-dir="brl"><svg><use href="#i-brl"/></svg><span>Braille</span></button>
+          <button data-dir="spc"><svg><use href="#i-leaf"/></svg><span data-t="scan"></span></button>
         </div>
       </header>
       <div class="tgrid">
@@ -330,6 +351,7 @@ input[type=range]{accent-color:var(--pri);width:140px;min-height:40px}
               <button class="ib" id="tSpeak" data-tt="speak"><svg><use href="#i-spk"/></svg></button>
               <button class="ib" id="tCopy" data-tt="copy"><svg><use href="#i-copy"/></svg></button>
               <button class="ib" id="tShare" data-tt="share"><svg><use href="#i-share"/></svg></button>
+              <button class="ib" id="tBig" data-tt="bigShow"><svg><use href="#i-big"/></svg></button>
               <button class="ib" id="tClear" data-tt="clear"><svg><use href="#i-trash"/></svg></button>
               <button class="pill" id="tTeach"><svg><use href="#i-plus"/></svg><span data-t="teachSign"></span></button>
             </div>
@@ -347,6 +369,7 @@ input[type=range]{accent-color:var(--pri);width:140px;min-height:40px}
           </div>
           <div class="chips gloss" id="gloss"></div>
           <div class="brlline" id="t2sBrl" aria-label="Braille"></div>
+          <div class="mean" id="t2sMean"></div>
           <form class="ask card" id="askForm">
             <textarea id="askText" rows="2" data-ph="typeHere" maxlength="600"></textarea>
             <div class="askrow">
@@ -390,6 +413,36 @@ input[type=range]{accent-color:var(--pri);width:140px;min-height:40px}
           </div>
           <details class="card chart"><summary data-t="bChart"></summary><div class="bchart" id="bChart"></div></details>
         </div>
+        <div class="pane spc">
+          <div class="cam" id="scam">
+            <video id="svideo" playsinline muted autoplay></video>
+            <img id="simg" alt="" hidden>
+            <div class="camstart" id="sstart">
+              <button class="big primary" id="sLive"><svg><use href="#i-cam"/></svg><span data-t="sOpen"></span></button>
+              <label class="pill" for="sFile" style="cursor:pointer"><svg><use href="#i-img"/></svg><span data-t="bUpload"></span></label>
+              <input type="file" id="sFile" accept="image/*" hidden>
+              <p class="muted small" data-t="sTip"></p>
+            </div>
+            <div class="status" id="sStatus"></div>
+            <div class="camtools">
+              <label class="ib glass" for="sFile" style="cursor:pointer" data-tt="bUpload"><svg><use href="#i-img"/></svg></label>
+              <button class="ib glass" id="sStop" data-tt="stopCamera"><svg><use href="#i-x"/></svg></button>
+            </div>
+            <button class="shutter" id="sShot" hidden><svg><use href="#i-leaf"/></svg><span data-t="sScan"></span></button>
+          </div>
+          <div class="out card">
+            <div class="outhead">
+              <label class="switch"><input type="checkbox" id="sAloudSw"><span class="knob"></span><svg><use href="#i-spk"/></svg><span data-t="readAloud"></span></label>
+              <select id="sLang" aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="bcl">Bikol</option></select>
+            </div>
+            <div class="muted small" id="sInfo"></div>
+            <div id="sRes" aria-live="polite"></div>
+          </div>
+          <div class="card finds">
+            <div class="row between"><h3 data-t="sFinds"></h3><button class="link" id="sFindsClear" data-t="clear"></button></div>
+            <ol id="finds"></ol>
+          </div>
+        </div>
       </div>
       <div class="card hist">
         <div class="row between"><h3 data-t="conversation"></h3><button class="link" id="histClear" data-t="clear"></button></div>
@@ -401,6 +454,7 @@ input[type=range]{accent-color:var(--pri);width:140px;min-height:40px}
     <section id="v-learn" class="view" hidden>
       <header class="top"><h1 data-t="tabLearn"></h1></header>
       <div class="stats card" id="stats"></div>
+      <div class="card sod" id="sod"></div>
       <h2 data-t="units"></h2>
       <div class="units" id="units"></div>
       <h2 data-t="games"></h2>
@@ -443,13 +497,22 @@ input[type=range]{accent-color:var(--pri);width:140px;min-height:40px}
 </div>
 
 <div class="sheet" id="sheet" hidden><div class="sheetbox" role="dialog" aria-modal="true"><button class="ib close" id="sheetX" aria-label="Close"><svg><use href="#i-x"/></svg></button><div id="sheetBody"></div></div></div>
+<div class="bigtext" id="big" hidden role="dialog" aria-modal="true">
+  <div id="bigTxt"></div>
+  <div class="bigbar">
+    <button class="ib glass" id="bigSpeak" data-tt="speak"><svg><use href="#i-spk"/></svg></button>
+    <button class="pill" id="bigFlash"><span data-t="flash"></span></button>
+    <button class="ib glass" id="bigX" aria-label="Close"><svg><use href="#i-x"/></svg></button>
+  </div>
+</div>
 <div class="toast" id="toast" role="status"></div>
 <template id="privacyTpl"><h2>Privacy policy and cookies</h2>
-<p class="muted">Effective 3 November 2026 · applies to the SENYAS website, the SENYAS web app and the SENYAS Android app.</p>
+<p class="muted">Effective 12 November 2026 · applies to the SENYAS website, the SENYAS web app and the SENYAS Android app.</p>
 <p><b>In short:</b> SENYAS reads your hands on your own device. Camera video is never uploaded, recorded or shared. SENYAS has no accounts, no ads and no tracking.</p>
 <h3>1. Camera and photos</h3>
 <p>When you press <i>Start camera</i>, video is passed to the hand-tracking model running inside your browser or the app. Only the positions of your hand joints are used, in memory, and are thrown away moments later. No picture or video leaves your device. You can stop the camera at any time; it also stops when you leave the screen.</p>
 <p>Braille photos you upload, and braille seen by the live scanner, are read on your device in the same way. The picture is not uploaded or kept; only the text you choose to keep appears in your conversation history.</p>
+<p>The plant and animal scan works the same way: the photo or camera frame is examined by models stored inside the app and is never uploaded or kept. Only the name it finds is added to <i>My finds</i> on your device. If you press <i>More info</i>, the name alone (never the photo) is sent to Wikipedia to fetch a short description.</p>
 <h3>2. Microphone and voice</h3>
 <p>The microphone is used only while you hold the microphone button, to turn speech into text for the avatar. Speech recognition is provided by your browser or phone (for example Google or Apple), which may process the audio on their servers under their own privacy policies. Reading aloud uses the voices installed on your device.</p>
 <h3>3. What is saved on your device</h3>
@@ -462,13 +525,13 @@ input[type=range]{accent-color:var(--pri);width:140px;min-height:40px}
 </ul>
 <p>SENYAS uses no advertising, analytics or third-party tracking cookies.</p>
 <h3>5. Downloads and hosting</h3>
-<p>The website is served by GitHub Pages, which keeps standard server logs (such as IP address) for security. If the hand-tracking files are not already on your device, they may be downloaded from jsDelivr or Google's model storage; those services see a normal web request. After the first download, the app works offline.</p>
+<p>The website is served by GitHub Pages, which keeps standard server logs (such as IP address) for security. If the hand-tracking files are not already on your device, they may be downloaded from jsDelivr or Google's model storage; those services see a normal web request. <i>More info</i> in the species scan contacts Wikipedia, as described above. After the first download, the app works offline.</p>
 <h3>6. Children</h3>
 <p>SENYAS is made for learners of all ages, including students. It collects no personal information, so no account or parental data is needed.</p>
 <h3>7. Your rights</h3>
 <p>Because SENYAS does not collect your data on any server, there is nothing about you for us to hold, sell or share. Under the Philippine Data Privacy Act of 2012 (RA 10173) you may still ask questions or raise concerns using the contact below.</p>
-<h3>8. Sign language accuracy</h3>
-<p>SENYAS is a learning and communication aid, not a certified interpreter. For medical, legal or emergency situations, ask for a qualified FSL interpreter.</p>
+<h3>8. Accuracy</h3>
+<p>SENYAS is a learning and communication aid, not a certified interpreter. For medical, legal or emergency situations, ask for a qualified FSL interpreter. The species scan is a guide only: never use it to decide whether a plant, mushroom or animal is safe to eat or touch.</p>
 <h3>9. Changes and contact</h3>
 <p>If this policy changes, the date above will change and the app will ask for your choice again where needed. Contact: open an issue on the SENYAS project page on GitHub.</p>
 </template>
@@ -983,9 +1046,11 @@ if (typeof module !== "undefined") module.exports = Avatar;
 Hand.SHAPES.NO2 = { f: ["o", "o", "c", "c"], t: "ti" };
 Hand.SHAPES.SICK = { f: ["x", "b", "x", "x"], s: [14, 0, -9, -20], t: "out" };
 Hand.ORI.Nd = [[0, 0.55, 0.83], [0, -0.83, 0.55]];
+Hand.SHAPES.BEAK = { f: ["o", "c", "c", "c"], t: "ti" };
+Hand.SHAPES.BENT3 = { f: "hhcc", s: [6, -6, 0, 0], t: "out" };
 
 var DATA = (function () {
-  var CATS = ["greet", "people", "needs", "feel", "quest", "emerg", "time"];
+  var CATS = ["greet", "people", "needs", "feel", "quest", "emerg", "time", "nature"];
   var ROWS = `
 hello|greet|hello|kumusta|kumusta|FLAT.forehead:t@-0.12,0,0.Fa FLAT.temple@-0.35,0.05,0.3.Fa.450|Flat hand at the forehead, then out like a salute.
 goodbye|greet|goodbye|paalam|paaram|FLAT.nh.Fa BENT.nh.Fa.250 FLAT.nh.Fa.250 BENT.nh.Fa.250|Open hand, fingers bend down and up: a wave.
@@ -994,7 +1059,7 @@ please|greet|please|pakiusap|tabi|FLAT.chest.B FLAT.chest@0.1,0.1,0.B.250 FLAT.c
 sorry|greet|sorry|pasensya na|pasensya na|A.chest.B A.chest@0.1,0.1,0.B.250 A.chest@0,0.2,0.B.250 A.chest@-0.1,0.1,0.B.250 A.chest.B.250|Closed fist (A) circles on the chest.
 yes|greet|yes|oo|iyo|S.nh.Fa S.nh.Nd.200 S.nh.Fa.200 S.nh.Nd.200|Fist nods up and down, like a head nodding.
 no|greet|no|hindi|dai|THREE.nh.Fa NO2.nh.Fa.200 THREE.nh.Fa.200 NO2.nh.Fa.200|Index and middle fingers snap down onto the thumb.
-welcome|greet|you're welcome|walang anuman|daing anoman|FLAT.n@-0.3,0.1,0.4.U FLAT.stomach@0.1,0,0.U.500|Open palm sweeps in toward the body.
+welcome|greet|you're welcome|walang anuman|daing ano man|FLAT.n@-0.3,0.1,0.4.U FLAT.stomach@0.1,0,0.U.500|Open palm sweeps in toward the body.
 fine|greet|fine|mabuti|marhay man|FIVE.chest:th.Fi FIVE.chest:th@0,0,0.15.Fi.250 FIVE.chest:th.Fi.250|Open hand, thumb taps the chest.
 nice|greet|nice|maganda|magayon|FLAT.nc@-0.1,0.12,0.1.D FLAT.nc@-0.45,0.12,0.2.D.500;FLAT.nc.U|Flat hand slides across the other palm.
 meet|greet|meet|makilala|mamidbid|ONE.n@-0.3,0,0.S ONE.nc@-0.08,0,0.S.500;ONE.n@-0.3,0,0.S ONE.nc@-0.08,0,0.S.500|Two index fingers, up, come together.
@@ -1006,7 +1071,7 @@ my|people|my|akin|sako|FLAT.chest.B|Flat palm on the chest.
 mother|people|mother|nanay|nanay|FIVE.chin:th.S FIVE.chin:th@0,0,0.12.S.200 FIVE.chin:th.S.200|Open hand, thumb taps the chin.
 father|people|father|tatay|tatay|FIVE.forehead:th.S FIVE.forehead:th@0,0,0.12.S.200 FIVE.forehead:th.S.200|Open hand, thumb taps the forehead.
 sibling|people|brother / sister|kapatid|tugang|L.forehead:th.S L.nc@0,0.1,0.S.500;L.nc@0,0,0.S|L hand from the head down onto the other L hand.
-baby|people|baby|sanggol|aki|FLAT.nc@0,-0.05,0.U FLAT.nc@-0.15,0.05,0.U.400 FLAT.nc@0.1,0.05,0.U.400;FLAT.nc@0,-0.15,0.U FLAT.nc@0.15,-0.05,0.U.400 FLAT.nc@-0.1,-0.05,0.U.400|Arms cradle and rock a baby.
+baby|people|baby|sanggol|omboy|FLAT.nc@0,-0.05,0.U FLAT.nc@-0.15,0.05,0.U.400 FLAT.nc@0.1,0.05,0.U.400;FLAT.nc@0,-0.15,0.U FLAT.nc@0.15,-0.05,0.U.400 FLAT.nc@-0.1,-0.05,0.U.400|Arms cradle and rock a baby.
 friend|people|friend|kaibigan|katood|X.nc@0,0.1,0.G X.nc@0,0,0.Gd.400;X.nc@0,0,0.Gd X.nc@0,0.1,0.G.400|Hooked index fingers link, then switch.
 family|people|family|pamilya|pamilya|F.n@0.15,0.2,0.F F.n@-0.15,0,0.3.S.400 F.nc@0,0,0.3.B.400;F.n@0.15,0.2,0.F F.n@-0.15,0,0.3.S.400 F.nc@0,0,0.3.B.400|Two F hands draw a circle and meet.
 name|people|name|pangalan|pangaran|H.nc@0,0.1,0.G H.nc@0,0.03,0.G.200 H.nc@0,0.1,0.G.200 H.nc@0,0.03,0.G.200;H.nc@0.1,0,0.G|Two H hands, one taps the other twice.
@@ -1026,19 +1091,19 @@ home|needs|home|bahay|harong|FLATO.mouth:t.Bi FLATO.cheek:t.Bi.400|Flat-O touche
 house|needs|house|bahay|harong|FLAT.nh@0.32,0.25,0.Si FLAT.n@0,-0.1,0.S.500;FLAT.nh@0.32,0.25,0.Si FLAT.n@0,-0.1,0.S.500|Two flat hands draw a roof and walls.
 school|needs|school|paaralan|eskwelahan|FLAT.nc@0,0.25,0.D FLAT.nc@0,0.08,0.D.200 FLAT.nc@0,0.25,0.D.200 FLAT.nc@0,0.08,0.D.200;FLAT.nc.U|Clap twice, palm on palm.
 help|needs|help|tulong|tabang|THUMB.nc@0,0.1,0.S THUMB.nc@0,0.35,0.S.500;FLAT.nc.U FLAT.nc@0,0.25,0.U.500|Thumbs-up hand rests on the other palm; both lift.
-more|needs|more|dagdag|dagdag|FLATO.nc@-0.25,0,0.S FLATO.nc@-0.08,0,0.S.250 FLATO.nc@-0.25,0,0.S.250 FLATO.nc@-0.08,0,0.S.250;FLATO.nc@-0.25,0,0.S FLATO.nc@-0.08,0,0.S.250 FLATO.nc@-0.25,0,0.S.250 FLATO.nc@-0.08,0,0.S.250|Fingertips of two flat-O hands tap together.
+more|needs|more|dagdag|dugang|FLATO.nc@-0.25,0,0.S FLATO.nc@-0.08,0,0.S.250 FLATO.nc@-0.25,0,0.S.250 FLATO.nc@-0.08,0,0.S.250;FLATO.nc@-0.25,0,0.S FLATO.nc@-0.08,0,0.S.250 FLATO.nc@-0.25,0,0.S.250 FLATO.nc@-0.08,0,0.S.250|Fingertips of two flat-O hands tap together.
 finished|needs|finished|tapos na|tapos na|FIVE.n.B FIVE.n@-0.1,0,0.Fa.300 FIVE.n.B.250 FIVE.n@-0.1,0,0.Fa.250;FIVE.n.B FIVE.n@-0.1,0,0.Fa.300 FIVE.n.B.250 FIVE.n@-0.1,0,0.Fa.250|Both open hands flip out.
 want|needs|want|gusto|gusto|CLAW.n@0,0,0.3.U CLAW.n@0,0,-0.1.U.450;CLAW.n@0,0,0.3.U CLAW.n@0,0,-0.1.U.450|Clawed hands, palms up, pull toward you.
 need|needs|need|kailangan|kaipuhan|X.n.Fa X.n@0,-0.1,0.D.300 X.n.Fa.250 X.n@0,-0.1,0.D.300|Hooked index bends down firmly.
-money|needs|money|pera|kuwarta|FLATO.nc@0,0.18,0.Bi FLATO.nc@0,0.08,0.Bi.200 FLATO.nc@0,0.18,0.Bi.200;FLAT.nc.U|Flat-O taps the open palm.
+money|needs|money|pera|kwarta|FLATO.nc@0,0.18,0.Bi FLATO.nc@0,0.08,0.Bi.200 FLATO.nc@0,0.18,0.Bi.200;FLAT.nc.U|Flat-O taps the open palm.
 work|needs|work|trabaho|trabaho|S.nc@0,0.2,0.D S.nc@0,0.1,0.D.200 S.nc@0,0.2,0.D.200;S.nc.D|One fist taps the back of the other.
 play|needs|play|laro|kawat|Y.n.Fa Y.n.Si.200 Y.n.Fa.200 Y.n.Si.200;Y.n.Fa Y.n.Si.200 Y.n.Fa.200 Y.n.Si.200|Both Y hands twist back and forth.
 go|needs|go|punta|lakaw|ONE.n:i.Bi ONE.fwd:i.Fw.450;ONE.n:i.Bi ONE.fwd:i.Fw.450|Both index fingers arc forward.
 come|needs|come|halika|dali|ONE.fwd:i.Fw ONE.n:i.Bi.450;ONE.fwd:i.Fw ONE.n:i.Bi.450|Both index fingers beckon toward you.
-stop|needs|stop|tigil|ontok|FLAT.nc@0,0.35,0.S FLAT.nc@0,0.05,0.S.300;FLAT.nc.U|Edge of the hand chops down onto the palm.
+stop|needs|stop|tigil|pundo|FLAT.nc@0,0.35,0.S FLAT.nc@0,0.05,0.S.300;FLAT.nc.U|Edge of the hand chops down onto the palm.
 wait|needs|wait|sandali|halat|FIVE.n.U CLAW.n.U.180 FIVE.n.U.180 CLAW.n.U.180;FIVE.n.U CLAW.n.U.180 FIVE.n.U.180 CLAW.n.U.180|Both palms up, fingers wiggle.
 again|needs|again|ulit|giraray|BENT.nc@0,0.1,0.25.U BENT.nc:t@0,0.05,0.D.450;FLAT.nc.U|Bent hand flips over onto the open palm.
-slow|needs|slow|dahan-dahan|hinay-hinay|FLAT.nc@0,0.1,0.D FLAT.nc@0,0.1,0.3.D.800;FLAT.nc.D|One hand slides slowly up the back of the other.
+slow|needs|slow|dahan-dahan|luway-luway|FLAT.nc@0,0.1,0.D FLAT.nc@0,0.1,0.3.D.800;FLAT.nc.D|One hand slides slowly up the back of the other.
 write|needs|write|sulat|surat|FLATO.nc:t@0,0.08,0.D FLATO.nc:t@-0.15,0.05,0.D.400;FLAT.nc.U|Pinched fingers write across the palm.
 call|needs|call (phone)|tawag|apod|Y.ear.F Y.ear@0,0,0.1.F.300|Y hand held at the ear like a phone.
 see|needs|see|kita|hiling|V.eye:t@0,0,0.05.Bi V.fwd.Fw.400|V from the eyes moves forward.
@@ -1047,14 +1112,14 @@ know|needs|know|alam|aram|BENT.temple:t.Bi BENT.temple:t@0,0,0.1.Bi.200 BENT.tem
 not|needs|not|hindi|dai|A.chin:th.S A.chin:th@0,0,0.3.S.350|Thumb under the chin flicks forward.
 sign|needs|sign language|senyas|senyas|ONE.nh@0.1,0,0.G ONE.n@0.1,0,0.3.G.300 ONE.nh@0.1,0,0.G.300;ONE.n@0.1,0,0.3.G ONE.nh@0.1,0,0.G.300 ONE.n@0.1,0,0.3.G.300|Index fingers circle in turn.
 love|feel|love|pagmamahal|pagkamoot|S.heart.B S.heart@0,0,0.05.B.300;S.heart.B S.heart@0,0,0.05.B.300|Arms cross over the heart.
-iloveyou|feel|I love you|Mahal kita|Namumutan taka|ILY.nh.Fa ILY.nh@0,0,0.1.Fa.300|Thumb, index and little finger up.
+iloveyou|feel|I love you|Mahal kita|Namomotan ta ka|ILY.nh.Fa ILY.nh@0,0,0.1.Fa.300|Thumb, index and little finger up.
 happy|feel|happy|masaya|maogma|FLAT.chest.B FLAT.chest@0,0.15,0.1.B.250 FLAT.chest.B.250 FLAT.chest@0,0.15,0.1.B.250|Flat hand brushes up the chest.|happy
 sad|feel|sad|malungkot|mamundo|FIVE.eye@0,0.05,0.2.F FIVE.mouth@0,-0.1,0.25.F.600;FIVE.eye@0,0.05,0.2.F FIVE.mouth@0,-0.1,0.25.F.600|Open hands slide down in front of the face.|sad
 angry|feel|angry|galit|maanggot|CLAW.mouth@0,0,0.2.B CLAW.chin@0,0,0.3.B.400|Clawed hand pulls out from the face.|wh
 tired|feel|tired|pagod|pagal|BENT.chestR:t.B BENT.chestR:t@0,-0.1,0.Bi.500;BENT.chestR:t.B BENT.chestR:t@0,-0.1,0.Bi.500|Bent hands on the chest droop down.|sad
-sick|feel|sick|may sakit|may hilang|SICK.forehead:t.B SICK.forehead:t@0,0,0.1.B.250;SICK.stomach:t.B SICK.stomach:t@0,0,0.1.B.250|Middle fingers touch the forehead and the stomach.|sad
+sick|feel|sick|may sakit|may helang|SICK.forehead:t.B SICK.forehead:t@0,0,0.1.B.250;SICK.stomach:t.B SICK.stomach:t@0,0,0.1.B.250|Middle fingers touch the forehead and the stomach.|sad
 hungry|feel|hungry|gutom|gutom|C.chest@0,0.25,0.B C.stomach.B.500|C hand moves down the chest.
-thirsty|feel|thirsty|uhaw|uhaw|ONE.chin:i.B ONE.neck:i@0,-0.15,0.B.450|Index traces down the throat.
+thirsty|feel|thirsty|uhaw|paha|ONE.chin:i.B ONE.neck:i@0,-0.15,0.B.450|Index traces down the throat.
 good|feel|good|mabuti|marhay|FLAT.chin:t.B FLAT.nc@0,0.1,0.U.450;FLAT.nc.U|From the chin down to the open palm. A thumbs-up also reads as good.
 bad|feel|bad|masama|maraot|FLAT.chin:t.B FLAT.n@0,0,0.D.450|From the chin, the hand flips down. A thumbs-down also reads as bad.
 okay|feel|okay|ayos|sige|F.nh.Fa F.nh@0,0,0.1.Fa.250|The OK hand: thumb and index make a circle.
@@ -1064,7 +1129,7 @@ what|quest|what|ano|ano|FIVE.n.U FIVE.n@-0.05,0,0.Ul.200 FIVE.n.U.200;FIVE.n.U F
 where|quest|where|saan|hain|ONE.nh.F ONE.nh.Fi.180 ONE.nh.F.180 ONE.nh.Fi.180|Index finger up, wags side to side.|wh
 who|quest|who|sino|siisay|ONE.chin:i.Bi ONE.chin:i@0.05,0.05,0.Bi.200 ONE.chin:i.Bi.200|Index circles in front of the chin.|wh
 when|quest|when|kailan|nuarin|ONE.nc@-0.1,0.3,0.2.F ONE.nc@0,0.2,0.F.400;ONE.nc.F|Index circles and lands on the other index.|wh
-why|quest|why|bakit|taano|FLAT.forehead:t.B Y.forehead@-0.15,-0.05,0.3.B.400|Fingers at the forehead pull away into a Y.|wh
+why|quest|why|bakit|tano|FLAT.forehead:t.B Y.forehead@-0.15,-0.05,0.3.B.400|Fingers at the forehead pull away into a Y.|wh
 how|quest|how|paano|paano|BENT.nc@-0.05,0,0.D BENT.nc@-0.05,0.05,0.U.400;BENT.nc@-0.05,0,0.D BENT.nc@-0.05,0.05,0.U.400|Bent hands back to back roll up and out.|wh
 emergency|emerg|emergency|emerhensiya|emerhensiya|E.nh.Fa E.nh@-0.08,0,0.Fa.180 E.nh.Fa.180 E.nh@-0.08,0,0.Fa.180|E hand shakes side to side.|wh
 hospital|emerg|hospital|ospital|ospital|H.~shoulder@0,0.05,0.25.G H.~shoulder@0,-0.15,0.25.G.300 H.~shoulder@0.1,-0.05,0.25.G.300 H.~shoulder@-0.1,-0.05,0.25.G.300|H fingers draw a cross on the upper arm.
@@ -1074,11 +1139,33 @@ flood|emerg|flood|baha|baha|W.chin:i.S FLAT.n@0,-0.2,0.D.300 FLAT.n@0,0.3,0.D.50
 typhoon|emerg|typhoon|bagyo|bagyo|FIVE.nh.S FIVE.nh@0.3,0,0.S.400 FIVE.nh.S.400;FIVE.nh.S FIVE.nh@-0.3,0,0.S.400 FIVE.nh.S.400|Both open hands sway hard, like strong wind.|wh
 danger|emerg|danger|panganib|peligro|A.nc@0,0.1,0.S A.nc@0,0.3,0.1.S.250 A.nc@0,0.1,0.S.250;FLAT.nc.B|Thumb brushes up the back of the other hand.|wh
 medicine|emerg|medicine|gamot|bulong|SICK.nc:t@0,0.08,0.D SICK.nc:t@0.05,0.1,0.D.200 SICK.nc:t@0,0.08,0.D.200;FLAT.nc.U|Middle finger circles on the open palm.
-now|time|now / today|ngayon|ngonyan|BENT.n@0,0.1,0.U BENT.n@0,-0.05,0.U.400;BENT.n@0,0.1,0.U BENT.n@0,-0.05,0.U.400|Both bent hands drop a little.
+now|time|now / today|ngayon|ngunyan|BENT.n@0,0.1,0.U BENT.n@0,-0.05,0.U.400;BENT.n@0,0.1,0.U BENT.n@0,-0.05,0.U.400|Both bent hands drop a little.
 tomorrow|time|tomorrow|bukas|sa aga|A.cheek:th.S A.cheek:th@0,0,0.3.S.400|Thumb at the cheek moves forward.
 yesterday|time|yesterday|kahapon|kasuhapon|A.cheek:th@0,0,0.2.S A.ear:th.S.400|Thumb moves back from the cheek.
 morning|time|morning|umaga|aga|FLAT.n@0,-0.25,0.U FLAT.n@0,0.15,0.Up.500;FLAT.nc@0,0,0.Id|One hand rises like the sun over the other arm.
-night|time|night|gabi|banggi|BENT.nc@0,0.15,0.D BENT.nc@0,0,0.D.500;FLAT.nc@0,0.05,0.Id|Bent hand sets over the other arm, like the sun going down.`;
+night|time|night|gabi|banggi|BENT.nc@0,0.15,0.D BENT.nc@0,0,0.D.500;FLAT.nc@0,0.05,0.Id|Bent hand sets over the other arm, like the sun going down.
+animal|nature|animal|hayop|hayop|BENT.chestR:t.B BENT.chestR:t@0.12,0,0.B.250 BENT.chestR:t.B.250 BENT.chestR:t@0.12,0,0.B.250;BENT.chestR:t.B BENT.chestR:t@0.12,0,0.B.250 BENT.chestR:t.B.250 BENT.chestR:t@0.12,0,0.B.250|Fingertips on the chest, hands flap in and out.
+plant|nature|plant|halaman|tanom|FLATO.nc@0,-0.12,0.Up FIVE.nc@0,0.35,0.Up.550;C.nc@0,0,0.S|A closed hand grows up through the other hand and opens.
+tree|nature|tree|puno|kahoy|FIVE.nh@0,0.3,0.Fa FIVE.nh@0,0.3,0.B.250 FIVE.nh@0,0.3,0.Fa.250 FIVE.nh@0,0.3,0.B.250;FLAT.n@0.5,0,0.Id|Elbow on the other hand, the open hand twists like leaves.
+flower|nature|flower|bulaklak|burak|FLATO.nose:t@-0.1,0,0.Bi FLATO.nose:t@0.1,0,0.Bi.380|Flat-O hand touches one side of the nose, then the other.
+fruit|nature|fruit|prutas|prutas|F.cheek:i.Bi F.cheek:i.B.250 F.cheek:i.Bi.250|F hand twists at the cheek.
+bird|nature|bird|ibon|gamgam|G.mouth@0,0,0.2.Fw BEAK.mouth@0,0,0.2.Fw.180 G.mouth@0,0,0.2.Fw.180 BEAK.mouth@0,0,0.2.Fw.180|Index and thumb open and close at the mouth, like a beak.
+chicken|nature|chicken|manok|manok|G.mouth@0,0,0.2.Fw BEAK.mouth@0,0,0.2.Fw.180 BEAK.nc:i@0,0.1,0.D.380;FLAT.nc.U|A beak at the mouth, then it pecks the open palm.
+fish|nature|fish|isda|sira|FLAT.nc@-0.3,0.2,0.Fw FLAT.nc@-0.15,0.2,0.2.Si.200 FLAT.nc@0,0.2,0.4.Fw.200 FLAT.nc@0.15,0.2,0.6.Si.200|Flat hand swims forward, wiggling.
+dog|nature|dog|aso|ayam|FLAT.down@0,0.12,0.B FLAT.down@0,0,0.B.180 FLAT.down@0,0.12,0.B.180 FLAT.down@0,0,0.B.180|Pat your leg, as if calling a dog.
+cat|nature|cat|pusa|ikos|F.cheek:i.Bi F.cheek:i@-0.25,0,0.1.Bi.300 F.cheek:i.Bi.250 F.cheek:i@-0.25,0,0.1.Bi.300|Pinch and pull out the whiskers at the cheek.
+pig|nature|pig|baboy|orig|FLAT.chin@0,-0.06,0.Id BENT.chin@0,-0.06,0.Id.200 FLAT.chin@0,-0.06,0.Id.200 BENT.chin@0,-0.06,0.Id.200|Hand under the chin, fingers flap down.
+cow|nature|cow|baka|baka|Y.temple:th.Fa Y.temple:th.Fi.250 Y.temple:th.Fa.250 Y.temple:th.Fi.250|Y hand, thumb at the temple, twists like a horn.
+carabao|nature|carabao|kalabaw|damulag|Y.temple:th.Fa Y.temple:th@-0.12,0.1,0.Fi.300 Y.temple:th.Fa.250;Y.temple:th.Fa Y.temple:th@-0.12,0.1,0.Fi.300 Y.temple:th.Fa.250|Both Y hands at the temples curve out like wide horns.
+horse|nature|horse|kabayo|kabayo|THREE.temple:th.Fa BENT3.temple:th.Fa.200 THREE.temple:th.Fa.200 BENT3.temple:th.Fa.200|Thumb at the temple, two fingers flap like an ear.
+monkey|nature|monkey|unggoy|kabalang|CLAW.side@0.3,-0.1,0.B CLAW.side@0.3,0.12,0.B.200 CLAW.side@0.3,-0.1,0.B.200 CLAW.side@0.3,0.12,0.B.200;CLAW.side@0.3,-0.1,0.B CLAW.side@0.3,0.12,0.B.200 CLAW.side@0.3,-0.1,0.B.200 CLAW.side@0.3,0.12,0.B.200|Clawed hands scratch up the sides.
+mouse|nature|mouse|daga|kino|ONE.nose:i@-0.1,0,0.Bi ONE.nose:i@0.1,0,0.Bi.180 ONE.nose:i@-0.1,0,0.Bi.180 ONE.nose:i@0.1,0,0.Bi.180|Index finger brushes across the tip of the nose.
+snake|nature|snake|ahas|halas|BENTV.chin@0,0,0.1.Fw BENTV.fwd@-0.12,0.15,0.Fw.300 BENTV.fwd@0.1,0,0.25.Fw.300|Bent V darts forward from the mouth, winding.
+frog|nature|frog|palaka|talapang|S.chin@0,-0.08,0.1.Id V.chin@0,-0.08,0.1.Id.180 S.chin@0,-0.08,0.1.Id.180 V.chin@0,-0.08,0.1.Id.180|Fist under the chin, two fingers flick out.
+turtle|nature|turtle|pagong|ba-o|A.nc@0,0.05,0.S A.nc@0,0.05,0.12.S.220 A.nc@0,0.05,0.S.220;BENT.nc@0,0.22,0.D|A hand under the cupped hand, thumb peeks out like a head.
+insect|nature|insect|insekto|insekto|THREE.nose:th.S BENT3.nose:th.S.200 THREE.nose:th.S.200 BENT3.nose:th.S.200|Thumb on the nose, two fingers bend like feelers.
+butterfly|nature|butterfly|paruparo|alibangbang|FIVE.chest@0.12,0.12,0.25.B BENT.chest@0.12,0.12,0.25.B.220 FIVE.chest@0.12,0.12,0.25.B.220 BENT.chest@0.12,0.12,0.25.B.220;FIVE.chest@0.12,0.12,0.25.B BENT.chest@0.12,0.12,0.25.B.220 FIVE.chest@0.12,0.12,0.25.B.220 BENT.chest@0.12,0.12,0.25.B.220|Thumbs hooked, both hands flap like wings.
+spider|nature|spider|gagamba|lawa|CLAW.nc@0.08,0.1,0.D FIVE.nc@0.08,0.1,0.D.200 CLAW.nc@0.08,0.1,0.D.200 FIVE.nc@0.08,0.1,0.D.200;CLAW.nc@0.08,0.1,0.D FIVE.nc@0.08,0.1,0.D.200 CLAW.nc@0.08,0.1,0.D.200 FIVE.nc@0.08,0.1,0.D.200|Hands crossed at the wrists, fingers crawl.`;
 
   var NUMW = [["zero", "sero", "sero"], ["one", "isa", "saro"], ["two", "dalawa", "duwa"], ["three", "tatlo", "tulo"], ["four", "apat", "apat"], ["five", "lima", "lima"],
     ["six", "anim", "anom"], ["seven", "pito", "pito"], ["eight", "walo", "walo"], ["nine", "siyam", "siyam"], ["ten", "sampu", "sampulo"]];
@@ -1099,35 +1186,35 @@ night|time|night|gabi|banggi|BENT.nc@0,0.15,0.D BENT.nc@0,0,0.D.500;FLAT.nc@0,0.
 goodmorning|Good morning|Magandang umaga|Marhay na aga|good morning
 goodnight|Good evening|Magandang gabi|Marhay na banggi|good night
 thanks|Thank you|Salamat po|Dios mabalos|thankyou
-welcome|You're welcome|Walang anuman|Daing anoman|welcome
+welcome|You're welcome|Walang anuman|Daing ano man|welcome
 howareyou|How are you?|Kumusta ka?|Kumusta ka?|how you
 fine|I'm fine|Mabuti ako|Marhay man ako|me fine
 yourname|What is your name?|Ano ang pangalan mo?|Ano an pangaran mo?|you name what
 myname|My name is|Ang pangalan ko ay|An pangaran ko si|my name
 nicemeet|Nice to meet you|Ikinagagalak kitang makilala|Maogma akong mamidbid ka|nice meet you
 deaf|I am Deaf|Bingi ako|Bungog ako|me deaf
-slow|Please sign slowly|Pakidahan-dahan ang pagsenyas|Hinay-hinay tabi an pagsenyas|please sign slow
+slow|Please sign slowly|Pakidahan-dahan ang pagsenyas|Luway-luway tabi an pagsenyas|please sign slow
 nounderstand|I don't understand|Hindi ko maintindihan|Dai ko nasasabotan|me understand not
 repeat|Please repeat|Pakiulit po|Giraray tabi|again please
 write|Please write it down|Pakisulat po|Isurat mo tabi|write please
 whereCR|Where is the bathroom?|Nasaan ang CR?|Hain an CR?|bathroom where
 needhelp|I need help|Kailangan ko ng tulong|Kaipuhan ko nin tabang|me need help
 calldoctor|Call a doctor|Tumawag ng doktor|Mag-apod nin doktor|call doctor
-sick|I am sick|May sakit ako|May hilang ako|me sick
+sick|I am sick|May sakit ako|May helang ako|me sick
 wherehospital|Where is the hospital?|Nasaan ang ospital?|Hain an ospital?|hospital where
-loveyou|I love you|Mahal kita|Namumutan taka|iloveyou
+loveyou|I love you|Mahal kita|Namomotan ta ka|iloveyou
 hungry|I'm hungry|Gutom na ako|Gutom na ako|me hungry
-thirsty|I'm thirsty|Nauuhaw ako|Uhaw ako|me thirsty
+thirsty|I'm thirsty|Nauuhaw ako|Paha na ako|me thirsty
 eat|Let's eat|Kain tayo|Magkakan kita|we eat
 seeyou|See you tomorrow|Kita tayo bukas|Magkita kita sa aga|see you tomorrow
 bye|Goodbye|Paalam|Paaram|goodbye
 sorry|I'm sorry|Pasensya na|Pasensya na|sorry
 wait|Please wait|Sandali lang po|Halat muna tabi|wait please
-stop|Stop!|Tigil!|Ontok!|stop
-danger|Danger! Leave now!|Delikado! Umalis na!|Peligro! Lakaw na!|danger go now
+stop|Stop!|Tigil!|Pundo!|stop
+danger|Danger! Leave now!|Delikado! Umalis na!|Peligro! Maghale na!|danger go now
 fire|There is a fire!|May sunog!|May kalayo!|fire
 quake|Earthquake!|Lindol!|Linog!|earthquake
-okay|Are you okay?|Ayos ka lang?|Marhay ka lang?|you okay`;
+okay|Are you okay?|Ayos ka lang?|Marhay ka man?|you okay`;
   var phrases = PHRASES.trim().split("\n").map(function (r) { var a = r.split("|"); return { id: a[0], en: a[1], fil: a[2], bcl: a[3], gloss: a[4].split(" ") }; });
 
   /* Lookup from any written word or phrase (in any of the three languages) to its sign. */
@@ -1139,8 +1226,8 @@ okay|Are you okay?|Ayos ka lang?|Marhay ka lang?|you okay`;
     ["en", "fil", "bcl"].forEach(function (l) { w[l].split(" / ").forEach(function (x) { put(x, { word: w }); put(x.replace(/\(.*\)/, ""), { word: w }); }); });
   });
   var EXTRA = { i: "me", ako: "me", ko: "me", mo: "you", ka: "you", ikaw: "you", ika: "you", hi: "hello", thanks: "thankyou", ty: "thankyou", ok: "okay", yeah: "yes", nope: "no",
-    cr: "bathroom", toilet: "bathroom", comfort: "bathroom", restroom: "bathroom", nasaan: "where", "hello po": "hello", po: null, tabi: null, the: null, a: null, an: null, is: null, am: null, are: null, to: null, ang: null, ng: null, nin: null, sa: null, si: null, ay: null, na: null,
-    mama: "mother", ina: "mother", papa: "father", ama: "father", nanay: "mother", tatay: "father", brother: "sibling", sister: "sibling", today: "now", gamot: "medicine", doktora: "doctor", tulungan: "help", tabangi: "help", tulong: "help" };
+    cr: "bathroom", toilet: "bathroom", comfort: "bathroom", restroom: "bathroom", nasaan: "where", "hello po": "hello", po: null, tabi: null, the: null, a: null, an: null, is: null, am: null, are: null, to: null, ang: null, ng: null, nin: null, sa: null, si: null, ay: null, na: null, asin: null, kan: null, mga: null, at: null, and: null,
+    mama: "mother", ina: "mother", papa: "father", ama: "father", nanay: "mother", tatay: "father", brother: "sibling", sister: "sibling", today: "now", gamot: "medicine", doktora: "doctor", tulungan: "help", tabangi: "help", tulong: "help", ayam: "dog", ikos: "cat", gamgam: "bird", sira: "fish", kalabaw: "carabao", damulag: "carabao", halaman: "plant", tanom: "plant", kahoy: "tree", burak: "flower", ontok: "stop", pundo: "stop", uhaw: "thirsty", paha: "thirsty", hinay: "slow", luway: "slow" };
   Object.keys(EXTRA).forEach(function (k) { index[key(k)] = EXTRA[k] ? { word: words[EXTRA[k]] } : { skip: true }; });
   for (var n = 0; n <= 10; n++) index[String(n)] = { word: words["n" + n] };
 
@@ -1676,10 +1763,159 @@ var Braille = (function () {
 })();
 if (typeof module !== "undefined") module.exports = Braille;
 
+/* SENYAS species scan: names a plant or animal from one photo, on the device.
+   Four small models work together. A general model (ImageNet, about 400 kinds of animals plus
+   some plants and fruits) says what sort of living thing is in the picture; that decides which
+   specialist is believed: plants (2,101 species), birds (964) or insects (1,021), all trained on
+   iNaturalist photos. The specialists are never trusted alone, because each one always finds
+   "something" (a tabby cat looks like a butterfly to the insect model). */
+var Species = (function () {
+  /* ImageNet class number -> kind of living thing (null = not a plant or animal). */
+  function kind(i) {
+    if (i <= 6 || (i >= 389 && i <= 397)) return "fish";
+    if ((i >= 7 && i <= 24) || (i >= 80 && i <= 100) || (i >= 127 && i <= 146)) return "bird";
+    if (i >= 25 && i <= 29) return "animal";
+    if (i >= 30 && i <= 32) return "frog";
+    if (i >= 33 && i <= 37) return "turtle";
+    if (i >= 38 && i <= 50) return "lizard";
+    if (i >= 52 && i <= 68) return "snake";
+    if (i >= 70 && i <= 78) return "spider";
+    if (i === 79 || (i >= 101 && i <= 126) || (i >= 147 && i <= 150)) return "animal";
+    if (i >= 151 && i <= 268) return "dog";
+    if (i >= 269 && i <= 280) return "animal";
+    if (i >= 281 && i <= 285) return "cat";
+    if (i >= 286 && i <= 299) return "animal";
+    if (i >= 300 && i <= 326) return "insect";
+    if (i === 339 || i === 340) return "horse";
+    if (i >= 341 && i <= 343) return "pig";
+    if (i >= 345 && i <= 347) return "cow";
+    if (i >= 365 && i <= 384) return "monkey";
+    if (i >= 327 && i <= 388) return "animal";
+    if ((i >= 936 && i <= 957) || (i >= 984 && i <= 998)) return "plant";
+    return null;
+  }
+
+  /* Words for each kind in the three languages, and the sign the avatar uses for it. */
+  var KINDS = {
+    animal: ["animal", "hayop", "hayop"], plant: ["plant", "halaman", "tanom"], tree: ["tree", "puno", "kahoy"], flower: ["flower", "bulaklak", "burak"],
+    bird: ["bird", "ibon", "gamgam"], fish: ["fish", "isda", "sira"], dog: ["dog", "aso", "ayam"], cat: ["cat", "pusa", "ikos"],
+    insect: ["insect", "insekto", "insekto"], butterfly: ["butterfly", "paruparo", "alibangbang"], snake: ["snake", "ahas", "halas"],
+    frog: ["frog", "palaka", "talapang"], turtle: ["turtle", "pagong", "ba-o"], lizard: ["lizard", "butiki", "tiki"], spider: ["spider", "gagamba", "lawa"],
+    monkey: ["monkey", "unggoy", "kabalang"], horse: ["horse", "kabayo", "kabayo"], pig: ["pig", "baboy", "orig"], cow: ["cow", "baka", "baka"]
+  };
+  var SIGN = { lizard: "animal" };
+  var LI = { en: 0, fil: 1, bcl: 2 };
+
+  /* Local names of things people in Albay meet often: scientific name or general label -> [Filipino, Bikol]. */
+  var LOCAL = {
+    "Mangifera indica": ["mangga", "mangga"], "Cocos nucifera": ["niyog", "niyog"], "Carica papaya": ["papaya", "tapayas"], "Zea mays": ["mais", "mais"],
+    "Colocasia esculenta": ["gabi", "natong"], "Psidium guajava": ["bayabas", "bayawas"], "Hibiscus rosa-sinensis": ["gumamela", "gumamela"],
+    "Mimosa pudica": ["makahiya", "torog-torog"], "Helianthus annuus": ["mirasol", "mirasol"], "Capsicum annuum": ["sili", "lada"],
+    "Solanum lycopersicum": ["kamatis", "kamatis"], "Plumeria rubra": ["kalachuchi", "kalachuchi"], "Apis mellifera": ["pukyutan", "ligwan"],
+    banana: ["saging", "batag"], jackfruit: ["langka", "langka"], pineapple: ["pinya", "pinya"], corn: ["mais", "mais"], ear: ["mais", "mais"],
+    "water buffalo": ["kalabaw", "damulag"], hen: ["manok", "manok"], cock: ["manok", "manok"], hog: ["baboy", "orig"], ox: ["baka", "baka"],
+    bee: ["bubuyog", "ligwan"], fly: ["langaw", "langaw"], ant: ["langgam", "langgam"], mushroom: ["kabute", "kabute"], ram: ["tupa", "karnero"],
+    "African crocodile": ["buwaya", "buaya"], "American alligator": ["buwaya", "buaya"], tiger: ["tigre", "tigre"], lion: ["leon", "leon"],
+    "Indian elephant": ["elepante", "elepante"], "African elephant": ["elepante", "elepante"], goose: ["gansa", "gansa"], drake: ["pato", "pato"]
+  };
+  var FLOWER = /flower|rose|lily|daisy|orchid|hibiscus|tulip|poppy|aster|violet|iris|lotus|plumeria|periwinkle|marigold|lupine|primrose|morning.glory|mallow|slipper/i;
+  var TREE = /tree|pine|oak|palm|maple|birch|fir|spruce|cedar|mango|beech|elm|willow|cypress|ash$|mangrove|eucalyptus|juniper|poplar|walnut|hickory|acacia|kapok|papaya|guava/i;
+  var FLUTTER = /butterfly|moth|swallowtail|monarch|skipper|sulphur|fritillary|admiral|hairstreak|buckeye|emperor|bluewing|nymph|checkerspot|crescent|azure|copper|satyr|sphinx|tussock/i;
+
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function best(list, labels) {
+    /* A specialist's top answers without its "background" class; bg is that class's score. */
+    var bgIndex = labels.length - 1, bg = 0, out = [];
+    list.forEach(function (c) { if (c.index === bgIndex) bg = c.score; else out.push({ sci: labels[c.index][0], name: labels[c.index][1] || labels[c.index][0], score: c.score }); });
+    return { top: out[0] || null, alts: out.slice(1, 3).filter(function (a) { return a.score >= 0.05; }), bg: bg };
+  }
+
+  /* gen: the general model's answers [{index, name, score}], best first. sp: {plant, bird, insect}, each the
+     specialist's answers [{index, score}]. labels: {plant, bird, insect} name lists. */
+  function decide(gen, sp, labels) {
+    var sums = {}, lead = {}, dead = 0;
+    gen.forEach(function (c) {
+      var k = kind(c.index);
+      if (!k) { dead = Math.max(dead, c.score); return; }
+      var route = k === "bird" || k === "insect" || k === "plant" ? k : "animal";
+      sums[route] = (sums[route] || 0) + c.score;
+      if (!lead[route]) lead[route] = { kind: k, name: c.name, score: c.score };
+    });
+    var gate = null;
+    Object.keys(sums).forEach(function (r) { if (!gate || sums[r] > sums[gate]) gate = r; });
+    if (gate && (sums[gate] < 0.18 || sums[gate] < dead * 0.6)) gate = null;
+    var B = { plant: best(sp.plant, labels.plant), bird: best(sp.bird, labels.bird), insect: best(sp.insect, labels.insect) };
+
+    function fromSpecialist(route, why) {
+      var b = B[route], t = b.top, k = route;
+      if (route === "plant") k = FLOWER.test(t.name) ? "flower" : TREE.test(t.name) ? "tree" : "plant";
+      if (route === "insect" && FLUTTER.test(t.name)) k = "butterfly";
+      return { ok: true, kind: k, name: t.name, sci: t.sci, score: t.score, alts: b.alts, source: route, why: why };
+    }
+    function fromGeneral(route) {
+      var l = lead[route], k = l.kind, name = cap(l.name), detail = "";
+      if (k === "dog" || k === "cat") { detail = l.name; name = cap(KINDS[k][0]); }
+      if (route === "plant") k = FLOWER.test(l.name) ? "flower" : "plant";
+      return { ok: true, kind: k, name: name, sci: "", detail: detail, key: l.name, score: Math.min(1, sums[route]), alts: [], source: "general" };
+    }
+
+    if (gate === "animal") return fromGeneral("animal");
+    if (gate) {
+      var t = B[gate].top;
+      if (t && t.score >= 0.3 && t.score >= B[gate].bg) return fromSpecialist(gate, "gate");
+      if (lead[gate].score >= 0.3 || !t || t.score < 0.12) return fromGeneral(gate);
+      return fromSpecialist(gate, "weak");
+    }
+    /* The general model saw no living thing: believe a specialist only when it is sure. */
+    var need = { plant: 0.35, bird: 0.6, insect: 0.6 }, pick = null;
+    Object.keys(B).forEach(function (r) { var t = B[r].top; if (t && t.score >= need[r] && t.score > B[r].bg && (!pick || t.score > B[pick].top.score)) pick = r; });
+    if (pick) return fromSpecialist(pick, "alone");
+    return { ok: false };
+  }
+
+  /* The name to show and say in a language: a local name if there is one, else the kind and the English name. */
+  function nameIn(res, lang) {
+    if (!res.ok) return "";
+    var full = res.name + (res.detail ? " (" + res.detail + ")" : "");
+    if (lang === "en" || !LI[lang]) return full;
+    var loc = LOCAL[res.sci] || LOCAL[res.key];
+    if (loc && loc[LI[lang] - 1]) return cap(loc[LI[lang] - 1]);
+    var word = KINDS[res.kind] ? KINDS[res.kind][LI[lang]] : "";
+    if (res.name.toLowerCase() === KINDS[res.kind][0]) return cap(word) + (res.detail ? " (" + res.detail + ")" : "");
+    return cap(word) + ": " + res.name;
+  }
+  function kindWord(res, lang) { return KINDS[res.kind] ? KINDS[res.kind][LI[lang] || 0] : ""; }
+  function signId(res) { return SIGN[res.kind] || res.kind; }
+
+  /* ---------- running the models ---------- */
+  var ready = null, C = {}, LABELS = null;
+  function load(vision, base) {
+    if (ready) return ready;
+    ready = (async function () {
+      var v = await vision();
+      LABELS = await (await fetch(base + "labels.json")).json();
+      var names = ["general", "plants", "birds", "insects"];
+      for (var i = 0; i < names.length; i++) {
+        C[names[i]] = await v.mp.ImageClassifier.createFromOptions(v.files, { baseOptions: { modelAssetPath: base + names[i] + ".tflite", delegate: "CPU" }, runningMode: "IMAGE", maxResults: names[i] === "general" ? 10 : 4 });
+      }
+    })();
+    ready.catch(function () { ready = null; });
+    return ready;
+  }
+  /* source: an image, a video frame or a canvas. */
+  function classify(source) {
+    function run(n) { return C[n].classify(source).classifications[0].categories.map(function (c) { return { index: c.index, name: c.categoryName || c.displayName || "", score: c.score }; }); }
+    return decide(run("general"), { plant: run("plants"), bird: run("birds"), insect: run("insects") }, LABELS);
+  }
+
+  return { kind: kind, decide: decide, nameIn: nameIn, kindWord: kindWord, signId: signId, load: load, classify: classify, KINDS: KINDS, count: { plants: 2101, birds: 964, insects: 1021, general: 398 } };
+})();
+if (typeof module !== "undefined") module.exports = Species;
+
 /* SENYAS app: live sign translator, text/voice to sign avatar, lessons, dictionary and phrasebook. */
 (function () {
   "use strict";
-  var VERSION = "1.0.0";
+  var VERSION = "1.1.0";
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -1688,7 +1924,7 @@ if (typeof module !== "undefined") module.exports = Braille;
 
   /* ---------- words on screen ---------- */
   var T = {
-    en: { badFile: "That file can't be used. Choose a photo (or a SENYAS data file) under the size limit.", bLive: "Scan braille live", bUpload: "Upload photo", bTip: "Hold the page flat and straight in good light. Reads Grade 1 (uncontracted) braille.", bHint: "Scan a page or upload a photo of braille. The text appears here.", bNone: "No braille found. Move closer, hold it flat and add light.", bChart: "Braille alphabet", bCellsN: "cells", tabTranslate: "Translate", tabLearn: "Learn", tabDict: "Dictionary", tabPhrases: "Phrases", tabSettings: "Settings", signToText: "Sign → Words", textToSign: "Words → Sign",
+    en: { scan: "Nature", sOpen: "Open camera", sScan: "Scan", sTip: "Point at one plant or animal, fill the frame, then press Scan. Works offline.", sHint: "Scan a plant or an animal. SENYAS names it, says it, signs it and shows it in braille.", sLoading: "Loading the species models…", sNone: "No plant or animal recognised. Move closer, fill the frame and try again.", sUnsure: "Not sure", sAlso: "Could also be", sMoreInfo: "More info", sNoNet: "More info needs the internet.", sSafe: "A guide only. Never use it to decide whether a plant, mushroom or animal is safe to eat or touch.", sFinds: "My finds", sModelErr: "The species models could not load. Connect once, then it works offline.", bigShow: "Show big", flash: "Flash", sod: "Sign of the day", watch: "Watch", sVoiceEn: "English voice", sVoiceFil: "Filipino and Bikol voice", sTest: "Test voice", sNoFil: "This device has no Filipino voice, so Filipino and Bikol are read with the closest voice. Install Filipino in the phone's text-to-speech settings for the best sound.", sNoVoice: "This device has no speech voices installed.", cat_nature: "Animals & plants", badFile: "That file can't be used. Choose a photo (or a SENYAS data file) under the size limit.", bLive: "Scan braille live", bUpload: "Upload photo", bTip: "Hold the page flat and straight in good light. Reads Grade 1 (uncontracted) braille.", bHint: "Scan a page or upload a photo of braille. The text appears here.", bNone: "No braille found. Move closer, hold it flat and add light.", bChart: "Braille alphabet", bCellsN: "cells", tabTranslate: "Translate", tabLearn: "Learn", tabDict: "Dictionary", tabPhrases: "Phrases", tabSettings: "Settings", signToText: "Sign → Words", textToSign: "Words → Sign",
       startCamera: "Start camera", stopCamera: "Stop camera", camPrivacy: "Video stays on this device. Nothing is uploaded.", flip: "Switch camera", modeAll: "All", modeWords: "Words",
       readAloud: "Read aloud", captionHint: "Sign in front of the camera. Letters, numbers and words appear here.", space: "Space", backspace: "Delete", newLine: "New line", speak: "Speak",
       copy: "Copy", share: "Share", clear: "Clear", teachSign: "Teach a sign", play: "Play", replay: "Replay", typeHere: "Type or say something…", speakNow: "Speak", signIt: "Sign it",
@@ -1712,7 +1948,7 @@ if (typeof module !== "undefined") module.exports = Braille;
       showHand: "Show your hand", reading: "Reading…", camError: "The camera could not start. Allow camera access and try again.", modelError: "Hand tracking could not load. Connect once, then it works offline.",
       copied: "Copied", noSpeech: "Voice input isn't available here. Type instead.", listening: "Listening…", signer: "Signer", speaker: "Speaker", record: "Record", save: "Save", word: "Word",
       newWord: "or a new word", delete: "Delete", passed: "Passed!", tryAgain: "Try again", knew: "I knew it", again: "Again", reveal: "Show answer", personal: "Personal examples", saved: "Saved", unitDone: "Unit complete", badges: "Badges" },
-    fil: { badFile: "Hindi magagamit ang file. Pumili ng larawan (o SENYAS data file) na hindi lampas sa limit.", bLive: "I-scan ang braille nang live", bUpload: "Mag-upload ng larawan", bTip: "Ilapag nang patag at tuwid ang papel sa maliwanag na lugar. Bumabasa ng Grade 1 na braille.", bHint: "Mag-scan ng pahina o mag-upload ng larawan ng braille. Lalabas dito ang teksto.", bNone: "Walang nakitang braille. Lumapit, ituwid at dagdagan ang ilaw.", bChart: "Alpabeto ng braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Matuto", tabDict: "Diksiyonaryo", tabPhrases: "Mga Pahayag", tabSettings: "Mga Setting", signToText: "Senyas → Salita", textToSign: "Salita → Senyas",
+    fil: { scan: "Kalikasan", sOpen: "Buksan ang camera", sScan: "I-scan", sTip: "Itutok sa isang halaman o hayop, punuin ang frame, saka pindutin ang I-scan. Gumagana offline.", sHint: "Mag-scan ng halaman o hayop. Papangalanan, bibigkasin, isesenyas at ipapakita ito ng SENYAS sa braille.", sLoading: "Nilo-load ang mga modelo ng species…", sNone: "Walang nakilalang halaman o hayop. Lumapit, punuin ang frame at subukang muli.", sUnsure: "Hindi sigurado", sAlso: "Maaari ring", sMoreInfo: "Dagdag na impormasyon", sNoNet: "Kailangan ng internet para sa dagdag na impormasyon.", sSafe: "Gabay lamang. Huwag gamitin para pagpasyahan kung ligtas kainin o hawakan ang halaman, kabute o hayop.", sFinds: "Aking mga nakita", sModelErr: "Hindi na-load ang mga modelo ng species. Kumonekta minsan, saka ito gagana offline.", bigShow: "Ipakita nang malaki", flash: "Kislap", sod: "Senyas ng araw", watch: "Panoorin", sVoiceEn: "Boses sa Ingles", sVoiceFil: "Boses sa Filipino at Bikol", sTest: "Subukan ang boses", sNoFil: "Walang boses na Filipino sa device na ito, kaya binabasa ang Filipino at Bikol gamit ang pinakamalapit na boses. I-install ang Filipino sa text-to-speech settings ng telepono.", sNoVoice: "Walang naka-install na boses sa device na ito.", cat_nature: "Hayop at halaman", badFile: "Hindi magagamit ang file. Pumili ng larawan (o SENYAS data file) na hindi lampas sa limit.", bLive: "I-scan ang braille nang live", bUpload: "Mag-upload ng larawan", bTip: "Ilapag nang patag at tuwid ang papel sa maliwanag na lugar. Bumabasa ng Grade 1 na braille.", bHint: "Mag-scan ng pahina o mag-upload ng larawan ng braille. Lalabas dito ang teksto.", bNone: "Walang nakitang braille. Lumapit, ituwid at dagdagan ang ilaw.", bChart: "Alpabeto ng braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Matuto", tabDict: "Diksiyonaryo", tabPhrases: "Mga Pahayag", tabSettings: "Mga Setting", signToText: "Senyas → Salita", textToSign: "Salita → Senyas",
       startCamera: "Buksan ang camera", stopCamera: "Isara ang camera", camPrivacy: "Nananatili sa device na ito ang video. Walang ina-upload.", flip: "Palitan ang camera", modeAll: "Lahat", modeWords: "Mga Salita",
       readAloud: "Basahin nang malakas", captionHint: "Mag-senyas sa harap ng camera. Lalabas dito ang mga titik, numero at salita.", space: "Espasyo", backspace: "Burahin", newLine: "Bagong linya", speak: "Bigkasin",
       copy: "Kopyahin", share: "Ibahagi", clear: "Linisin", teachSign: "Magturo ng senyas", play: "I-play", replay: "Ulitin", typeHere: "Mag-type o magsalita…", speakNow: "Magsalita", signIt: "I-senyas",
@@ -1736,8 +1972,8 @@ if (typeof module !== "undefined") module.exports = Braille;
       showHand: "Ipakita ang iyong kamay", reading: "Binabasa…", camError: "Hindi nagsimula ang camera. Payagan ang camera at subukang muli.", modelError: "Hindi na-load ang hand tracking. Kumonekta minsan, saka ito gagana offline.",
       copied: "Nakopya", noSpeech: "Walang voice input dito. Mag-type na lang.", listening: "Nakikinig…", signer: "Nag-senyas", speaker: "Nagsalita", record: "I-record", save: "I-save", word: "Salita",
       newWord: "o bagong salita", delete: "Burahin", passed: "Pasado!", tryAgain: "Subukang muli", knew: "Alam ko", again: "Ulitin", reveal: "Ipakita ang sagot", personal: "Sariling halimbawa", saved: "Na-save", unitDone: "Tapos ang aralin", badges: "Mga Badge" },
-    bcl: { badFile: "Dai magagamit an file. Magpili nin ladawan (o SENYAS data file) na dai lampas sa limit.", bLive: "I-scan an braille nin live", bUpload: "Mag-upload nin ladawan", bTip: "Ilapag nin patag asin tuwid an papel sa maliwanag na lugar. Nagbabasa nin Grade 1 na braille.", bHint: "Mag-scan nin pahina o mag-upload nin ladawan kan braille. Maluwas digdi an teksto.", bNone: "Mayong nahiling na braille. Magdani, tuwidon asin dugangan an liwanag.", bChart: "Alpabeto kan braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Mag-adal", tabDict: "Diksiyonaryo", tabPhrases: "Mga Taram", tabSettings: "Mga Setting", signToText: "Senyas → Tataramon", textToSign: "Tataramon → Senyas",
-      startCamera: "Bukasan an kamera", stopCamera: "Serrahan an kamera", camPrivacy: "Yaon sana sa device na ini an video. Mayong ina-upload.", flip: "Ribayan an kamera", modeAll: "Gabos", modeWords: "Mga Tataramon",
+    bcl: { scan: "Kalikasan", sOpen: "Bukasan an kamera", sScan: "I-scan", sTip: "Itutok sa sarong tanom o hayop, panoon an frame, dangan pinduton an I-scan. Nagagana offline.", sHint: "Mag-scan nin tanom o hayop. Papangaranan, sasabihon, isesenyas asin ipapahiling ini kan SENYAS sa braille.", sLoading: "Nilo-load an mga modelo kan species…", sNone: "Mayong namidbid na tanom o hayop. Magdani, panoon an frame asin probaran giraray.", sUnsure: "Dai sigurado", sAlso: "Puwede man na", sMoreInfo: "Dugang na impormasyon", sNoNet: "Kaipuhan nin internet para sa dugang na impormasyon.", sSafe: "Giya sana. Dai paggamiton tanganing magdesisyon kun ligtas kakanon o kaputan an tanom, kabute o hayop.", sFinds: "Sakong mga nahiling", sModelErr: "Dai na-load an mga modelo kan species. Magkonekta minsan, dangan magagana offline.", bigShow: "Ipahiling nin dakula", flash: "Kislap", sod: "Senyas kan aldaw", watch: "Hilingon", sVoiceEn: "Boses sa Ingles", sVoiceFil: "Boses sa Filipino asin Bikol", sTest: "Probaran an boses", sNoFil: "Mayong boses na Filipino sa device na ini, kaya binabasa an Filipino asin Bikol gamit an pinakaharaning boses. I-install an Filipino sa text-to-speech settings kan selpon.", sNoVoice: "Mayong naka-install na boses sa device na ini.", cat_nature: "Hayop asin tanom", badFile: "Dai magagamit an file. Magpili nin ladawan (o SENYAS data file) na dai lampas sa limit.", bLive: "I-scan an braille nin live", bUpload: "Mag-upload nin ladawan", bTip: "Ilapag nin patag asin tuwid an papel sa maliwanag na lugar. Nagbabasa nin Grade 1 na braille.", bHint: "Mag-scan nin pahina o mag-upload nin ladawan kan braille. Maluwas digdi an teksto.", bNone: "Mayong nahiling na braille. Magdani, tuwidon asin dugangan an liwanag.", bChart: "Alpabeto kan braille", bCellsN: "selda", tabTranslate: "Isalin", tabLearn: "Mag-adal", tabDict: "Diksiyonaryo", tabPhrases: "Mga Taram", tabSettings: "Mga Setting", signToText: "Senyas → Tataramon", textToSign: "Tataramon → Senyas",
+      startCamera: "Bukasan an kamera", stopCamera: "Sarahan an kamera", camPrivacy: "Yaon sana sa device na ini an video. Mayong ina-upload.", flip: "Ribayan an kamera", modeAll: "Gabos", modeWords: "Mga Tataramon",
       readAloud: "Basahon nin makusog", captionHint: "Magsenyas sa atubangan kan kamera. Maluwas digdi an mga letra, numero asin tataramon.", space: "Espasyo", backspace: "Puraon", newLine: "Bagong linya", speak: "Sabihon",
       copy: "Kopyahon", share: "I-share", clear: "Limpyohan", teachSign: "Magtukdo nin senyas", play: "I-play", replay: "Giraray", typeHere: "Mag-type o magtaram…", speakNow: "Magtaram", signIt: "I-senyas",
       conversation: "Olay", historyEmpty: "Maluwas digdi an saindong olay.", units: "Mga Leksyon", games: "Mga kawat pampraktis", gReadSpell: "Basahon an fingerspelling", gReadSpellD: "Hilingon an avatar, i-type an tataramon.",
@@ -1748,9 +1984,9 @@ if (typeof module !== "undefined") module.exports = Braille;
       whichHand: "Arin na porma kan kamot an", score: "Iskor", signThis: "I-senyas ini", needCam: "Bukasan an kamera tanganing magpraktis.", greatJob: "Marhay na gibo!", skip: "Laktawan", recordMine: "I-record an sako",
       typeWord: "I-type an tataramon", check: "Siyasaton", showAgain: "Ipahiling giraray", answerWas: "An simbag iyo an", sUi: "Tataramon kan app", sOut: "Isalin sa", sVoice: "Boses", sAloud: "Basahon nin makusog an salin",
       sAloudD: "Sinasabi an kada tataramon na namidbid", sLetters: "Sabihon man an kada letra", sRate: "Bilis kan boses", sRecog: "Kamera asin pagsenyas", sHand: "Kamot na gamit", right: "Tuo", left: "Wala",
-      sFacing: "Kamera", front: "Atubangan", back: "Likod", sMirror: "I-mirror an preview", sPoints: "Ipahiling an mga punto kan kamot", sHold: "Haba kan kada senyas", fast: "Madali", normal: "Normal", slow: "Hinay",
-      sRepeat: "Ulitan an letra kun dai binabago", sSwap: "Baliktaron an wala/tuo", sAvatar: "Avatar", sTone: "Kolor kan kudit", sDisplay: "Display", sTheme: "Tema", auto: "Awtomatiko", light: "Maliwanag", dark: "Madiklom",
-      sText: "Kadakulaon kan teksto", sContrast: "Halangkaw na contrast", sMotion: "Bawasan an kiwa", sMine: "Sakong mga senyas", sMineD: "Mga senyas na itinukdo mo", none: "Mayo pa", sData: "Privacy asin datos", privacy: "Palisiya sa privacy",
+      sFacing: "Kamera", front: "Atubangan", back: "Likod", sMirror: "I-mirror an preview", sPoints: "Ipahiling an mga punto kan kamot", sHold: "Haba kan kada senyas", fast: "Madali", normal: "Normal", slow: "Luway",
+      sRepeat: "Ulitan an letra kun dai binabago", sSwap: "Baliktaron an wala/tuo", sAvatar: "Avatar", sTone: "Kolor kan kublit", sDisplay: "Display", sTheme: "Tema", auto: "Awtomatiko", light: "Maliwanag", dark: "Madiklom",
+      sText: "Kadakulaon kan teksto", sContrast: "Halangkaw na contrast", sMotion: "Bawasan an hiro", sMine: "Sakong mga senyas", sMineD: "Mga senyas na itinukdo mo", none: "Mayo pa", sData: "Privacy asin datos", privacy: "Palisiya sa privacy",
       cookies: "Cookies asin storage", export: "I-export an sakong datos", import: "Mag-import nin datos", reset: "I-reset an progreso", wipe: "Puraon gabos na datos", sure: "Sigurado ka?", about: "Manongod", version: "Bersyon", install: "I-install an app",
       aboutText: "Gamit kan SENYAS an manual alphabet asin mga pangenot na senyas na parehas sa Filipino Sign Language (FSL) asin ASL. Puwedeng magkaiba an senyas segun sa lugar — mag-adal kaiba an lokal na Deaf community.",
       cTitle: "An saimong privacy", cText: "Nagagana an SENYAS sa saimong device. Dai nanggad ina-upload o sine-save an ladawan kan kamera. Naggagamit an SENYAS nin storage sa device na ini (arog kan cookies) tanganing girumdomon sana an saimong settings, progreso asin mga senyas na itinukdo mo — mayong ads asin mayong tracking.",
@@ -1798,6 +2034,7 @@ if (typeof module !== "undefined") module.exports = Braille;
     if (o.tone !== undefined) r.tone = Math.round(num(o.tone, 0, 3, 1));
     if (o.fs !== undefined) r.fs = Math.round(num(o.fs, 12, 24, 16));
     if (o.speed !== undefined) r.speed = num(o.speed, 0.25, 2, 1);
+    if (o.voice && typeof o.voice === "object") r.voice = { en: str(o.voice.en, 200), fil: str(o.voice.fil, 200) };
     return r;
   }
   function cleanProgress(o) {
@@ -1820,40 +2057,66 @@ if (typeof module !== "undefined") module.exports = Braille;
   function cleanPersonal(a) {
     return (Array.isArray(a) ? a : []).slice(0, 500).map(function (x) { return x && /^[A-Z]{1,6}$/.test(x.l) && nums(x.f, 41) ? { l: x.l, f: x.f, k: str(x.k, 20) } : null; }).filter(Boolean);
   }
+  function cleanFinds(a) {
+    return (Array.isArray(a) ? a : []).slice(-12).map(function (f) { return f && typeof f === "object" ? { n: str(f.n, 80), s: str(f.s, 80), k: str(f.k, 12), at: num(f.at, 0, 4e12, 0) } : null; }).filter(function (f) { return f && f.n; });
+  }
   function cleanHistory(a) {
     return (Array.isArray(a) ? a : []).slice(-60).map(function (h) { return h && (h.w === "si" || h.w === "sp") ? { w: h.w, t: str(h.t, 500), at: num(h.at, 0, 4e12, 0) } : null; }).filter(Boolean);
   }
 
   var guess = /^(fil|tl)/i.test(navigator.language || "") ? "fil" : "en";
   var S = Object.assign({ ui: guess, out: guess, inLang: guess, aloud: true, letters: false, rate: 1, hand: "right", facing: "user", mirror: true, points: true, hold: 400,
-    repeat: false, swap: false, tone: 1, theme: "auto", fs: 16, hc: false, rm: false, mode: "all", speed: 1 }, cleanSettings(load("settings", {})));
+    repeat: false, swap: false, tone: 1, theme: "auto", fs: 16, hc: false, rm: false, mode: "all", speed: 1, voice: {} }, cleanSettings(load("settings", {})));
   function saveS() { save("settings", S); }
   var P = cleanProgress(load("progress", {}));
   function saveP() { save("progress", P); }
-  var CUSTOM = cleanCustom(load("custom", [])), PERSONAL = cleanPersonal(load("personal", [])), HIST = cleanHistory(load("history", []));
+  var CUSTOM = cleanCustom(load("custom", [])), PERSONAL = cleanPersonal(load("personal", [])), HIST = cleanHistory(load("history", [])), FINDS = cleanFinds(load("finds", []));
 
   /* ---------- speech out and in ---------- */
-  var synth = window.speechSynthesis, CODES = { en: ["en-PH", "en-US", "en-GB", "en"], fil: ["fil-PH", "fil", "tl-PH", "tl"], bcl: ["fil-PH", "fil", "tl-PH", "tl"] };
+  var synth = window.speechSynthesis;
+  /* Voices tried for each language, best first. Bikol has no voice of its own on phones, so it is read with a
+     Filipino voice; where there is none, an Indonesian, Malay or Spanish voice says the vowels far better than
+     an English one. The user can also pick a voice in Settings. */
+  var CODES = { en: ["en-PH", "en-US", "en-GB", "en"], fil: ["fil-PH", "fil", "tl-PH", "tl", "id", "ms", "es"], bcl: ["fil-PH", "fil", "tl-PH", "tl", "id", "ms", "es"] };
+  function voices() { try { return synth ? synth.getVoices() : []; } catch (e) { return []; } }
   function voiceFor(lang) {
-    var vs = synth ? synth.getVoices() : [], list = CODES[lang] || CODES.en;
-    for (var i = 0; i < list.length; i++) {
+    var vs = voices(), mine = S.voice && S.voice[lang === "en" ? "en" : "fil"], list = CODES[lang] || CODES.en, i, v;
+    if (mine) { v = vs.filter(function (x) { return x.voiceURI === mine; })[0]; if (v) return v; }
+    for (i = 0; i < list.length; i++) {
       var c = list[i].toLowerCase();
-      var v = vs.filter(function (x) { return x.lang.replace("_", "-").toLowerCase().indexOf(c) === 0; })[0];
+      v = vs.filter(function (x) { return x.lang.replace("_", "-").toLowerCase().indexOf(c) === 0; })[0];
       if (v) return v;
     }
     return null;
   }
+  var sayT = 0;
   function say(text, lang, flush) {
+    text = String(text == null ? "" : text).trim();
     if (!text) return;
     lang = lang || S.out;
-    if (window.SenyasNative && window.SenyasNative.speak) { try { window.SenyasNative.speak(String(text), (CODES[lang] || CODES.en)[0], S.rate, !!flush); } catch (e) {} return; }
-    if (!synth) return;
-    if (flush) synth.cancel();
-    var u = new SpeechSynthesisUtterance(text), v = voiceFor(lang);
-    if (v) u.voice = v;
-    u.lang = v ? v.lang : (CODES[lang] || CODES.en)[0]; u.rate = S.rate;
-    synth.speak(u);
+    if (window.SenyasNative && window.SenyasNative.speak) { try { window.SenyasNative.speak(text, lang === "en" ? "en-US" : "fil-PH", S.rate, !!flush); } catch (e) {} return; }
+    if (!synth || typeof SpeechSynthesisUtterance === "undefined") return;
+    /* Long text is said sentence by sentence: Chrome stops an utterance after about 15 seconds. */
+    var parts = text.length > 160 ? (text.match(/[^.!?;]+[.!?;]*\s*/g) || [text]) : [text];
+    function go() {
+      try { synth.resume(); } catch (e) {}
+      parts.forEach(function (part) {
+        var u = new SpeechSynthesisUtterance(part), v = voiceFor(lang);
+        if (v) { u.voice = v; u.lang = v.lang; } else u.lang = lang === "en" ? "en-US" : "fil-PH";
+        u.rate = S.rate;
+        synth.speak(u);
+      });
+    }
+    /* Chrome drops speech queued straight after cancel(), so wait a moment; anything said
+       meanwhile lines up behind it, so sentences keep their order. */
+    if (flush) {
+      clearTimeout(sayT); try { synth.cancel(); } catch (e) {}
+      sayWait = [go];
+      sayT = setTimeout(function () { var q = sayWait; sayWait = null; q.forEach(function (f) { f(); }); }, 70);
+    } else if (sayWait) sayWait.push(go);
+    else go();
   }
+  var sayWait = null;
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition, rec = null;
   window.senyasHeard = function (text, final) { if (window.__heard) window.__heard(text, final !== false); };
   function listen(lang, cb) {
@@ -1872,7 +2135,7 @@ if (typeof module !== "undefined") module.exports = Braille;
   function openSheet(html, onClose) {
     if (!$("#sheet").hidden) closeSheet(true);
     $("#sheetBody").innerHTML = html; $("#sheet").hidden = false; sheetClose = onClose || null;
-    try { history.pushState({ sheet: 1 }, ""); } catch (e) {}
+    try { if (!(history.state && history.state.sheet)) history.pushState({ sheet: 1 }, ""); } catch (e) {}
     return $("#sheetBody");
   }
   function closeSheet(silent) {
@@ -1880,9 +2143,10 @@ if (typeof module !== "undefined") module.exports = Braille;
     $("#sheet").hidden = true; Cam.unmount();
     var f = sheetClose; sheetClose = null; if (f) f();
     $("#sheetBody").innerHTML = "";
+    if (!silent && current !== "translate" && Cam.on) Cam.stop();
     if (!silent && history.state && history.state.sheet) { try { history.back(); } catch (e) {} }
   }
-  window.addEventListener("popstate", function () { if (!$("#sheet").hidden) closeSheet(true); });
+  window.addEventListener("popstate", function () { if (!$("#big").hidden) { $("#big").hidden = true; return; } if (!$("#sheet").hidden) { closeSheet(true); if (current !== "translate" && Cam.on) Cam.stop(); } });
   $("#sheetX").onclick = function () { closeSheet(); };
   $("#sheet").addEventListener("click", function (e) { if (e.target.id === "sheet") closeSheet(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSheet(); });
@@ -1911,21 +2175,35 @@ if (typeof module !== "undefined") module.exports = Braille;
   }
 
   /* ---------- camera and hand tracking ---------- */
-  var Cam = (function () {
-    var C = { on: false, lm: null, handler: null }, video = $("#video"), ov = $("#overlay"), box = $("#cam"), home = box.parentNode, homeNext = box.nextSibling, stream = null, raf = 0, lastT = -1, loading = null;
-    var CDN = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
-    function status(s) { $("#camStatus").textContent = s || ""; }
+  var CDN = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
+  var Vision = (function () {
+    var p = null;
     function simd() { try { return WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 96, 0, 1, 123, 3, 2, 1, 0, 10, 10, 1, 8, 0, 65, 0, 253, 15, 253, 98, 11])); } catch (e) { return false; } }
-    function model() {
-      if (loading) return loading;
-      loading = (async function () {
+    return function () {
+      if (p) return p;
+      p = (async function () {
         var mp;
         try { mp = await import("./vendor/vision_bundle.mjs"); } catch (e) { mp = await import(CDN + "/vision_bundle.mjs"); }
         var files = simd() ? { wasmLoaderPath: new URL("vendor/vision_wasm_internal.js", location.href).href, wasmBinaryPath: new URL("vendor/vision_wasm_internal.wasm", location.href).href } : await mp.FilesetResolver.forVisionTasks(CDN + "/wasm");
+        return { mp: mp, files: files };
+      })();
+      p.catch(function () { p = null; });
+      return p;
+    };
+  })();
+  var Cam = (function () {
+    var C = { on: false, lm: null, handler: null }, video = $("#video"), ov = $("#overlay"), box = $("#cam"), home = box.parentNode, homeNext = box.nextSibling, stream = null, raf = 0, lastT = -1, loading = null;
+    function status(s) { $("#camStatus").textContent = s || ""; }
+    function model() {
+      if (loading) return loading;
+      loading = (async function () {
+        var v = await Vision(), mp = v.mp, files = v.files;
         var local = new URL("vendor/hand_landmarker.task", location.href).href, remote = "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task";
         async function make(f, path, delegate) { return mp.HandLandmarker.createFromOptions(f, { baseOptions: { modelAssetPath: path, delegate: delegate }, runningMode: "VIDEO", numHands: 2, minHandDetectionConfidence: 0.5, minHandPresenceConfidence: 0.5, minTrackingConfidence: 0.5 }); }
-        var tries = [[files, local, "GPU"], [files, local, "CPU"], [await mp.FilesetResolver.forVisionTasks(CDN + "/wasm"), remote, "CPU"]];
-        for (var i = 0; i < tries.length; i++) { try { return await make(tries[i][0], tries[i][1], tries[i][2]); } catch (e) { if (i === tries.length - 1) throw e; } }
+        var tries = [[files, local, "GPU"], [files, local, "CPU"], [null, remote, "CPU"]];
+        for (var i = 0; i < tries.length; i++) {
+          try { return await make(tries[i][0] || await mp.FilesetResolver.forVisionTasks(CDN + "/wasm"), tries[i][1], tries[i][2]); } catch (e) { if (i === tries.length - 1) throw e; }
+        }
       })();
       loading.catch(function () { loading = null; });
       return loading;
@@ -2035,7 +2313,7 @@ if (typeof module !== "undefined") module.exports = Braille;
       if (!d || d.rec) { b.hidden = true; return; }
       b.hidden = false; $("#badgeTxt").textContent = tokLabel(d.tok); $("#badgeBar").style.width = Math.round(d.conf * 100) + "%";
     },
-    commit: function (tok) { onToken(tok); clearTimeout(idleT); idleT = setTimeout(newLine, 7000); },
+    commit: function (tok) { onToken(tok); },
     idle: function () { flush(); }
   };
   Cam.handler = translateHandler;
@@ -2052,6 +2330,7 @@ if (typeof module !== "undefined") module.exports = Braille;
   }
   $("#histClear").onclick = function () { HIST = []; save("history", HIST); renderHist(); };
   $("#tSpace").onclick = function () { flush(); };
+  $("#tBig").onclick = function () { flush(); if (tokens.length) bigText(sentence(S.out), S.out); };
   $("#tBack").onclick = function () { if (spell) spell = spell.slice(0, -1); else tokens.pop(); renderCaption(); };
   $("#tEnter").onclick = newLine;
   $("#tSpeak").onclick = function () { flush(); say(sentence(S.out), S.out, true); };
@@ -2092,6 +2371,12 @@ if (typeof module !== "undefined") module.exports = Braille;
     $$("#gloss .chip").forEach(function (c) { c.onclick = function () { var n = +c.dataset.i; player.play(items.filter(function (it) { return it.chip === n; })); $("#aPlay use").setAttribute("href", "#i-pause"); }; });
     player.speed = S.speed; player.play(items); $("#aPlay use").setAttribute("href", "#i-pause");
     $("#t2sBrl").textContent = Braille.write(text);
+    var segs = DATA.toSigns(text), NAME = { en: "EN", fil: "FIL", bcl: "BIK" };
+    $("#t2sMean").innerHTML = segs.some(function (g) { return g.word; }) ? ["en", "fil", "bcl"].map(function (l) {
+      var line = segs.map(function (g) { return g.word ? wordText(g.word, l) : g.spell.charAt(0) + g.spell.slice(1).toLowerCase(); }).join(" ");
+      return '<button data-l="' + l + '"><span class="l">' + NAME[l] + "</span>" + esc(line) + "</button>";
+    }).join("") : "";
+    $$("#t2sMean button").forEach(function (b) { b.onclick = function () { say(b.textContent.replace(/^(EN|FIL|BIK)/, ""), b.dataset.l, true); }; });
     if (!noHist) addHist("sp", text);
   }
   $("#askForm").onsubmit = function (e) { e.preventDefault(); signText($("#askText").value); };
@@ -2119,9 +2404,10 @@ if (typeof module !== "undefined") module.exports = Braille;
   $$("#dir button").forEach(function (b) { b.onclick = function () { setDir(b.dataset.dir); }; });
   function setDir(d) {
     $$("#dir button").forEach(function (x) { x.classList.toggle("on", x.dataset.dir === d); });
-    $(".tgrid").classList.toggle("t2s", d === "t2s"); $(".tgrid").classList.toggle("brl", d === "brl");
+    $(".tgrid").classList.toggle("t2s", d === "t2s"); $(".tgrid").classList.toggle("brl", d === "brl"); $(".tgrid").classList.toggle("spc", d === "spc");
     if (d !== "brl" && BR) BR.stop();
-    if (d === "brl" && Cam.on) Cam.stop();
+    if (d !== "spc" && SP) SP.stop();
+    if ((d === "brl" || d === "spc") && Cam.on) Cam.stop();
     player.redraw();
   }
 
@@ -2201,7 +2487,148 @@ if (typeof module !== "undefined") module.exports = Braille;
   }
 
   /* ---------- navigation ---------- */
-  var current = "translate", BR = null;
+  /* ---------- one switch and one language for every pane ---------- */
+  function setAloud(on) {
+    S.aloud = !!on; saveS();
+    ["#aloud", "#bAloud", "#sAloudSw", "#sAloud"].forEach(function (q) { var e = $(q); if (e) e.checked = S.aloud; });
+    if (!S.aloud && synth) { try { synth.cancel(); } catch (e) {} }
+  }
+  function setOut(lang) {
+    S.out = lang; saveS();
+    ["#outLang", "#sLang", "#sOut"].forEach(function (q) { var e = $(q); if (e) e.value = S.out; });
+    renderCaption(); if (SP) SP.refresh();
+  }
+  document.addEventListener("change", function (e) {
+    var id = e.target && e.target.id;
+    if (id === "aloud" || id === "bAloud" || id === "sAloudSw" || id === "sAloud") setAloud(e.target.checked);
+    if (id === "outLang" || id === "sLang" || id === "sOut") setOut(e.target.value);
+  });
+
+  /* ---------- big text: show a message across the whole screen to a hearing person ---------- */
+  var bigMsg = { t: "", l: "en" };
+  function bigText(text, lang) {
+    if (!text) return;
+    bigMsg = { t: text, l: lang || S.out };
+    var el = $("#big"), box = $("#bigTxt"), size = Math.min(window.innerWidth, window.innerHeight) * 0.3;
+    box.textContent = text; el.classList.remove("flash"); el.hidden = false;
+    box.style.fontSize = size + "px";
+    for (var i = 0; i < 40 && (box.scrollHeight > box.clientHeight + 2 || box.scrollWidth > box.clientWidth + 2) && size > 18; i++) { size *= 0.9; box.style.fontSize = size + "px"; }
+    try { if (!(history.state && history.state.big)) history.pushState({ big: 1 }, ""); } catch (e) {}
+  }
+  function closeBig() {
+    if ($("#big").hidden) return;
+    $("#big").hidden = true;
+    if (history.state && history.state.big) { try { history.back(); } catch (e) {} }
+  }
+  $("#bigX").onclick = closeBig;
+  $("#bigSpeak").onclick = function () { say(bigMsg.t, bigMsg.l, true); };
+  $("#bigFlash").onclick = function () { $("#big").classList.toggle("flash"); };
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeBig(); });
+
+  /* ---------- species scan: a plant or an animal from one photo, said, signed and in braille ---------- */
+  function makeSpecies() {
+    var P = { on: false, stream: null, res: null, pl: null }, v = $("#svideo"), img = $("#simg"), box = $("#scam");
+    function st(s) { $("#sStatus").textContent = s || ""; }
+    function models() {
+      st(t("sLoading"));
+      return Species.load(Vision, new URL("vendor/species/", location.href).href).then(function () { st(""); }, function (e) { st(""); toast(t("sModelErr")); throw e; });
+    }
+    function renderFinds() {
+      $("#finds").innerHTML = FINDS.slice().reverse().map(function (f) { return "<li>" + esc(f.n) + "<small>" + esc(f.s || f.k) + "</small></li>"; }).join("");
+    }
+    /* The avatar signs the kind (bird, tree, dog...) and then fingerspells the name. */
+    function signItems(res) {
+      var out = [], w = DATA.words[Species.signId(res)];
+      if (w) out.push({ spec: w.spec, face: w.face, label: wordText(w, S.out), hold: 500 });
+      res.name.toUpperCase().replace(/[^A-ZÑ]/g, "").split("").slice(0, 24).forEach(function (c) { var sp = Avatar.letterSpec(c); if (sp) out.push({ spec: sp, label: c, hold: 160 }); });
+      return out;
+    }
+    function show(res, quiet) {
+      P.res = res;
+      var el = $("#sRes");
+      if (!res || !res.ok) { el.innerHTML = '<span class="ph">' + esc(t(res ? "sNone" : "sHint")) + "</span>"; $("#sInfo").textContent = ""; return; }
+      var name = Species.nameIn(res, S.out), low = res.score < 0.5, pct = Math.round(res.score * 100);
+      $("#sInfo").textContent = (low ? t("sUnsure") + " · " : "") + pct + "%";
+      el.innerHTML = '<div class="spname">' + esc(name) + '</div><div class="spsci">' + (res.sci ? "<i>" + esc(res.sci) + "</i> · " : "") + esc(Species.kindWord(res, S.out)) + "</div>" +
+        '<div class="spbar' + (low ? " low" : "") + '"><i style="width:' + pct + '%"></i></div>' +
+        (res.alts && res.alts.length ? '<p class="muted small">' + esc(t("sAlso")) + ": " + res.alts.map(function (a) { return esc(a.name) + " (" + Math.round(a.score * 100) + "%)"; }).join(", ") + "</p>" : "") +
+        '<div class="brlline" id="sBrl" aria-label="Braille">' + esc(Braille.write(name)) + '</div><canvas class="avatar mini" id="sAv"></canvas>' +
+        '<div class="tools"><button class="ib" id="sSay" title="' + esc(t("speak")) + '" aria-label="' + esc(t("speak")) + '"><svg><use href="#i-spk"/></svg></button>' +
+        '<button class="pill" id="sSign"><svg><use href="#i-hand"/></svg>' + esc(t("signIt")) + "</button>" +
+        '<button class="ib" id="sBig" title="' + esc(t("bigShow")) + '" aria-label="' + esc(t("bigShow")) + '"><svg><use href="#i-big"/></svg></button>' +
+        '<button class="ib" id="sCopy" title="' + esc(t("copy")) + '" aria-label="' + esc(t("copy")) + '"><svg><use href="#i-copy"/></svg></button>' +
+        '<button class="pill" id="sWiki"><svg><use href="#i-info"/></svg>' + esc(t("sMoreInfo")) + '</button></div><div class="muted small" id="sMore"></div><p class="muted small">' + esc(t("sSafe")) + "</p>";
+      P.pl = new Avatar.Player($("#sAv"), { tone: S.tone, lefty: S.hand === "left" });
+      var play = function () { P.pl.speed = S.speed; P.pl.play(signItems(res)); };
+      $("#sSay").onclick = function () { say(name, S.out, true); };
+      $("#sSign").onclick = play;
+      $("#sBig").onclick = function () { bigText(name, S.out); };
+      $("#sCopy").onclick = function () { if (navigator.clipboard) navigator.clipboard.writeText(name + (res.sci ? " (" + res.sci + ")" : "")).then(function () { toast(t("copied")); }); };
+      $("#sWiki").onclick = function () { more(res); };
+      if (!quiet) { if (S.aloud) say(name, S.out, true); setTimeout(play, 250); }
+    }
+    /* More info: only the name is sent, to Wikipedia, and only when the user asks. */
+    function more(res) {
+      var q = res.sci || res.detail || res.name, out = $("#sMore");
+      if (navigator.onLine === false) { out.textContent = t("sNoNet"); return; }
+      out.textContent = "…";
+      fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(q.replace(/ /g, "_")), { headers: { Accept: "application/json" } })
+        .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+        .then(function (d) {
+          var x = str(d && d.extract, 700); if (!x) throw 0;
+          out.innerHTML = esc(x) + ' <button class="link" id="sMoreSay" aria-label="' + esc(t("speak")) + '"><svg><use href="#i-spk"/></svg></button> <span class="muted">Wikipedia</span>';
+          $("#sMoreSay").onclick = function () { say(x, "en", true); };
+        })
+        .catch(function () { out.textContent = t("sNoNet"); });
+    }
+    function scan(source) {
+      $("#sShot").disabled = true;
+      return models().then(function () {
+        var res = Species.classify(source);
+        show(res);
+        if (res.ok) {
+          FINDS.push({ n: res.name + (res.detail ? " (" + res.detail + ")" : ""), s: res.sci, k: res.kind, at: Date.now() });
+          if (FINDS.length > 12) FINDS.shift();
+          save("finds", FINDS); renderFinds(); addHist("si", "🌿 " + Species.nameIn(res, S.out));
+        }
+        return res;
+      }).catch(function () { return null; }).then(function (r) { $("#sShot").disabled = false; return r; });
+    }
+    P.file = function (f) {
+      if (!f) return;
+      if (!/^image\/(png|jpe?g|webp|gif|bmp|heic|heif)$/i.test(f.type) || f.size > 25e6) { toast(t("badFile")); return; }
+      P.stop();
+      var url = URL.createObjectURL(f);
+      img.onerror = function () { URL.revokeObjectURL(url); toast(t("badFile")); };
+      img.onload = function () { URL.revokeObjectURL(url); img.hidden = false; box.classList.add("live"); $("#sstart").hidden = true; scan(img); };
+      img.src = url;
+    };
+    P.start = async function () {
+      if (P.on) return;
+      try { P.stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } } }); }
+      catch (e) { toast(t("camError")); return; }
+      img.hidden = true; v.srcObject = P.stream; try { await v.play(); } catch (e) {}
+      P.on = true; box.classList.add("live"); $("#sstart").hidden = true; $("#sShot").hidden = false;
+      models().catch(function () {});
+    };
+    P.stop = function () {
+      var was = P.on || !img.hidden; P.on = false;
+      if (P.stream) P.stream.getTracks().forEach(function (tr) { tr.stop(); }); P.stream = null; v.srcObject = null; st("");
+      $("#sShot").hidden = true;
+      if (was) { img.hidden = true; box.classList.remove("live"); $("#sstart").hidden = false; }
+    };
+    P.scan = scan;
+    P.refresh = function () { if (P.res) show(P.res, true); else show(null); renderFinds(); };
+    $("#sLive").onclick = function () { P.start(); };
+    $("#sStop").onclick = function () { P.stop(); };
+    $("#sShot").onclick = function () { if (v.readyState >= 2) scan(v); };
+    $("#sFile").onchange = function () { P.file(this.files[0]); this.value = ""; };
+    $("#sFindsClear").onclick = function () { FINDS = []; save("finds", FINDS); renderFinds(); };
+    show(null); renderFinds();
+    return P;
+  }
+
+  var current = "translate", BR = null, SP = null;
   function go(v) {
     if (!$("#v-" + v)) v = "translate";
     current = v;
@@ -2211,6 +2638,7 @@ if (typeof module !== "undefined") module.exports = Braille;
     if (v === "translate") player.redraw();
     if (v !== "translate" && Cam.on && $("#sheet").hidden) Cam.stop();
     if (v !== "translate" && BR) BR.stop();
+    if (v !== "translate" && SP) SP.stop();
     try { history.replaceState(null, "", "#" + v); } catch (e) {}
     window.scrollTo(0, 0);
   }
@@ -2233,7 +2661,11 @@ if (typeof module !== "undefined") module.exports = Braille;
     $("#stats").innerHTML = '<div class="stat"><b>' + lvl + "</b><span>" + esc(t("level")) + '</span></div><div class="xpbar" title="' + P.xp + ' XP"><i style="width:' + pct + '%"></i></div>' +
       '<div class="stat"><b>🔥 ' + streak() + "</b><span>" + esc(t("streak")) + '</span></div><div class="stat"><b>' + Object.keys(P.learned).length + "</b><span>" + esc(t("learned")) + "</span></div>" +
       '<div class="badges" title="' + esc(t("badges")) + '">' + BADGES.map(function (b) { return '<span class="' + (b[1]() ? "got" : "") + '">' + b[0] + "</span>"; }).join("") + "</div>";
-    var ICON = { a1: "🅰️", a2: "🔠", a3: "🔡", num: "🔢", greet: "👋", people: "👪", needs: "🍚", feel: "❤️", quest: "❓", emerg: "🚨", time: "⏰" };
+    var pool = DATA.list.filter(function (w) { return w.num === undefined; }), d0 = new Date(), sw = pool[(d0.getFullYear() * 372 + d0.getMonth() * 31 + d0.getDate()) % pool.length];
+    $("#sod").innerHTML = '<canvas></canvas><span><small>' + esc(t("sod")) + "</small><b>" + esc(wordText(sw)) + "</b><small>" + esc(["en", "fil", "bcl"].filter(function (l) { return l !== S.ui; }).map(function (l) { return first(sw[l]); }).join(" · ")) + '</small></span><button class="primary" id="sodGo">' + esc(t("watch")) + "</button>";
+    Avatar.still($("#sod canvas"), sw.spec, { tone: S.tone });
+    $("#sodGo").onclick = function () { detail(itemOf("w:" + sw.id)); };
+    var ICON = { a1: "🅰️", a2: "🔠", a3: "🔡", num: "🔢", greet: "👋", people: "👪", needs: "🍚", feel: "❤️", quest: "❓", emerg: "🚨", time: "⏰", nature: "🌿" };
     $("#units").innerHTML = DATA.UNITS.map(function (u, i) {
       var keys = unitKeys(u), got = keys.filter(function (k) { return P.learned[k]; }).length, f = got / keys.length, q = P.quiz[u.id];
       return '<button class="unit' + (q >= 0.7 ? " done" : "") + '" data-u="' + i + '"><span class="uic">' + ICON[u.id] + "</span><b>" + esc(t("cat_" + u.id)) + "</b><small>" + got + "/" + keys.length + (q !== undefined ? " · " + Math.round(q * 100) + "%" : "") + "</small>" +
@@ -2282,9 +2714,10 @@ if (typeof module !== "undefined") module.exports = Braille;
         '<div class="opts">' + opts.map(function (k) { var o = itemOf(k); return '<button class="opt" data-k="' + k + '">' + (pick ? '<canvas data-spec="' + esc(o.spec.split(" ")[0]) + '"></canvas>' : esc(o.label)) + "</button>"; }).join("") + "</div></div>", function () { if (current === "learn") renderLearn(); });
       if (pick) $$("canvas[data-spec]", el).forEach(function (c) { Avatar.still(c, c.dataset.spec, { tone: S.tone, crop: "hand" }); });
       else { var pl = new Avatar.Player($("#qav", el), { tone: S.tone, lefty: S.hand === "left" }), play = function () { pl.play([{ spec: it.spec, face: it.face, hold: 600 }]); }; setTimeout(play, 150); $("#qr", el).onclick = play; }
+      var answered = false;
       $$(".opt", el).forEach(function (b) {
         b.onclick = function () {
-          if (el.dataset.done) return; el.dataset.done = 1;
+          if (answered) return; answered = true;
           var ok = b.dataset.k === qs[n];
           b.classList.add(ok ? "good" : "bad");
           if (!ok) $$(".opt", el).forEach(function (x) { if (x.dataset.k === qs[n]) x.classList.add("good"); });
@@ -2430,10 +2863,11 @@ if (typeof module !== "undefined") module.exports = Braille;
     var order = [S.ui].concat(["en", "fil", "bcl"].filter(function (l) { return l !== S.ui; })), NAME = { en: "EN", fil: "FIL", bcl: "BIK" };
     $("#plist").innerHTML = DATA.phrases.map(function (p, i) {
       return '<div class="pitem">' + order.map(function (l, n) { return '<button style="text-align:left" data-say="' + l + '" data-i="' + i + '"><span class="l">' + NAME[l] + "</span>" + (n ? esc(p[l]) : "<b>" + esc(p[l]) + "</b>") + "</button>"; }).join("") +
-        '<div class="acts"><button class="pill" data-sign="' + i + '"><svg><use href="#i-hand"/></svg>' + esc(t("signIt")) + '</button><button class="ib" data-cp="' + i + '" aria-label="' + esc(t("copy")) + '"><svg><use href="#i-copy"/></svg></button></div></div>';
+        '<div class="acts"><button class="pill" data-sign="' + i + '"><svg><use href="#i-hand"/></svg>' + esc(t("signIt")) + '</button><button class="ib" data-big="' + i + '" aria-label="' + esc(t("bigShow")) + '"><svg><use href="#i-big"/></svg></button><button class="ib" data-cp="' + i + '" aria-label="' + esc(t("copy")) + '"><svg><use href="#i-copy"/></svg></button></div></div>';
     }).join("");
     $$("#plist [data-say]").forEach(function (b) { b.onclick = function () { say(DATA.phrases[+b.dataset.i][b.dataset.say], b.dataset.say, true); }; });
     $$("#plist [data-sign]").forEach(function (b) { b.onclick = function () { var p = DATA.phrases[+b.dataset.sign]; go("translate"); setDir("t2s"); $("#askText").value = p[S.inLang]; signText(p[S.inLang]); }; });
+    $$("#plist [data-big]").forEach(function (b) { b.onclick = function () { bigText(DATA.phrases[+b.dataset.big][S.out], S.out); }; });
     $$("#plist [data-cp]").forEach(function (b) { b.onclick = function () { var p = DATA.phrases[+b.dataset.cp]; if (navigator.clipboard) navigator.clipboard.writeText(p[S.ui]).then(function () { toast(t("copied")); }); }; });
   }
 
@@ -2478,12 +2912,26 @@ if (typeof module !== "undefined") module.exports = Braille;
   function sw(id, on) { return '<label class="switch"><input type="checkbox" id="' + id + '"' + (on ? " checked" : "") + '><span class="knob"></span></label>'; }
   function row(label, ctl, sub) { return '<div class="set"><span>' + esc(label) + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</span>" + ctl + "</div>"; }
   var LANGS = [["en", "English"], ["fil", "Filipino"], ["bcl", "Bikol"]];
+  function voiceRows() {
+    if (window.SenyasNative && window.SenyasNative.speak) return '<div class="set"><button class="pill" id="sTestV"><svg><use href="#i-spk"/></svg>' + esc(t("sTest")) + "</button></div>";
+    var vs = voices();
+    if (!vs.length) return '<p class="muted small">' + esc(t("sNoVoice")) + "</p>";
+    function opts(cur, test) {
+      var list = vs.filter(test); if (!list.length) list = vs;
+      return [["", t("auto")]].concat(list.slice(0, 60).map(function (v) { return [v.voiceURI, v.name + " (" + v.lang + ")"]; }));
+    }
+    var hasFil = vs.some(function (v) { return /^(fil|tl)/i.test(v.lang); });
+    return row(t("sVoiceEn"), sel("sVen", S.voice.en || "", opts(S.voice.en, function (v) { return /^en/i.test(v.lang); }))) +
+      row(t("sVoiceFil"), sel("sVfil", S.voice.fil || "", opts(S.voice.fil, function (v) { return /^(fil|tl|id|ms|es)/i.test(v.lang); }))) +
+      (hasFil ? "" : '<p class="muted small">' + esc(t("sNoFil")) + "</p>") +
+      '<div class="set"><button class="pill" id="sTestV"><svg><use href="#i-spk"/></svg>' + esc(t("sTest")) + "</button></div>";
+  }
   function renderSettings() {
     var mine = CUSTOM.map(function (c) { return row(c.label[S.ui] || c.label.en || c.label.fil || c.label.bcl, '<button class="link" data-del="' + c.id + '">' + esc(t("delete")) + "</button>", c.dyn ? "↝" : "✋"); }).join("") || '<p class="muted">' + esc(t("none")) + "</p>";
     $("#sets").innerHTML =
       '<div class="card group"><h3>' + esc(t("sUi")) + "</h3>" + row(t("sUi"), sel("sUi", S.ui, LANGS)) + row(t("sOut"), sel("sOut", S.out, LANGS)) + "</div>" +
       '<div class="card group"><h3>' + esc(t("sVoice")) + "</h3>" + row(t("sAloud"), sw("sAloud", S.aloud), t("sAloudD")) + row(t("sLetters"), sw("sLetters", S.letters)) +
-      row(t("sRate"), '<input type="range" id="sRate" min="0.6" max="1.4" step="0.1" value="' + S.rate + '">') + "</div>" +
+      row(t("sRate"), '<input type="range" id="sRate" min="0.6" max="1.4" step="0.1" value="' + S.rate + '">') + voiceRows() + "</div>" +
       '<div class="card group"><h3>' + esc(t("sRecog")) + "</h3>" + row(t("sHand"), sel("sHand", S.hand, [["right", t("right")], ["left", t("left")]])) + row(t("sFacing"), sel("sFacing", S.facing, [["user", t("front")], ["environment", t("back")]])) +
       row(t("sMirror"), sw("sMirror", S.mirror)) + row(t("sPoints"), sw("sPoints", S.points)) + row(t("sHold"), sel("sHold", S.hold, [[300, t("fast")], [400, t("normal")], [600, t("slow")]])) +
       row(t("sRepeat"), sw("sRepeat", S.repeat)) + row(t("sSwap"), sw("sSwap", S.swap)) + "</div>" +
@@ -2499,11 +2947,14 @@ if (typeof module !== "undefined") module.exports = Braille;
       (installEvt && !INAPP ? row(t("install"), '<button class="pill" id="sInst"><svg><use href="#i-dl"/></svg>' + esc(t("install")) + "</button>") : "") +
       '<p class="muted small">Hand tracking: MediaPipe (Apache-2.0). <a href="' + (INAPP ? "https://pogi6969.github.io/SENYAS/" : "../") + '" target="_blank" rel="noopener noreferrer">SENYAS website</a></p></div>';
     var on = function (id, ev, f) { var e = $("#" + id); if (e) e.addEventListener(ev, f); };
-    on("sUi", "change", function () { S.ui = this.value; saveS(); applyText(); renderQuick(); renderSettings(); });
+    on("sUi", "change", function () { S.ui = this.value; saveS(); applyText(); renderQuick(); renderSettings(); if (SP) SP.refresh(); });
     on("sOut", "change", function () { S.out = this.value; $("#outLang").value = S.out; saveS(); renderCaption(); });
     on("sAloud", "change", function () { S.aloud = this.checked; $("#aloud").checked = S.aloud; $("#bAloud").checked = S.aloud; saveS(); });
     on("sLetters", "change", function () { S.letters = this.checked; saveS(); });
     on("sRate", "change", function () { S.rate = +this.value; saveS(); say(t("readAloud"), S.ui, true); });
+    on("sVen", "change", function () { S.voice.en = this.value; saveS(); say("Hello. This is SENYAS.", "en", true); });
+    on("sVfil", "change", function () { S.voice.fil = this.value; saveS(); say("Marhay na aldaw. Dios mabalos.", "bcl", true); });
+    on("sTestV", "click", function () { say("Hello. This is SENYAS.", "en", true); say("Magandang araw. Salamat po.", "fil"); say("Marhay na aldaw. Dios mabalos.", "bcl"); });
     on("sHand", "change", function () { S.hand = this.value; saveS(); player.opts.lefty = S.hand === "left"; player.redraw(); Cam.refresh(); });
     on("sFacing", "change", function () { S.facing = this.value; saveS(); if (Cam.on) { Cam.stop(); Cam.start(); } Cam.refresh(); });
     ["Mirror", "Points", "Repeat", "Swap", "Hc", "Rm"].forEach(function (k) { on("s" + k, "change", function () { S[k.toLowerCase()] = this.checked; saveS(); Cam.refresh(); applyLook(); }); });
@@ -2515,7 +2966,7 @@ if (typeof module !== "undefined") module.exports = Braille;
     on("sTeach", "click", function () { go("translate"); setDir("s2t"); teach(); });
     on("sPriv", "click", showPrivacy); on("sCk", "click", function () { consentSheet(true); });
     on("sExp", "click", function () {
-      var blob = new Blob([JSON.stringify({ app: "SENYAS", v: VERSION, settings: S, progress: P, custom: CUSTOM, personal: PERSONAL, history: HIST }, null, 1)], { type: "application/json" });
+      var blob = new Blob([JSON.stringify({ app: "SENYAS", v: VERSION, settings: S, progress: P, custom: CUSTOM, personal: PERSONAL, history: HIST, finds: FINDS }, null, 1)], { type: "application/json" });
       var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "senyas-data.json"; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
     });
     on("sImp", "change", function () {
@@ -2523,7 +2974,7 @@ if (typeof module !== "undefined") module.exports = Braille;
       if (f.size > 5e6 || !/json|text|^$/.test(f.type)) { toast(t("badFile")); return; }
       f.text().then(function (s) {
         var d = JSON.parse(s); if (!d || d.app !== "SENYAS") { toast(t("badFile")); return; }
-        Object.assign(S, cleanSettings(d.settings)); P = cleanProgress(d.progress); CUSTOM = cleanCustom(d.custom); PERSONAL = cleanPersonal(d.personal); HIST = cleanHistory(d.history);
+        Object.assign(S, cleanSettings(d.settings)); P = cleanProgress(d.progress); CUSTOM = cleanCustom(d.custom); PERSONAL = cleanPersonal(d.personal); HIST = cleanHistory(d.history); FINDS = cleanFinds(d.finds); save("finds", FINDS);
         saveS(); saveP(); save("custom", CUSTOM); save("personal", PERSONAL); save("history", HIST); Cam.refresh(); applyLook(); applyText(); renderSettings(); renderHist(); toast(t("saved"));
       }).catch(function () { toast(t("badFile")); });
     });
@@ -2550,20 +3001,20 @@ if (typeof module !== "undefined") module.exports = Braille;
   }
 
   /* ---------- start ---------- */
-  BR = makeBraille();
+  BR = makeBraille(); SP = makeSpecies();
   applyLook(); applyText();
-  $("#aloud").checked = S.aloud; $("#bAloud").checked = S.aloud; $("#outLang").value = S.out; $("#inLang").value = S.inLang; $("#aSpeed").value = String(S.speed);
+  $("#aloud").checked = S.aloud; $("#bAloud").checked = S.aloud; $("#sAloudSw").checked = S.aloud; $("#sLang").value = S.out; $("#outLang").value = S.out; $("#inLang").value = S.inLang; $("#aSpeed").value = String(S.speed);
   $$("#modes button").forEach(function (x) { x.classList.toggle("on", x.dataset.mode === S.mode); }); Cam.sess.mode = S.mode;
   player.opts.lefty = S.hand === "left";
   renderCaption(); renderHist(); renderQuick();
   go((location.hash || "#translate").slice(1));
   if (!consent) setTimeout(function () { consentSheet(false); }, 400);
-  if (synth && synth.onvoiceschanged !== undefined) synth.onvoiceschanged = function () {};
+  if (synth && synth.addEventListener) synth.addEventListener("voiceschanged", function () { if (current === "settings") renderSettings(); });
   matchMedia("(prefers-color-scheme: dark)").addEventListener && matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyLook);
   if ("serviceWorker" in navigator && !INAPP && /^https:|^http:\/\/localhost/.test(location.href)) navigator.serviceWorker.register("../sw.js", { scope: "../" }).catch(function () {});
   var cn = navigator.connection;
   if (!(cn && (cn.saveData || /2g/.test(cn.effectiveType || "")))) { if ("requestIdleCallback" in window) requestIdleCallback(function () { Cam.preload(); }); else setTimeout(Cam.preload, 2000); }
-  window.SENYAS = { version: VERSION, signText: signText, onToken: onToken, go: go };
+  window.SENYAS = { version: VERSION, signText: signText, onToken: onToken, go: go, setDir: setDir, bigText: bigText, species: function () { return SP; } };
 })();
 </script>
 </body>

@@ -20,9 +20,9 @@ logo = logo[logo.index("<svg"):].replace("<title>SENYAS</title>", "").replace('r
 def brand(h): return h.replace('<span class="logo" aria-hidden="true"></span>', '<span class="logo">' + logo + "</span>").replace('<span class="logo"></span>', '<span class="logo">' + logo + "</span>")
 
 app = brand(rd("app.html")).replace("/*CSS*/", rd("app.css")).replace("<!--PRIVACY-->", policy)
-app = app.replace("/*JS*/", js("hand.js", "avatar.js", "data.js", "recog.js", "braille.js", "app.js"))
+app = app.replace("/*JS*/", js("hand.js", "avatar.js", "data.js", "recog.js", "braille.js", "species.js", "app.js"))
 (R / "app").mkdir(exist_ok=True)
-app = csp(app, " 'wasm-unsafe-eval' https://cdn.jsdelivr.net", " https://cdn.jsdelivr.net https://storage.googleapis.com")
+app = csp(app, " 'wasm-unsafe-eval' https://cdn.jsdelivr.net", " https://cdn.jsdelivr.net https://storage.googleapis.com https://en.wikipedia.org")
 (R / "app" / "index.html").write_text(app, encoding="utf-8")
 
 site = brand(rd("site.html"))

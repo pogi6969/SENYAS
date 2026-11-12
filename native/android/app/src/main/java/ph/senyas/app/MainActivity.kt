@@ -165,9 +165,10 @@ class MainActivity : AppCompatActivity() {
         fun speak(text: String, lang: String, rate: Double, flush: Boolean) {
             val t = tts ?: return
             if (!ttsReady) return
-            val loc = Locale.forLanguageTag(lang)
-            val ok = t.isLanguageAvailable(loc) >= TextToSpeech.LANG_AVAILABLE
-            t.language = if (ok) loc else if (lang.startsWith("en")) Locale.US else Locale.forLanguageTag("fil-PH")
+            /* Filipino and Bikol: a Filipino voice if the phone has one, else the closest-sounding one. */
+            val wanted = if (lang.startsWith("en")) listOf("en-US", "en-GB") else listOf("fil-PH", "tl-PH", "id-ID", "ms-MY", "es-ES", "es-US")
+            val loc = wanted.map { Locale.forLanguageTag(it) }.firstOrNull { t.isLanguageAvailable(it) >= TextToSpeech.LANG_AVAILABLE }
+            if (loc != null) t.language = loc
             t.setSpeechRate(rate.toFloat())
             t.speak(text, if (flush) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD, null, "senyas")
         }
