@@ -28,6 +28,7 @@ SENYAS: a live sign language translator, braille reader and sign language course
   - `fll/SENYAS_FLL_BIOGLOW_Innovation_Project_Paper.docx`, `.pdf` – the short BIOGLOW Innovation Project paper (3 pages); `python3 make_fll_paper.py` rebuilds it
   - `deck/SENYAS_RIM_PR2_Presentation.pptx`, `.pdf` – the PR2 deck in the LegaSci template; `python3 make_deck.py` rebuilds it
   - `script/SENYAS_Rationale_Narration_Script_v1.docx`, `.pdf` – the 1:45 rationale narration script (NSTF)
+  - `script/SENYAS_Rationale_Video_Script_v3_BIOGLOW_2min.docx`, `.pdf` – the 2:00 BIOGLOW rationale video script, focused on the plant and animal scan
   - `script/SENYAS_Rationale_Video_Script_v2_BIOGLOW.docx`, `.pdf` – the 1:45 rationale video script for FIRST LEGO League BIOGLOW, with the six Core Values
   - `code/` – the benchmarks, their results and `analyze.py` (statistics and figures); `bench_species.js` tests the nature scan on flower photographs
   - `figures/` – charts and screenshots used in the paper and deck
