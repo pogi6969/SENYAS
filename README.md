@@ -22,12 +22,14 @@ SENYAS: a live sign language translator, braille reader and sign language course
 - `src/` – the sources of the app and website; `python3 build.py` rebuilds `app/index.html`, `index.html` and `privacy.html`
   - `hand.js` 3D hand model, renderer and features · `avatar.js` signing avatar · `recog.js` sign recogniser · `braille.js` braille reader and writer · `species.js` plant and animal scan · `data.js` words and phrases in three languages · `app.js`, `app.html`, `app.css` the app · `site.html` the website · `policy.html` the privacy policy
 - `tests/app.test.js` – the functional test: opens the website and app in a browser engine and tries every feature (`node tests/app.test.js`; needs Playwright). Photos for the species checks go in `tests/photos/`
-- `research/` – the NSTF research (Robotics and Intelligent Machines, Team); it describes version 1.0.0
-  - `paper/SENYAS_NSTF_RIM_Research_Paper.docx`, `.pdf` – the full research paper; `python3 make_paper.py` rebuilds it
+- `research/` – the NSTF research (Robotics and Intelligent Machines, Team) and the FIRST LEGO League paper
+  - `paper/SENYAS_NSTF_RIM_Research_Paper_2nd_Edition.docx`, `.pdf` – the full NSTF paper for version 1.2 (52 pages), with the nature-scan and device-adaptation experiments; `python3 make_paper.py v2` rebuilds it
+  - `paper/SENYAS_NSTF_RIM_Research_Paper.docx`, `.pdf` – the first edition (version 1.0.0); `python3 make_paper.py` rebuilds it
+  - `fll/SENYAS_FLL_BIOGLOW_Innovation_Project_Paper.docx`, `.pdf` – the short BIOGLOW Innovation Project paper (3 pages); `python3 make_fll_paper.py` rebuilds it
   - `deck/SENYAS_RIM_PR2_Presentation.pptx`, `.pdf` – the PR2 deck in the LegaSci template; `python3 make_deck.py` rebuilds it
   - `script/SENYAS_Rationale_Narration_Script_v1.docx`, `.pdf` – the 1:45 rationale narration script (NSTF)
   - `script/SENYAS_Rationale_Video_Script_v2_BIOGLOW.docx`, `.pdf` – the 1:45 rationale video script for FIRST LEGO League BIOGLOW, with the six Core Values
-  - `code/` – the nine benchmarks, their results and `analyze.py` (statistics and figures)
+  - `code/` – the benchmarks, their results and `analyze.py` (statistics and figures); `bench_species.js` tests the nature scan on flower photographs
   - `figures/` – charts and screenshots used in the paper and deck
 
 ## Publish

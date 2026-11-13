@@ -12,9 +12,11 @@ from docx.oxml import OxmlElement
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-import content as C
+V2 = len(sys.argv) > 1 and sys.argv[1] == "v2"
+if V2: import content_v2 as C
+else: import content as C
 
-NAME = "SENYAS_NSTF_RIM_Research_Paper"
+NAME = "SENYAS_NSTF_RIM_Research_Paper" + ("_2nd_Edition" if V2 else "")
 FONT = "Times New Roman"
 
 
